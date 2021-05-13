@@ -11,11 +11,11 @@
 - Nginx 1.19.3
 - Postgres 12.4
 ### Начало работы
-Для начала клонируем репозиторий в нужный каталог,
-после этого создаём виртуальное окружение:
-```python3 -m venv venv```
-И активируем виртуальное окружение:
-```source venv/bin/activate``` для Linux и
-```source venv/Scripts/activate``` для Windows.
-Чтобы установить все зависимости из корня проекта выполняем
-```pip3 install -r requirements.txt```
+Для начала клонируем репозиторий в нужный каталог,  
+после этого создаём виртуальное окружение:  
+```python3 -m venv venv```  
+И активируем виртуальное окружение:  
+```source venv/bin/activate``` для Linux и  
+```source venv/Scripts/activate``` для Windows.  
+Чтобы установить все зависимости из корня проекта выполняем  
+```pip3 install -r requirements.txt```  
