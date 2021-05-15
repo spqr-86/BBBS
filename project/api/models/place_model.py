@@ -12,6 +12,7 @@ class Place(models.Model):
     )
     info = models.CharField(
         verbose_name='Info',
+        max_length=500,
     )
     description = models.TextField(
         verbose_name='Description',
