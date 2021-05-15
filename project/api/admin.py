@@ -1,3 +1,28 @@
 from django.contrib import admin
+from django.utils.translation import gettext as _
 
-# Register your models here.
+from .models import Article, History, Question
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'color')
+    search_fields = ('title', 'color')
+    list_filter = ('title',)
+    empty_value_display = _('-пусто-')
+
+
+@admin.register(History)
+class HistoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'imageUrl')
+    search_fields = ('title', 'imageUrl')
+    list_filter = ('title',)
+    empty_value_display = _('-пусто-')
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('title', )
+    search_fields = ('title', )
+    list_filter = ('title',)
+    empty_value_display = _('-пусто-')
