@@ -1,6 +1,8 @@
-from .place_model import Place
+from .place import Place
+from .tag import Tag
 
 
-__all__ = (
+__all__ = [
     'Place',
-)
+    'Tag',
+]
