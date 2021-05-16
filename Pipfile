@@ -21,6 +21,7 @@ PyJWT = "==2.1.0"
 
 [dev-packages]
 pytest = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.9"
