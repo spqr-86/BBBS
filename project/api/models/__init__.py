@@ -1,6 +1,10 @@
+from .place import Place
 from .profile import Profile
+from .tag import Tag
 
 
 __all__ = [
-    Profile,
+    'Place',
+    'Profile',
+    'Tag',
 ]
