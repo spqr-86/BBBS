@@ -1,6 +1,8 @@
+from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
+from .fields import fields
 from .models import Article, History, Question
 
 
@@ -10,6 +12,10 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('title', 'color')
     list_filter = ('title',)
     empty_value_display = _('-пусто-')
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
 
 
 @admin.register(History)
