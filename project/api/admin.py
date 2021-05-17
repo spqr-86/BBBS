@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Article, History, Place, Tag, Question
+from .models import Article, Movie, History, Place, Question, Tag, Video
 
 
 @admin.register(Article)
@@ -20,6 +20,13 @@ class HistoryAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
 
+@admin.register(Movie)
+class MovieAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'image_url', 'link')
+    search_fields = ('title',)
+    empty_value_display = _('-пусто-')
+
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('title', )
@@ -31,7 +38,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('title', 'name', 'info', 'imageUrl', 'link')
     search_fields = ('title', 'name', 'info')
-    list_filter = ('name',)
+    list_filter = ('title',)
     empty_value_display = _('-пусто-')
 
 
@@ -39,5 +46,10 @@ class PlaceAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name', 'slug')
-    list_filter = ('name',)
+
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'image_url', 'link')
+    search_fields = ('title',)
     empty_value_display = _('-пусто-')
