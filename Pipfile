@@ -18,6 +18,7 @@ sqlparse = "==0.4.1"
 toml = "==0.10.2"
 Django = "==3.2.3"
 PyJWT = "==2.1.0"
+djangorestframework-camel-case = "*"
 
 [dev-packages]
 pytest = "*"
