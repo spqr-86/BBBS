@@ -6,7 +6,7 @@ from .models import Place, Tag
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'name', 'info', 'description', 'imageUrl', 'link')
+    list_display = ('title', 'name', 'info', 'imageUrl', 'link')
     search_fields = ('title', 'name', 'info')
     list_filter = ('name',)
     empty_value_display = _('-пусто-')
