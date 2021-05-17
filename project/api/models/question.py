@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-#from . import Tag
+# from . import Tag
 
 
 class Question(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
 #    tags = models.ForeignKey(

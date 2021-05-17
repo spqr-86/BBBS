@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 class History(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
     imageUrl = models.URLField(

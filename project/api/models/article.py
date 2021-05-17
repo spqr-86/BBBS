@@ -7,7 +7,7 @@ from ..fields import fields
 
 class Article(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
     color = fields.ColorField(
