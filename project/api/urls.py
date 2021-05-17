@@ -7,10 +7,13 @@ from .views import *  # noqa F405
 
 v1_router = DefaultRouter()
 
+v1_router.register(r'articles', ArticleViewSet, basename='article')
+v1_router.register(r'history', HistoryViewSet, basename='history')
 v1_router.register(r'places', PlaceViewSet, basename='place')
 v1_router.register(r'tags', TagViewSet, basename='tag')
 v1_router.register(r'movies', MovieView, basename='movies')
 v1_router.register(r'videos', VideoView, basename='videos')
+v1_router.register(r'questions', QuestionViewSet, basename='questions')
 
 app_name = 'api'
 
