@@ -6,6 +6,8 @@ from .profile import Profile
 from .tag import Tag
 from .video import Video
 from .question import Question
+from .cityes import City
+from .event import Event
 
 __all__ = [
     'Article',
@@ -16,4 +18,6 @@ __all__ = [
     'Tag',
     'Movie',
     'Video',
+    'City',
+    'Event',
 ]

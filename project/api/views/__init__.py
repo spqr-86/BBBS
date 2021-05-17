@@ -5,6 +5,8 @@ from .place import PlaceViewSet
 from .tag import TagViewSet
 from .video import VideoView
 from .question import QuestionViewSet
+from .cityes import CityViewSet
+from .event import EventViewSet
 
 
 __all__ = [
@@ -14,5 +16,7 @@ __all__ = [
     'TagViewSet',
     'MovieView',
     'VideoView',
-    'QuestionViewSet'
+    'QuestionViewSet',
+    'CityViewSet',
+    'EventViewSet',
 ]

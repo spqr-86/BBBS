@@ -10,7 +10,7 @@ class Profile(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='profile',
-        verbose_name = _('Пользователь'),
+        verbose_name =_('Пользователь'),
         null=False,
     )
     city = models.ForeignKey(
@@ -28,4 +28,4 @@ class Profile(models.Model):
         verbose_name_plural = _('Профили')
 
     def __str__(self):
-        return f'{self.user}, {self.city}' 
+        return f'{self.user}, {self.city}'

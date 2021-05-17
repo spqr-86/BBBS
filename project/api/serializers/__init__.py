@@ -5,6 +5,8 @@ from .place import PlaceSerializer
 from .tag import TagSerializer
 from .video import VideoSerializer
 from .question import QuestionSerializer
+from .cityes import CitySerializer
+from .event import EventSerializer
 
 __all__ = [
     'ArticleSerializer',
@@ -14,4 +16,6 @@ __all__ = [
     'MovieSerializer',
     'VideoSerializer',
     'QuestionSerializer',
+    'CitySerializer',
+    'EventSerializer',
 ]
