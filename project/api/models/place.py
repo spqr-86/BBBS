@@ -31,6 +31,8 @@ class Place(models.Model):
 
     class Meta:
         app_label = 'api'
+        verbose_name = _('Место')
+        verbose_name_plural = _('Места')
 
     def __str__(self):
         return self.title
