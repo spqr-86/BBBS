@@ -9,11 +9,10 @@ class Question(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
-    tags = models.ForeignKey(
+    tags = models.ManyToManyField(
         Tag,
         verbose_name=_('Тег'),
         related_name='question',
-        on_delete=models.CASCADE
     )
 
     class Meta:
