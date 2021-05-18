@@ -10,7 +10,6 @@ from .models import Article, History, Movie, Place, Question, Tag, Video
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'color')
     search_fields = ('title', 'color')
-    list_filter = ('title',)
     empty_value_display = _('-пусто-')
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
@@ -22,7 +21,6 @@ class ArticleAdmin(admin.ModelAdmin):
 class HistoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_url')
     search_fields = ('title', 'image_url')
-    list_filter = ('title',)
     empty_value_display = _('-пусто-')
 
 
@@ -30,6 +28,7 @@ class HistoryAdmin(admin.ModelAdmin):
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
     search_fields = ('title',)
+    list_filter = ('tags', )
     empty_value_display = _('-пусто-')
 
 
@@ -37,14 +36,13 @@ class MovieAdmin(admin.ModelAdmin):
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('title', )
     search_fields = ('title', )
-    list_filter = ('title',)
+    list_filter = ('tags', )
 
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
-    list_filter = ('title',)
     empty_value_display = _('-пусто-')
 
 
