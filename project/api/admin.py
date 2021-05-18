@@ -12,7 +12,7 @@ class MixinAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(MixinAdmin):
-    list_display = ('title', 'color')
+    list_display = ('id', 'title', 'color')
     search_fields = ('title', 'color')
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
@@ -22,7 +22,7 @@ class ArticleAdmin(MixinAdmin):
 
 @admin.register(History)
 class HistoryAdmin(MixinAdmin):
-    list_display = ('title', 'image_url')
+    list_display = ('id', 'title', 'image_url')
     search_fields = ('title', 'image_url')
     empty_value_display = _('-пусто-')
 
@@ -37,21 +37,21 @@ class MovieAdmin(MixinAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(MixinAdmin):
-    list_display = ('title', )
+    list_display = ('id', 'title', )
     search_fields = ('title', )
     list_filter = ('tags', )
 
 
 @admin.register(Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('title', 'name', 'info', 'image_url', 'link')
+    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
     empty_value_display = _('-пусто-')
 
 
 @admin.register(Tag)
 class TagAdmin(MixinAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('id', 'name', 'slug')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
 
