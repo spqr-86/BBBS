@@ -31,6 +31,7 @@ class Place(models.Model):
 
     class Meta:
         app_label = 'api'
+        ordering = ['id']
         verbose_name = _('Место')
         verbose_name_plural = _('Места')
 

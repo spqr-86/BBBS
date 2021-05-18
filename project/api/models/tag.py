@@ -15,6 +15,7 @@ class Tag(models.Model):
 
     class Meta:
         app_label = 'api'
+        ordering = ['id']
         verbose_name = _('Тег')
         verbose_name_plural = _('Теги')
 
