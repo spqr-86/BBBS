@@ -9,7 +9,7 @@ class Question(models.Model):
     )
     tags = models.ManyToManyField(
         'api.Tag',
-        verbose_name=_('Тег'),
+        verbose_name=_('Теги'),
         related_name='questions',
     )
 
