@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ..models import Movie
-from ..serializers.tag import TagSerializer
+from .tag import TagSerializer
 
 
 class MovieSerializer(serializers.ModelSerializer):
