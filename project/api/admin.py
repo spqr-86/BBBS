@@ -20,8 +20,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(History)
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'imageUrl')
-    search_fields = ('title', 'imageUrl')
+    list_display = ('title', 'image_url')
+    search_fields = ('title', 'image_url')
     list_filter = ('title',)
     empty_value_display = _('-пусто-')
 
@@ -42,7 +42,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'name', 'info', 'imageUrl', 'link')
+    list_display = ('title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
     list_filter = ('title',)
     empty_value_display = _('-пусто-')

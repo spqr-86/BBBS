@@ -7,7 +7,7 @@ class History(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
-    imageUrl = models.URLField(
+    image_url = models.URLField(
         verbose_name=_('Изображение'),
         blank=True,
         null=True,

@@ -18,7 +18,7 @@ class Place(models.Model):
     description = models.TextField(
         verbose_name=_('Описание'),
     )
-    imageUrl = models.URLField(
+    image_url = models.URLField(
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
