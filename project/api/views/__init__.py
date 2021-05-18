@@ -2,10 +2,9 @@ from .article import ArticleViewSet
 from .history import HistoryViewSet
 from .movie import MovieView
 from .place import PlaceViewSet
+from .question import QuestionViewSet
 from .tag import TagViewSet
 from .video import VideoView
-from .question import QuestionViewSet
-
 
 __all__ = [
     'ArticleViewSet',

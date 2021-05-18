@@ -1,7 +1,9 @@
+from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Article, Movie, History, Place, Question, Tag, Video
+from .fields import fields
+from .models import Article, History, Movie, Place, Question, Tag, Video
 
 
 @admin.register(Article)
@@ -10,6 +12,10 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('title', 'color')
     list_filter = ('title',)
     empty_value_display = _('-пусто-')
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
 
 
 @admin.register(History)
@@ -50,6 +56,6 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'image_url', 'link')
+    list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
     empty_value_display = _('-пусто-')

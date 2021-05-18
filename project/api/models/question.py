@@ -1,10 +1,10 @@
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Question(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
     tags = models.ManyToManyField(

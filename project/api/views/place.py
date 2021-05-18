@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets, permissions
+from rest_framework import mixins, permissions, viewsets
 
 from ..models import Place
 from ..serializers import PlaceSerializer
