@@ -5,9 +5,9 @@ from .history import History
 from .movie import Movie
 from .place import Place
 from .profile import Profile
+from .question import Question
 from .tag import Tag
 from .video import Video
-from .question import Question
 
 __all__ = [
     'Article',

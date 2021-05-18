@@ -1,16 +1,19 @@
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
+
+from .tag import Tag
 
 
 class Question(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
-    tags = models.ManyToManyField(
-        'api.Tag',
+    tags = models.ForeignKey(
+        Tag,
         verbose_name=_('Тег'),
-        related_name='questions',
+        related_name='question',
+        on_delete=models.CASCADE
     )
 
     class Meta:
