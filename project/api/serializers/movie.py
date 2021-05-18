@@ -1,9 +1,12 @@
 from rest_framework import serializers
 
 from ..models import Movie
+from ..serializers.tag import TagSerializer
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, required=False, read_only=True)
+
     class Meta:
         model = Movie
-        fields = ('id', 'image_url', 'title', 'info', 'link')
+        fields = ('id', 'image_url', 'title', 'info', 'link', 'tags')

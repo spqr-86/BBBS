@@ -15,6 +15,8 @@ class History(models.Model):
 
     class Meta:
         app_label = 'api'
+        verbose_name = _('История')
+        verbose_name_plural = _('Истории')
 
     def __str__(self):
         return self.title

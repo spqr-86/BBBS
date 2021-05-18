@@ -1,6 +1,6 @@
 import pytest
 
-from .common import auth_client, create_tag, create_users_api
+from .common import auth_client, create_tags, create_users_api
 
 
 class TestTagAPI:
@@ -22,17 +22,22 @@ class TestTagAPI:
         assert response.status_code == 400, (
             'Проверьте, что при POST запросе `/api/v1/tags/` с не правильными данными возвращает статус 400'
         )
-        data = {'name': 'Ужасы', 'slug': 'horror'}
+        data = {'name': 'Статья', 'slug': 'article'}
         response = user_client.post('/api/v1/tags/', data=data)
         assert response.status_code == 201, (
             'Проверьте, что при POST запросе `/api/v1/tags/` с правильными данными возвращает статус 201'
         )
-        data = {'name': 'Триллер', 'slug': 'horror'}
+        data = {'name': 'Место', 'slug': 'article'}
         response = user_client.post('/api/v1/tags/', data=data)
         assert response.status_code == 400, (
-            'Проверьте, что при POST запросе `/api/v1/tags/` нельзя создать 2 категории с одинаковым `slug`'
+            'Проверьте, что при POST запросе `/api/v1/tags/` нельзя создать 2 тега с одинаковым `slug`'
         )
-        data = {'name': 'Комедия', 'slug': 'comedy'}
+        data = {'name': 'Статья', 'slug': 'place'}
+        response = user_client.post('/api/v1/tags/', data=data)
+        assert response.status_code == 400, (
+            'Проверьте, что при POST запросе `/api/v1/tags/` нельзя создать 2 тега с одинаковым `name`'
+        )
+        data = {'name': 'Песня', 'slug': 'song'}
         response = user_client.post('/api/v1/tags/', data=data)
         assert response.status_code == 201, (
             'Проверьте, что при POST запросе `/api/v1/tags/` с правильными данными возвращает статус 201'
@@ -70,11 +75,11 @@ class TestTagAPI:
             'Проверьте, что при GET запросе `/api/v1/tags/` возвращаете данные с пагинацией. '
             'Значение параметра `results` не правильное'
         )
-        assert {'name': 'Ужасы', 'slug': 'horror'} in data['results'], (
+        assert {'id': 1, 'name': 'Статья', 'slug': 'article'} in data['results'], (
             'Проверьте, что при GET запросе `/api/v1/tags/` возвращаете данные с пагинацией. '
             'Значение параметра `results` не правильное'
         )
-        response = user_client.get('/api/v1/tags/?search=Ужасы')
+        response = user_client.get('/api/v1/tags/?search=Статья')
         data = response.json()
         assert len(data['results']) == 1, (
             'Проверьте, что при GET запросе `/api/v1/tags/` фильтуется по search параметру названия тега '
@@ -82,7 +87,7 @@ class TestTagAPI:
 
     @pytest.mark.django_db(transaction=True)
     def test_03_tag_delete(self, user_client):
-        tags = create_tag(user_client)
+        tags = create_tags(user_client)
         response = user_client.delete(f'/api/v1/tags/{tags[0]["slug"]}/')
         assert response.status_code == 204, (
             'Проверьте, что при DELETE запросе `/api/v1/tags/{slug}/` возвращаете статус 204'
@@ -120,7 +125,7 @@ class TestTagAPI:
 
     @pytest.mark.django_db(transaction=True)
     def test_04_tag_check_permission(self, client, user_client):
-        tags = create_tag(user_client)
+        tags = create_tags(user_client)
         data = {
             'name': 'Боевик',
             'slug': 'action'

@@ -15,6 +15,8 @@ class Tag(models.Model):
 
     class Meta:
         app_label = 'api'
+        verbose_name = _('Тег')
+        verbose_name_plural = _('Теги')
 
     def __str__(self):
-        return self.slug
+        return f'{self.name}: {self.slug}'
