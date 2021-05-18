@@ -24,7 +24,6 @@ class ArticleAdmin(MixinAdmin):
 class HistoryAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url')
     search_fields = ('title', 'image_url')
-    empty_value_display = _('-пусто-')
 
 
 @admin.register(Movie)
@@ -32,7 +31,7 @@ class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
-    empty_value_display = _('-пусто-')
+    autocomplete_fields = ('tags', )
 
 
 @admin.register(Question)
@@ -40,13 +39,13 @@ class QuestionAdmin(MixinAdmin):
     list_display = ('id', 'title', )
     search_fields = ('title', )
     list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
 
 
 @admin.register(Place)
 class PlaceAdmin(MixinAdmin):
     list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
-    empty_value_display = _('-пусто-')
 
 
 @admin.register(Tag)
@@ -60,4 +59,3 @@ class TagAdmin(MixinAdmin):
 class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
-    empty_value_display = _('-пусто-')
