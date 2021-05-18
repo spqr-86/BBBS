@@ -50,6 +50,6 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'image_url', 'link')
+    list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
     empty_value_display = _('-пусто-')

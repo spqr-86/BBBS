@@ -21,8 +21,9 @@ class Movie(models.Model):
     )
     tags = models.ManyToManyField(
         'api.Tag',
-        verbose_name=_('Тег'),
+        verbose_name=_('Тег(и)'),
         related_name='movies',
+        blank=True
     )
 
     class Meta:
