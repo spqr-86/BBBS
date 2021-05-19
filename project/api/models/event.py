@@ -1,5 +1,41 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+User = get_user_model()
 
 
 class Event(models.Model):
-    pass
+    address = models.CharField(
+        verbose_name=_('Адрес мероприятия'),
+        max_length=200,
+    )
+    contact = models.CharField(
+        verbose_name=_('Контактное лицо'),
+        max_length=200,
+    )
+    title = models.CharField(
+        verbose_name=_('Заголовок'),
+        max_length=200,
+    )
+    description = models.TextField(
+        verbose_name=_('Описание мероприятия'),
+    )
+    start_at = models.DateTimeField(
+        verbose_name=_('Время начала'),
+    )
+    end_at = models.DateTimeField(
+        verbose_name=_('Время окончания'),
+    )
+    seats = models.IntegerField(
+        verbose_name=_('Максимальное число участников'),
+    )
+    city = models.ForeignKey(
+        'api.City',
+        verbose_name=_('Город мероприятия'),
+        on_delete=models.RESTRICT,
+    )
+
+    def __str__(self):
+        return self.title
