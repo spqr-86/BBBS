@@ -30,6 +30,7 @@ class CityAdmin(MixinAdmin):
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'start_at', 'end_at', 'city')
     search_fields = ('title', 'contact', 'address', 'city')
+    autocomplete_fields = ('city', )
 
 
 @admin.register(models.History)
