@@ -6,7 +6,9 @@ from .tag import TagSerializer
 
 class EventSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False, read_only=True)
+    taken_seats = serializers.IntegerField(read_only=True)
+    booked = serializers.BooleanField(read_only=True)
 
     class Meta:
-        fields = '__all__'
+        exclude = ['participant']
         model = Event
