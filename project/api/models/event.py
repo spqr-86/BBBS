@@ -38,7 +38,7 @@ class Event(models.Model):
         on_delete=models.PROTECT,
     )
     participant = models.ManyToManyField(
-        'api.Profile',
+        User,
         verbose_name=_('Участники'),
         related_name='events',
     )
