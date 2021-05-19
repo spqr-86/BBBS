@@ -34,8 +34,15 @@ class Event(models.Model):
     city = models.ForeignKey(
         'api.City',
         verbose_name=_('Город мероприятия'),
-        on_delete=models.RESTRICT,
+        related_name='events',
+        on_delete=models.PROTECT,
     )
+
+    class Meta:
+        app_label = 'api'
+        ordering = ['id']
+        verbose_name = _('Событие')
+        verbose_name_plural = _('События')
 
     def __str__(self):
         return self.title

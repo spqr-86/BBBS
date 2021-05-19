@@ -2,15 +2,15 @@ from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from . import models
 from .fields import fields
-from .models import Article, History, Movie, Place, Question, Tag, Video
 
 
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
 
-@admin.register(Article)
+@admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
     list_display = ('id', 'title', 'color')
     search_fields = ('title', 'color')
@@ -20,13 +20,25 @@ class ArticleAdmin(MixinAdmin):
     }
 
 
-@admin.register(History)
+@admin.register(models.City)
+class CityAdmin(MixinAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name', )
+
+
+@admin.register(models.Event)
+class EventAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'start_at', 'end_at', 'city')
+    search_fields = ('title', 'contact', 'address', 'city')
+
+
+@admin.register(models.History)
 class HistoryAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url')
     search_fields = ('title', 'image_url')
 
 
-@admin.register(Movie)
+@admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
     search_fields = ('title',)
@@ -34,7 +46,7 @@ class MovieAdmin(MixinAdmin):
     autocomplete_fields = ('tags', )
 
 
-@admin.register(Question)
+@admin.register(models.Question)
 class QuestionAdmin(MixinAdmin):
     list_display = ('id', 'title', )
     search_fields = ('title', )
@@ -42,20 +54,20 @@ class QuestionAdmin(MixinAdmin):
     autocomplete_fields = ('tags', )
 
 
-@admin.register(Place)
+@admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
     list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
 
 
-@admin.register(Tag)
+@admin.register(models.Tag)
 class TagAdmin(MixinAdmin):
     list_display = ('id', 'name', 'slug')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
 
 
-@admin.register(Video)
+@admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
