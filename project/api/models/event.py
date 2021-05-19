@@ -37,6 +37,11 @@ class Event(models.Model):
         related_name='events',
         on_delete=models.PROTECT,
     )
+    participant = models.ManyToManyField(
+        'api.Profile',
+        verbose_name=_('Участники'),
+        related_name='events',
+    )
 
     class Meta:
         app_label = 'api'
