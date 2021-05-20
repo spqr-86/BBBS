@@ -61,6 +61,14 @@ class PlaceAdmin(MixinAdmin):
     search_fields = ('title', 'name', 'info')
 
 
+@admin.register(models.Profile)
+class ProfileAdmin(MixinAdmin):
+    list_display = ('id', 'user', 'city')
+    search_fields = ('user', 'city')
+    list_filter = ('city', )
+    autocomplete_fields = ('city', )
+
+
 @admin.register(models.Tag)
 class TagAdmin(MixinAdmin):
     list_display = ('id', 'name', 'slug')
