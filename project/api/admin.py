@@ -1,61 +1,74 @@
 from django import forms
 from django.contrib import admin
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
+from . import models
 from .fields import fields
-from .models import Article, History, Movie, Place, Question, Tag, Video
 
 
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'color')
-    search_fields = ('title', 'color')
-    list_filter = ('title',)
+class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
+
+
+@admin.register(models.Article)
+class ArticleAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'color')
+    search_fields = ('title', 'color')
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
     }
 
 
-@admin.register(History)
-class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'imageUrl')
-    search_fields = ('title', 'imageUrl')
-    list_filter = ('title',)
-    empty_value_display = _('-пусто-')
+@admin.register(models.City)
+class CityAdmin(MixinAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name', )
 
 
-@admin.register(Movie)
-class MovieAdmin(admin.ModelAdmin):
+@admin.register(models.Event)
+class EventAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'start_at', 'end_at', 'city')
+    search_fields = ('title', 'contact', 'address', 'city')
+    autocomplete_fields = ('city', )
+
+
+@admin.register(models.History)
+class HistoryAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'image_url')
+    search_fields = ('title', 'image_url')
+
+
+@admin.register(models.Movie)
+class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
     search_fields = ('title',)
-    empty_value_display = _('-пусто-')
+    list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
 
 
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', )
+@admin.register(models.Question)
+class QuestionAdmin(MixinAdmin):
+    list_display = ('id', 'title', )
     search_fields = ('title', )
-    list_filter = ('title',)
+    list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
 
 
-@admin.register(Place)
-class PlaceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'name', 'info', 'imageUrl', 'link')
+@admin.register(models.Place)
+class PlaceAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
-    list_filter = ('title',)
-    empty_value_display = _('-пусто-')
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
+@admin.register(models.Tag)
+class TagAdmin(MixinAdmin):
+    list_display = ('id', 'name', 'slug')
     search_fields = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
 
 
-@admin.register(Video)
-class VideoAdmin(admin.ModelAdmin):
+@admin.register(models.Video)
+class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
-    empty_value_display = _('-пусто-')

@@ -7,7 +7,7 @@ class History(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
-    imageUrl = models.URLField(
+    image_url = models.URLField(
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
@@ -15,6 +15,7 @@ class History(models.Model):
 
     class Meta:
         app_label = 'api'
+        ordering = ['id']
         verbose_name = _('История')
         verbose_name_plural = _('Истории')
 
