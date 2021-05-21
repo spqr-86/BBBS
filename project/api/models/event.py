@@ -41,6 +41,7 @@ class Event(models.Model):
         User,
         verbose_name=_('Участники'),
         related_name='events',
+        blank=True,
     )
 
     class Meta:
