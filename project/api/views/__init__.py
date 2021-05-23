@@ -1,6 +1,6 @@
 from .article import ArticleViewSet
 from .city import CityViewSet
-from .event import EventViewSet
+from .event import EventViewSet, ParticipantViewSet
 from .history import HistoryViewSet
 from .movie import MovieView
 from .place import PlaceViewSet
@@ -13,6 +13,7 @@ __all__ = [
     'ArticleViewSet',
     'CityViewSet',
     'EventViewSet',
+    'ParticipantViewSet',
     'HistoryViewSet',
     'PlaceViewSet',
     'TagViewSet',
