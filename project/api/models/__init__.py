@@ -1,6 +1,6 @@
 from .article import Article
 from .city import City
-from .event import Event
+from .event import Event, Participant
 from .history import History
 from .movie import Movie
 from .place import Place
@@ -13,6 +13,7 @@ __all__ = [
     'Article',
     'City',
     'Event',
+    'Participant',
     'History',
     'Question',
     'Place',

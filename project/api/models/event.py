@@ -39,11 +39,12 @@ class Event(models.Model):
         related_name='events',
         on_delete=models.PROTECT,
     )
-    participant = models.ManyToManyField(
+    participants = models.ManyToManyField(
         User,
+        through='Participant',
+        through_fields=('event', 'participant'),
         verbose_name=_('Участники'),
         related_name='events',
-        blank=True,
     )
 
     class Meta:
@@ -62,3 +63,20 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Participant(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    participant = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = 'api'
+        ordering = ['id']
+        verbose_name = _('Участник')
+        verbose_name_plural = _('Участники')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['event', 'participant'],
+                name='event_participant_uniquetogether',
+            )
+        ]
