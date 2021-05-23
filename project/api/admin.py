@@ -30,7 +30,7 @@ class CityAdmin(MixinAdmin):
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'start_at', 'end_at', 'city')
     search_fields = ('title', 'contact', 'address', 'city')
-    autocomplete_fields = ('city', 'participant')
+    autocomplete_fields = ('city', )
 
 
 @admin.register(models.History)
@@ -59,6 +59,13 @@ class QuestionAdmin(MixinAdmin):
 class PlaceAdmin(MixinAdmin):
     list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
+
+
+@admin.register(models.Participant)
+class ParticipantAdmin(MixinAdmin):
+    list_display = ('id', 'event', 'participant')
+    search_fields = ('event', 'participant')
+    autocomplete_fields = ('event', 'participant')
 
 
 @admin.register(models.Profile)
