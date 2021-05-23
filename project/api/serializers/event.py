@@ -1,6 +1,7 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
+from django.utils.translation import gettext_lazy as _
 
-from ..models import Event
+from ..models import Event, Participant
 from .tag import TagSerializer
 
 
@@ -10,5 +11,24 @@ class EventSerializer(serializers.ModelSerializer):
     booked = serializers.BooleanField(read_only=True)
 
     class Meta:
-        exclude = ['participant']
         model = Event
+        exclude = ['participants']
+
+
+class ParticipantReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        exclude = ['participant']
+
+
+class ParticipantWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = '__all__'
+        validators = [
+            validators.UniqueTogetherValidator(
+                queryset=Participant.objects.all(),
+                fields=['event', 'participant'],
+                message=_('Вы уже зарегестрированы на это событие')
+            )
+        ]
