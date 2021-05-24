@@ -14,7 +14,7 @@ class City(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ['name']
         verbose_name = _('Город')
         verbose_name_plural = _('Города')
 
