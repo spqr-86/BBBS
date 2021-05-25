@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from . import City
 
@@ -7,18 +9,16 @@ User = get_user_model()
 
 
 class Event(models.Model):
-    id = models.UUIDField(
+    id = models.AutoField(
         primary_key=True,
         editable=False,
+        auto_created=True,
     )
-    booked = models.BooleanField(
-        default=False,
-    )
-    participant = models.OneToOneField(
+    participant = models.ManyToManyField(
         User,
-        on_delete=models.RESTRICT,
         verbose_name='Записавшиеся юзеры',
         default=None,
+        blank=True,
     )
     address = models.CharField(
         verbose_name='Адрес мероприятия',
@@ -56,3 +56,9 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(pre_save, sender=Event)
+def get_taken_seats(sender, instance, **kwargs):
+    if instance.participant:
+        instance.taken_seats = instance.participant.count()

@@ -2,8 +2,10 @@ from django.db import models
 
 
 class City(models.Model):
-    id = models.IntegerField(
+    id = models.AutoField(
         primary_key=True,
+        editable=False,
+        auto_created=True,
     )
     name = models.CharField(
         verbose_name='Город',
@@ -15,4 +17,4 @@ class City(models.Model):
     )
 
     def __str__(self):
-        return self.id
+        return self.name

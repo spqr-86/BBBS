@@ -1,7 +1,15 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Article, History, Place, Tag, Question, Event, City
+from .models import Article, History, Place, Tag, Question, Event, City, Profile
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'city')
+    search_fields = ('user', 'city')
+    list_filter = ('user',)
+    empty_value_display = _('-пусто-')
 
 
 @admin.register(Article)
@@ -53,8 +61,8 @@ class CityAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address', 'contact', 'title',
+    list_display = ('id', 'address', 'contact', 'title',
                     'description', 'start_at', 'end_at', 'seats', 'city')
-    search_fields = ('name', 'city')
-    list_filter = ('name',)
+    search_fields = ('id', 'city')
+    list_filter = ('city',)
     empty_value_display = _('-пусто-')
