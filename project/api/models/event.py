@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from django.contrib.auth import get_user_model
 from django.core import validators
 from django.core.exceptions import ValidationError
@@ -82,3 +84,14 @@ class Participant(models.Model):
                 name='event_participant_uniquetogether',
             )
         ]
+
+    def clean(self):
+        errors = {}
+        if not self.event:
+            errors['event'] = ValidationError(
+                _('Укажите событие'))
+        if self.event.end_at <= datetime.now(timezone.utc):
+            errors['event'] = ValidationError(
+                _('Событие уже закончилось'))
+        if errors:
+            raise ValidationError(errors)
