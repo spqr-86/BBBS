@@ -1,13 +1,25 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from BBBS.project.api.models.cityes import City
-
+from . import City
 
 User = get_user_model()
 
 
 class Event(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        editable=False,
+    )
+    booked = models.BooleanField(
+        default=False,
+    )
+    participant = models.OneToOneField(
+        User,
+        on_delete=models.RESTRICT,
+        verbose_name='Записавшиеся юзеры',
+        default=None,
+    )
     address = models.CharField(
         verbose_name='Адрес мероприятия',
         max_length=200,
@@ -37,15 +49,10 @@ class Event(models.Model):
         default=0,
     )
     city = models.ForeignKey(
-        City, 
+        City,
         verbose_name='Город мероприятия',
         on_delete=models.RESTRICT,
     )
 
     def __str__(self):
         return self.title
-
-
-class EventParticipant(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    event = models.OneToOneField(Event, on_delete=models.RESTRICT)

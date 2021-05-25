@@ -10,14 +10,14 @@ class Profile(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='profile',
-        verbose_name =_('Пользователь'),
+        verbose_name=_('Пользователь'),
         null=False,
     )
     city = models.ForeignKey(
         'api.City',
         on_delete=models.CASCADE,
         related_name='profiles',
-        verbose_name = _('Город'),
+        verbose_name=_('Город'),
         null=False,
     )
 

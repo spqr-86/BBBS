@@ -14,8 +14,8 @@ v1_router.register(r'tags', TagViewSet, basename='tag')
 v1_router.register(r'movies', MovieView, basename='movies')
 v1_router.register(r'videos', VideoView, basename='videos')
 v1_router.register(r'questions', QuestionViewSet, basename='questions')
-v1_router.register(r'questions', CityViewSet, basename='cityes')
-v1_router.register(r'questions', EventViewSet, basename='events')
+v1_router.register(r'cityes', CityViewSet, basename='cityes')
+v1_router.register(r'events', EventViewSet, basename='events')
 
 app_name = 'api'
 

@@ -3,8 +3,7 @@ from django.db import models
 
 class City(models.Model):
     id = models.IntegerField(
-        max_length=128,
-
+        primary_key=True,
     )
     name = models.CharField(
         verbose_name='Город',

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Article, History, Place, Tag, Question
+from .models import Article, History, Place, Tag, Question, Event, City
 
 
 @admin.register(Article)
@@ -39,5 +39,22 @@ class PlaceAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name', 'slug')
+    list_filter = ('name',)
+    empty_value_display = _('-пусто-')
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    search_fields = ('name', )
+    list_filter = ('name',)
+    empty_value_display = _('-пусто-')
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address', 'contact', 'title',
+                    'description', 'start_at', 'end_at', 'seats', 'city')
+    search_fields = ('name', 'city')
     list_filter = ('name',)
     empty_value_display = _('-пусто-')
