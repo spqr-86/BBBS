@@ -39,6 +39,13 @@ class HistoryAdmin(MixinAdmin):
     search_fields = ('title', 'image_url')
 
 
+@admin.register(models.Main)
+class MainAdmin(MixinAdmin):
+    list_display = ('id', 'title')
+    filter_horizontal = ('events', 'histories', 'places', 'articles',
+                         'movies', 'video', 'questions')
+
+
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
@@ -59,6 +66,21 @@ class QuestionAdmin(MixinAdmin):
 class PlaceAdmin(MixinAdmin):
     list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
     search_fields = ('title', 'name', 'info')
+
+
+@admin.register(models.Participant)
+class ParticipantAdmin(MixinAdmin):
+    list_display = ('id', 'event', 'participant')
+    search_fields = ('event', 'participant')
+    autocomplete_fields = ('event', 'participant')
+
+
+@admin.register(models.Profile)
+class ProfileAdmin(MixinAdmin):
+    list_display = ('id', 'user', 'city')
+    search_fields = ('user', 'city')
+    list_filter = ('city', )
+    autocomplete_fields = ('city', )
 
 
 @admin.register(models.Tag)
