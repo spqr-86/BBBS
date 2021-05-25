@@ -15,13 +15,11 @@ class EventSerializer(serializers.ModelSerializer):
         exclude = ['participants']
 
 
-class ParticipantReadSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Participant
-        exclude = ['participant']
+class ParticipantSerializer(serializers.ModelSerializer):
+    participant = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
-
-class ParticipantWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = '__all__'

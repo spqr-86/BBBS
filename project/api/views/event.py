@@ -5,9 +5,7 @@ from rest_framework.response import Response
 
 from ..models import Event, Participant
 from ..permissions import IsUsersCity
-from ..serializers import (EventSerializer,
-                           ParticipantReadSerializer,
-                           ParticipantWriteSerializer)
+from ..serializers import EventSerializer, ParticipantSerializer
 
 
 class ListCreateDelViewSet(mixins.ListModelMixin,
@@ -47,7 +45,7 @@ class EventViewSet(viewsets.ViewSet):
 
 class ParticipantViewSet(ListCreateDelViewSet):
     permission_classes = [IsUsersCity, permissions.IsAuthenticated]
-    serializer_class = ParticipantReadSerializer
+    serializer_class = ParticipantSerializer
     pagination_class = None
 
     def get_queryset(self):
@@ -56,7 +54,6 @@ class ParticipantViewSet(ListCreateDelViewSet):
     def create(self, request):
         event = get_object_or_404(Event, id=self.request.data.get('event'))
         self.check_object_permissions(self.request, event)
-        self.request.data['participant'] = request.user.id
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -67,8 +64,3 @@ class ParticipantViewSet(ListCreateDelViewSet):
             Participant, event=pk, participant=request.user)
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return ParticipantReadSerializer
-        return ParticipantWriteSerializer
