@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core import validators
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -32,6 +33,7 @@ class Event(models.Model):
     )
     seats = models.PositiveSmallIntegerField(
         verbose_name=_('Максимальное число участников'),
+        validators=[validators.MinValueValidator(1)],
     )
     city = models.ForeignKey(
         'api.City',
