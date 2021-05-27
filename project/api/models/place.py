@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Place(models.Model):
@@ -18,7 +18,7 @@ class Place(models.Model):
     description = models.TextField(
         verbose_name=_('Описание'),
     )
-    imageUrl = models.URLField(
+    image_url = models.URLField(
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
@@ -31,6 +31,7 @@ class Place(models.Model):
 
     class Meta:
         app_label = 'api'
+        ordering = ['id']
         verbose_name = _('Место')
         verbose_name_plural = _('Места')
 

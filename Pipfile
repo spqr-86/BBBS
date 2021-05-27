@@ -23,6 +23,8 @@ djangorestframework-camel-case = "*"
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
+django-extensions = "*"
+werkzeug = "*"
 
 [requires]
 python_version = "3.9"
