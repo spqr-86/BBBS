@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ManyToManyField

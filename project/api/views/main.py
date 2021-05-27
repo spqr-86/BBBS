@@ -6,9 +6,7 @@ from ..serializers.main import MainSerializer
 
 
 class MainViewSet(viewsets.ViewSet):
-    permission_classes = [
-        permissions.AllowAny,
-    ]
+    permission_classes = [permissions.AllowAny]
 
     def list(self, request):
         queryset = Main.objects.order_by('-id').last()

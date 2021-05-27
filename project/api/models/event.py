@@ -56,6 +56,9 @@ class Event(models.Model):
         ordering = ['id']
         verbose_name = _('Событие')
         verbose_name_plural = _('События')
+        permissions = (
+            ('view_all_cities', _('Можно смотреть события всех городов')),
+        )
 
     def clean(self):
         errors = {}

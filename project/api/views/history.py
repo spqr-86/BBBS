@@ -7,6 +7,5 @@ from ..serializers import HistorySerializer
 class HistoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
-    ]
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None

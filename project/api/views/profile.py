@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from rest_framework import mixins, permissions, viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions, generics
 
 from ..models import Profile
 from ..serializers import ProfileSerializer
@@ -7,18 +8,13 @@ from ..serializers import ProfileSerializer
 User = get_user_model()
 
 
-class RetrieveUpdateViewSet(mixins.RetrieveModelMixin,
-                            mixins.UpdateModelMixin,
-                            viewsets.GenericViewSet):
-    pass
-
-
-class ProfileViewSet(RetrieveUpdateViewSet):
+class ProfileViewSet(generics.RetrieveUpdateAPIView):
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        return Profile.objects.filter(user=user)
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, user=self.request.user)
+        self.check_object_permissions(self.request, obj)
+        return obj

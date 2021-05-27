@@ -7,6 +7,5 @@ from ..serializers import ArticleSerializer
 class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
-    ]
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None

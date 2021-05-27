@@ -1,11 +1,11 @@
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import permissions, viewsets
 
 from ..models import Video
 from ..serializers import VideoSerializer
 
 
-class VideoView(viewsets.ModelViewSet):
+class VideoView(viewsets.ReadOnlyModelViewSet):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None
