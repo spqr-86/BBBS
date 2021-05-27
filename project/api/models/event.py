@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.core import validators
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from ..validators import events_lifetime_validator, free_seats_validators
 
 
 User = get_user_model()
@@ -32,6 +35,7 @@ class Event(models.Model):
     )
     seats = models.PositiveSmallIntegerField(
         verbose_name=_('Максимальное число участников'),
+        validators=[validators.MinValueValidator(1)],
     )
     city = models.ForeignKey(
         'api.City',
@@ -66,14 +70,24 @@ class Event(models.Model):
 
 
 class Participant(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    participant = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        validators=[
+            events_lifetime_validator,
+            free_seats_validators,
+        ]
+    )
+    participant = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         app_label = 'api'
         ordering = ['id']
-        verbose_name = _('Участник')
-        verbose_name_plural = _('Участники')
+        verbose_name = _('Запись на событие')
+        verbose_name_plural = _('Записи на события')
         constraints = [
             models.UniqueConstraint(
                 fields=['event', 'participant'],

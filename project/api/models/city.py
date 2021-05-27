@@ -6,6 +6,7 @@ class City(models.Model):
     name = models.CharField(
         verbose_name=_('Город'),
         max_length=128,
+        unique=True,
     )
     is_primary = models.BooleanField(
         verbose_name=_('Приоритет вывода'),
