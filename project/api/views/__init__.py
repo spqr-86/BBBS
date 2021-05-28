@@ -10,7 +10,6 @@ from .question import QuestionViewSet
 from .tag import TagViewSet
 from .video import VideoView
 
-
 __all__ = [
     'ArticleViewSet',
     'CityViewSet',

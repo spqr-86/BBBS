@@ -1,18 +1,20 @@
-import os
 from datetime import timedelta
+from os import environ
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
+ENV = environ
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = ENV.get('SECRET_KEY')
 
-DEBUG = int(os.environ.get('DEBUG', default=False))
+DEBUG = int(ENV.get('DEBUG', default=False))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
+ALLOWED_HOSTS = ENV.get('ALLOWED_HOSTS').split()
 
 
 # Application definition
@@ -94,9 +96,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 
-LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', default='en-us')
+LANGUAGE_CODE = ENV.get('LANGUAGE_CODE', default='en-us')
 
-TIME_ZONE = os.getenv('TIME_ZONE', default='UTC')
+TIME_ZONE = ENV.get('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -108,10 +110,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 
@@ -158,9 +160,9 @@ SIMPLE_JWT = {
 # Email backends
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', default=587))
-EMAIL_USE_SSL = int(os.getenv('EMAIL_USE_SSL', default=False))
-EMAIL_USE_TLS = int(os.getenv('EMAIL_USE_TLS', default=False))
+EMAIL_HOST = ENV.get('EMAIL_HOST')
+EMAIL_HOST_USER = ENV.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = ENV.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(ENV.get('EMAIL_PORT', default=587))
+EMAIL_USE_SSL = int(ENV.get('EMAIL_USE_SSL', default=False))
+EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))

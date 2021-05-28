@@ -9,13 +9,13 @@ class Question(models.Model):
     )
     tags = models.ManyToManyField(
         'api.Tag',
-        verbose_name=_('Теги'),
+        verbose_name=_('Тег(и)'),
         related_name='questions',
     )
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Вопрос')
         verbose_name_plural = _('Вопросы')
 

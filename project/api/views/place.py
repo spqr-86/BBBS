@@ -1,20 +1,11 @@
-from rest_framework import mixins, permissions, viewsets
+from rest_framework import permissions, viewsets
 
 from ..models import Place
 from ..serializers import PlaceSerializer
 
 
-class ListCreateDelViewSet(mixins.CreateModelMixin,
-                           mixins.DestroyModelMixin,
-                           mixins.ListModelMixin,
-                           viewsets.GenericViewSet):
-    pass
-
-
-class PlaceViewSet(ListCreateDelViewSet):
+class PlaceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
-    search_fields = ['name']
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
-    ]
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None

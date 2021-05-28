@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ManyToManyField
@@ -41,6 +40,6 @@ class Main(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Главная страница')
         verbose_name_plural = _('Главная страница')

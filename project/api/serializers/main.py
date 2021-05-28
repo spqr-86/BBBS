@@ -1,13 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 
 from ..models import Main
-from ..serializers import (EventSerializer,
-                           HistorySerializer,
-                           PlaceSerializer,
-                           ArticleSerializer,
-                           MovieSerializer,
-                           VideoSerializer,
-                           QuestionSerializer)
+from ..serializers import (ArticleSerializer, EventSerializer,
+                           HistorySerializer, MovieSerializer, PlaceSerializer,
+                           QuestionSerializer, VideoSerializer)
 
 
 class MainSerializer(ModelSerializer):
