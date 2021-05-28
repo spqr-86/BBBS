@@ -23,10 +23,6 @@ class Profile(models.Model):
         verbose_name=_('Город'),
         default=City.objects.first(),
     )
-    is_region_moderator = models.BooleanField(
-        verbose_name=_('Региональный модератор'),
-        default=False,
-    )
 
     class Meta:
         app_label = 'api'
