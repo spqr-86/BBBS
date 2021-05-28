@@ -74,7 +74,7 @@ class EventAdmin(MixinAdmin):
         queryset = super().get_queryset(request)
         if request.user.has_perm('api.view_all_cities'):
             return queryset
-        return queryset.filter(city=request.user.profile.city)
+        return queryset.filter(city__in=request.user.profile.cities.all())
 
 
 @admin.register(models.History)
@@ -121,10 +121,10 @@ class ParticipantAdmin(MixinAdmin):
 
 @admin.register(models.Profile)
 class ProfileAdmin(MixinAdmin):
-    list_display = ('id', 'user', 'city')
+    list_display = ('id', 'user')
     search_fields = ('user', 'city')
-    list_filter = ('city', )
-    autocomplete_fields = ('city', )
+    list_filter = ('cities', )
+    autocomplete_fields = ('cities', )
 
 
 @admin.register(models.Tag)
