@@ -29,7 +29,7 @@ class Profile(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Профиль')
         verbose_name_plural = _('Профили')
 
