@@ -40,6 +40,6 @@ class Main(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Главная страница')
         verbose_name_plural = _('Главная страница')

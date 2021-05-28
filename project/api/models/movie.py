@@ -21,14 +21,14 @@ class Movie(models.Model):
     )
     tags = models.ManyToManyField(
         'api.Tag',
-        verbose_name=_('Теги'),
+        verbose_name=_('Тег(и)'),
         related_name='movies',
         blank=True
     )
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Фильм')
         verbose_name_plural = _('Фильмы')
 

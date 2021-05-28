@@ -20,15 +20,15 @@ class Video(models.Model):
         verbose_name=_('Ссылка на видеоролик'),
         max_length=192,
     )
-    duration = models.PositiveSmallIntegerField(
-        verbose_name=_('Продолжительность видеоролика'),
+    duration = models.PositiveIntegerField(
+        verbose_name=_('Продолжительность видеоролика в сек.'),
         default=0,
-        validators=(MinValueValidator(1), MaxValueValidator(1440))
+        validators=(MinValueValidator(1), MaxValueValidator(86400))
     )
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Видеоролик')
         verbose_name_plural = _('Видеоролики')
 

@@ -15,7 +15,7 @@ class History(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('История')
         verbose_name_plural = _('Истории')
 

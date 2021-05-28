@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 from ..validators import events_lifetime_validator, free_seats_validators
 
-
 User = get_user_model()
 
 
@@ -53,12 +52,15 @@ class Event(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Событие')
         verbose_name_plural = _('События')
         permissions = (
             ('view_all_cities', _('Можно смотреть события всех городов')),
         )
+
+    def __str__(self):
+        return self.title
 
     def clean(self):
         errors = {}
@@ -68,8 +70,9 @@ class Event(models.Model):
         if errors:
             raise ValidationError(errors)
 
-    def __str__(self):
-        return self.title
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class Participant(models.Model):
@@ -88,12 +91,12 @@ class Participant(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Запись на событие')
         verbose_name_plural = _('Записи на события')
         constraints = [
             models.UniqueConstraint(
-                fields=['event', 'participant'],
+                fields=('event', 'participant',),
                 name='event_participant_uniquetogether',
             )
         ]
