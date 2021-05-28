@@ -22,11 +22,7 @@ class Article(models.Model):
 
     class Meta:
         app_label = 'api'
-<<<<<<< HEAD
-        ordering = ['id']
-=======
         ordering = ('id',)
->>>>>>> main
         verbose_name = _('Статья')
         verbose_name_plural = _('Статьи')
 
