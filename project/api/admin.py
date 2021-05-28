@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from . import models
@@ -8,6 +10,41 @@ from .fields import ColorField
 
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    readonly_fields = ('date_joined', 'last_login')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        is_superuser = request.user.is_superuser
+        disabled_fields = set()
+        if not is_superuser:
+            disabled_fields |= {
+                'username',
+                'is_superuser',
+                'user_permissions',
+            }
+        if (
+            not is_superuser
+            and obj is not None
+            and (obj.is_superuser or obj == request.user)
+        ):
+            disabled_fields |= {
+                'is_active',
+                'is_staff',
+                'is_superuser',
+                'groups',
+                'user_permissions',
+            }
+        for f in disabled_fields:
+            if f in form.base_fields:
+                form.base_fields[f].disabled = True
+        return form
 
 
 @admin.register(models.Article)
@@ -32,6 +69,12 @@ class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'start_at', 'end_at', 'city')
     search_fields = ('title', 'contact', 'address', 'city')
     autocomplete_fields = ('city', )
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.has_perm('api.view_all_cities'):
+            return queryset
+        return queryset.filter(city__in=request.user.profile.cities.all())
 
 
 @admin.register(models.History)
@@ -78,10 +121,10 @@ class ParticipantAdmin(MixinAdmin):
 
 @admin.register(models.Profile)
 class ProfileAdmin(MixinAdmin):
-    list_display = ('id', 'user', 'city')
+    list_display = ('id', 'user')
     search_fields = ('user', 'city')
-    list_filter = ('city', )
-    autocomplete_fields = ('city', )
+    list_filter = ('cities', )
+    autocomplete_fields = ('cities', )
 
 
 @admin.register(models.Tag)

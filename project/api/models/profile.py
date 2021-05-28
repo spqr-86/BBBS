@@ -14,17 +14,11 @@ class Profile(models.Model):
         related_name='profile',
         verbose_name=_('Пользователь'),
     )
-    city = models.ForeignKey(
+    cities = models.ManyToManyField(
         'api.City',
-        on_delete=models.SET_NULL,
         related_name='profiles',
         verbose_name=_('Город'),
         blank=True,
-        null=True,
-    )
-    is_region_moderator = models.BooleanField(
-        verbose_name=_('Региональный модератор'),
-        default=False,
     )
 
     class Meta:
@@ -34,7 +28,7 @@ class Profile(models.Model):
         verbose_name_plural = _('Профили')
 
     def __str__(self):
-        return f'{self.user}, {self.city}'
+        return f'{self.user.username}'
 
 
 @receiver(post_save, sender=User)
