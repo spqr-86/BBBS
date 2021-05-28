@@ -9,13 +9,17 @@ class Tag(models.Model):
         unique=True,
     )
     slug = models.SlugField(
-        verbose_name='Slug',
+        verbose_name=_('Слаг (Ссылка)'),
         unique=True,
     )
 
     class Meta:
         app_label = 'api'
+<<<<<<< HEAD
         ordering = ['id']
+=======
+        ordering = ('id',)
+>>>>>>> main
         verbose_name = _('Тег')
         verbose_name_plural = _('Теги')
 

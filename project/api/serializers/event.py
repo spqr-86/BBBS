@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 from rest_framework import serializers, validators
 from django.utils.translation import gettext_lazy as _
+=======
+from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers, validators
+>>>>>>> main
 
 from ..models import Event, Participant
 from .tag import TagSerializer

@@ -4,8 +4,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
-from . import City
-
 User = get_user_model()
 
 
@@ -18,15 +16,20 @@ class Profile(models.Model):
     )
     city = models.ForeignKey(
         'api.City',
-        on_delete=models.SET_DEFAULT,
+        on_delete=models.SET_NULL,
         related_name='profiles',
         verbose_name=_('Город'),
-        default=City.objects.first(),
+        blank=True,
+        null=True,
+    )
+    is_region_moderator = models.BooleanField(
+        verbose_name=_('Региональный модератор'),
+        default=False,
     )
 
     class Meta:
         app_label = 'api'
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = _('Профиль')
         verbose_name_plural = _('Профили')
 

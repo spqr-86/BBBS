@@ -6,7 +6,10 @@ from django.utils.translation import gettext_lazy as _
 
 from ..validators import events_lifetime_validator, free_seats_validators
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 User = get_user_model()
 
 
@@ -53,9 +56,21 @@ class Event(models.Model):
 
     class Meta:
         app_label = 'api'
+<<<<<<< HEAD
         ordering = ['id']
         verbose_name = _('Событие')
         verbose_name_plural = _('События')
+=======
+        ordering = ('id',)
+        verbose_name = _('Событие')
+        verbose_name_plural = _('События')
+        permissions = (
+            ('view_all_cities', _('Можно смотреть события всех городов')),
+        )
+
+    def __str__(self):
+        return self.title
+>>>>>>> main
 
     def clean(self):
         errors = {}
@@ -65,8 +80,14 @@ class Event(models.Model):
         if errors:
             raise ValidationError(errors)
 
+<<<<<<< HEAD
     def __str__(self):
         return self.title
+=======
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+>>>>>>> main
 
 
 class Participant(models.Model):
@@ -85,12 +106,20 @@ class Participant(models.Model):
 
     class Meta:
         app_label = 'api'
+<<<<<<< HEAD
         ordering = ['id']
+=======
+        ordering = ('id',)
+>>>>>>> main
         verbose_name = _('Запись на событие')
         verbose_name_plural = _('Записи на события')
         constraints = [
             models.UniqueConstraint(
+<<<<<<< HEAD
                 fields=['event', 'participant'],
+=======
+                fields=('event', 'participant',),
+>>>>>>> main
                 name='event_participant_uniquetogether',
             )
         ]

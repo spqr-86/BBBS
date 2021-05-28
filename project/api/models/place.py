@@ -31,7 +31,11 @@ class Place(models.Model):
 
     class Meta:
         app_label = 'api'
+<<<<<<< HEAD
         ordering = ['id']
+=======
+        ordering = ('id',)
+>>>>>>> main
         verbose_name = _('Место')
         verbose_name_plural = _('Места')
 
