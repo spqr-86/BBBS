@@ -16,7 +16,7 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
 
 
 class EventViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
         queryset = self.get_queryset()
@@ -31,16 +31,12 @@ class EventViewSet(viewsets.ViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        city = self.request.query_params.get('city', None)
-        queryset = Event.objects.annotate(taken_seats=Count('participants'))
-        if user.is_anonymous:
-            if city is not None:
-                queryset = queryset.filter(city=city)
-            return queryset.order_by('start_at')
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-        queryset = queryset.annotate(
-            booked=Exists(booked)).filter(city=user.city)
-        return queryset.order_by('start_at')
+        queryset = Event.objects.filter(city=user.city) \
+                                .annotate(booked=Exists(booked)) \
+                                .annotate(taken_seats=Count('participants')) \
+                                .order_by('start_at')
+        return queryset
 
 
 class ParticipantViewSet(ListCreateDelViewSet):
