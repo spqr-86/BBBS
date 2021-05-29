@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Tag(models.Model):
     name = models.CharField(
-        verbose_name=_('Имя'),
+        verbose_name=_('Название тега'),
         max_length=50,
         unique=True,
     )

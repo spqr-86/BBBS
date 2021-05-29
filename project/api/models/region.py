@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Region(models.Model):
     name = models.CharField(
-        verbose_name=_('Регион'),
+        verbose_name=_('Название региона'),
         max_length=128,
         unique=True,
     )
