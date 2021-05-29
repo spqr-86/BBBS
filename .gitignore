@@ -132,7 +132,3 @@ dmypy.json
 migrations/
 
 .vscode/
-
-static/
-
-project/project/static/
