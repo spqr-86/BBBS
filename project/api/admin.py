@@ -5,9 +5,9 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from . import models
-from .fields import fields
+# from .fields import fields
 
-from .fields import ColorField
+# from colorfield.fields import ColorField
 
 
 User = get_user_model()
@@ -56,11 +56,13 @@ class CustomUserAdmin(UserAdmin):
 class ArticleAdmin(MixinAdmin):
     list_display = ('id', 'title', 'color')
     search_fields = ('title', 'color')
-    formfield_overrides = {
+
+
+'''formfield_overrides = {
         ColorField: {'widget': forms.TextInput(attrs={
             'type': 'color',
             'style': 'height: 100px;width: 100px;'})}
-    }
+    }'''
 
 
 @admin.register(models.City)
