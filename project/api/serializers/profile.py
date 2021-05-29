@@ -10,7 +10,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
 
     class Meta:
-        fields = ['username', 'first_name', 'last_name', 'email', 'cities']
+        fields = ['username', 'first_name', 'last_name', 'email', 'city']
         model = Profile
 
     def update(self, instance, validated_data):
