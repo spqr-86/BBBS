@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Place(models.Model):
     title = models.CharField(
-        verbose_name=_('Заглавие'),
+        verbose_name=_('Заголовок'),
         max_length=200,
     )
     name = models.CharField(
@@ -25,6 +25,14 @@ class Place(models.Model):
     )
     link = models.URLField(
         verbose_name=_('Ссылка'),
+        blank=True,
+        null=True,
+    )
+    city = models.ForeignKey(
+        'api.City',
+        verbose_name=_('Город'),
+        related_name='places',
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
     )

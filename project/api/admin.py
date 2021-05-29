@@ -75,8 +75,15 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link')
+    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link', 'city')
     search_fields = ('title', 'name', 'info')
+    list_filter = ('city', )
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.has_perm('api.view_all_cities'):
+            return queryset
+        return queryset.filter(city__in=request.user.region.cities.all())
 
 
 @admin.register(models.Participant)
