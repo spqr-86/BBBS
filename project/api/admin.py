@@ -5,7 +5,12 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from . import models
+from .fields import fields
+
 from .fields import ColorField
+
+
+User = get_user_model()
 
 
 class MixinAdmin(admin.ModelAdmin):
