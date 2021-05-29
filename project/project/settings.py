@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'api',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# User model
+
+AUTH_USER_MODEL = 'account.CustomUser'
 
 
 # Password validation
