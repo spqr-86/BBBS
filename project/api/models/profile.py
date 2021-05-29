@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -14,11 +15,21 @@ class Profile(models.Model):
         related_name='profile',
         verbose_name=_('Пользователь'),
     )
-    cities = models.ManyToManyField(
+    city = models.ForeignKey(
         'api.City',
-        related_name='profiles',
         verbose_name=_('Город'),
+        related_name='profiles',
+        on_delete=models.SET_NULL,
         blank=True,
+        null=True,
+    )
+    region = models.ForeignKey(
+        'api.Region',
+        verbose_name=_('Регион'),
+        related_name='profiles',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     class Meta:

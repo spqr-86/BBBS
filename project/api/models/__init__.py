@@ -6,6 +6,7 @@ from .main import Main
 from .movie import Movie
 from .place import Place
 from .profile import Profile
+from .region import Region
 from .question import Question
 from .tag import Tag
 from .video import Video
@@ -20,6 +21,7 @@ __all__ = [
     'Question',
     'Place',
     'Profile',
+    'Region',
     'Tag',
     'Movie',
     'Video',

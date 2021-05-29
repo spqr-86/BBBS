@@ -9,6 +9,7 @@ from .fields import fields
 
 User = get_user_model()
 
+
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
@@ -60,8 +61,10 @@ class ArticleAdmin(MixinAdmin):
 
 @admin.register(models.City)
 class CityAdmin(MixinAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'region', 'is_primary')
     search_fields = ('name', )
+    list_filter = ('region', 'is_primary')
+    autocomplete_fields = ('region', )
 
 
 @admin.register(models.Event)
@@ -74,7 +77,8 @@ class EventAdmin(MixinAdmin):
         queryset = super().get_queryset(request)
         if request.user.has_perm('api.view_all_cities'):
             return queryset
-        return queryset.filter(city__in=request.user.profile.cities.all())
+        profile = request.user.profile
+        return queryset.filter(city__in=profile.region.cities.all())
 
 
 @admin.register(models.History)
@@ -121,10 +125,16 @@ class ParticipantAdmin(MixinAdmin):
 
 @admin.register(models.Profile)
 class ProfileAdmin(MixinAdmin):
-    list_display = ('id', 'user')
-    search_fields = ('user', 'city')
-    list_filter = ('cities', )
-    autocomplete_fields = ('cities', )
+    list_display = ('id', 'user', 'city', 'region')
+    search_fields = ('user', 'city', 'region')
+    list_filter = ('city', 'region')
+    autocomplete_fields = ('city', 'region')
+
+
+@admin.register(models.Region)
+class RegionAdmin(MixinAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name', )
 
 
 @admin.register(models.Tag)

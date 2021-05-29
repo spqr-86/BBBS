@@ -8,6 +8,14 @@ class City(models.Model):
         max_length=128,
         unique=True,
     )
+    region = models.ForeignKey(
+        'api.Region',
+        verbose_name=_('Регион'),
+        related_name='cities',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     is_primary = models.BooleanField(
         verbose_name=_('Приоритет вывода'),
         default=False,
