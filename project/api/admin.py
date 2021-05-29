@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.http import urlencode
 
 from . import models
 from .fields import fields
@@ -33,7 +35,7 @@ class CityAdmin(MixinAdmin):
 
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'start_at', 'end_at', 'city')
+    list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
     search_fields = ('title', 'contact', 'address', 'city')
     autocomplete_fields = ('city', )
 
@@ -42,6 +44,18 @@ class EventAdmin(MixinAdmin):
         if request.user.has_perm('api.view_all_cities'):
             return queryset
         return queryset.filter(city__in=request.user.region.cities.all())
+
+    def taken_seats(self, obj):
+        from django.utils.html import format_html
+        count = obj.participants.count()
+        url = (
+            reverse('admin:account_customuser_changelist')
+            + '?'
+            + urlencode({'events__id': f'{obj.id}'})
+        )
+        return format_html('<a href="{}">{} чел.</a>', url, count)
+
+    taken_seats.short_description = 'Кол-во участников'
 
 
 @admin.register(models.History)
