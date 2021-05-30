@@ -23,7 +23,7 @@ class Video(models.Model):
     duration = models.PositiveIntegerField(
         verbose_name=_('Продолжительность видеоролика в сек.'),
         default=0,
-        validators=(MinValueValidator(1), MaxValueValidator(86400))
+        validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
 
     class Meta:

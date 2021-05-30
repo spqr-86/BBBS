@@ -23,7 +23,7 @@ class Movie(models.Model):
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='movies',
-        blank=True
+        blank=True,
     )
 
     class Meta:

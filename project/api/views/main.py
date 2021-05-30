@@ -12,5 +12,5 @@ class MainViewSet(RetrieveAPIView):
 
     def get_object(self):
         queryset = self.get_queryset()
-        obj = queryset.order_by('-id').last()
+        obj = queryset.last()
         return obj

@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 from ..validators import events_lifetime_validator, free_seats_validators
@@ -73,6 +74,9 @@ class Event(models.Model):
         if self.start_at > self.end_at:
             errors['end_at'] = ValidationError(
                 _('Конец события не может быть раньше начала'))
+        if self.end_at < now():
+            errors['end_at'] = ValidationError(
+                _('Конец события не может быть в прошлом'))
         if errors:
             raise ValidationError(errors)
 

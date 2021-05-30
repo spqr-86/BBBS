@@ -12,7 +12,7 @@ class Article(models.Model):
     )
     color = fields.ColorField(
         verbose_name=_('Цвет'),
-        default='#FF0000')
+        default='#FF0000'),
 
     def colortile(self):
         if self.color:
