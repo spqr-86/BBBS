@@ -37,13 +37,20 @@ class CityAdmin(MixinAdmin):
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
     search_fields = ('title', 'contact', 'address', 'city')
-    autocomplete_fields = ('city', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        if request.user.has_perm('api.view_all_cities'):
+        if request.user.has_perm('api.events_in_all_cities'):
             return queryset
         return queryset.filter(city__in=request.user.region.cities.all())
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        user = request.user
+        if (db_field.name == 'city'
+                and not user.has_perm('api.events_in_all_cities')):
+            kwargs['queryset'] = models.City.objects.filter(region=user.region)
+        return super(EventAdmin, self).formfield_for_foreignkey(
+                                                db_field, request, **kwargs)
 
     def taken_seats(self, obj):
         from django.utils.html import format_html
@@ -95,9 +102,17 @@ class PlaceAdmin(MixinAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        if request.user.has_perm('api.view_all_cities'):
+        if request.user.has_perm('api.places_in_all_cities'):
             return queryset
         return queryset.filter(city__in=request.user.region.cities.all())
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        user = request.user
+        if (db_field.name == 'city'
+                and not user.has_perm('api.places_in_all_cities')):
+            kwargs['queryset'] = models.City.objects.filter(region=user.region)
+        return super(PlaceAdmin, self).formfield_for_foreignkey(
+                                                db_field, request, **kwargs)
 
 
 @admin.register(models.Participant)
