@@ -10,11 +10,11 @@ ENV = environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = ENV.get('SECRET_KEY')
+SECRET_KEY = ENV['SECRET_KEY']
 
-DEBUG = int(ENV.get('DEBUG', default=False))
+DEBUG = False
 
-ALLOWED_HOSTS = ENV.get('ALLOWED_HOSTS').split()
+ALLOWED_HOSTS = ENV['ALLOWED_HOSTS'].split()
 
 
 # Application definition
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django_filters',
     'api',
     'account',
+    'colorfield',
 ]
 
 MIDDLEWARE = [
@@ -121,9 +122,11 @@ STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Rest framework
 
@@ -163,6 +166,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+
 # Email backends
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -172,3 +176,8 @@ EMAIL_HOST_PASSWORD = ENV.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = int(ENV.get('EMAIL_PORT', default=587))
 EMAIL_USE_SSL = int(ENV.get('EMAIL_USE_SSL', default=False))
 EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))
+
+
+if int(ENV.get('DJANGO_DEVELOPMENT', default=False)):
+    from .settings_dev import ALLOWED_HOSTS, DEBUG, INSTALLED_APPS_DEV, SIMPLE_JWT # noqa (F401, E501)
+    INSTALLED_APPS += INSTALLED_APPS_DEV
