@@ -49,6 +49,12 @@ class Event(models.Model):
         verbose_name=_('Участники'),
         related_name='events',
     )
+    tags = models.ManyToManyField(
+        'api.Tag',
+        verbose_name=_('Теги'),
+        related_name='events',
+        blank=True,
+    )
 
     class Meta:
         app_label = 'api'
