@@ -42,6 +42,9 @@ class Place(models.Model):
         ordering = ('id',)
         verbose_name = _('Место')
         verbose_name_plural = _('Места')
+        permissions = (
+            ('places_in_all_cities', _('Можно смотреть места всех городов')),
+        )
 
     def __str__(self):
         return self.title
