@@ -6,13 +6,25 @@ from .tag import TagSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, read_only=True)
     taken_seats = serializers.IntegerField(read_only=True)
     booked = serializers.BooleanField(default=False, read_only=True)
 
     class Meta:
         model = Event
+        exclude = ['participants', 'tags']
+
+
+class MainEventSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, read_only=True)
+    remain_seats = serializers.SerializerMethodField()
+    booked = serializers.BooleanField(default=False, read_only=True)
+
+    class Meta:
+        model = Event
         exclude = ['participants']
+
+    def get_remain_seats(self, obj):
+        return obj.participants.count()
 
 
 class ParticipantSerializer(serializers.ModelSerializer):
