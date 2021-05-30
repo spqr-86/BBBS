@@ -21,7 +21,7 @@ class MainEventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        exclude = ['participants']
+        exclude = ['city', 'participants', 'seats']
 
     def get_remain_seats(self, obj):
         return obj.participants.count()
