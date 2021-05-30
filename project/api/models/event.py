@@ -56,7 +56,7 @@ class Event(models.Model):
         verbose_name = _('Событие')
         verbose_name_plural = _('События')
         permissions = (
-            ('view_all_cities', _('Можно смотреть события всех городов')),
+            ('events_in_all_cities', _('Можно смотреть события всех городов')),
         )
 
     def __str__(self):
