@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     'django_filters',
     'api',
     'account',
-    'colorfield',
 ]
 
 MIDDLEWARE = [
