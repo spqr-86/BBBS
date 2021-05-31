@@ -1,5 +1,6 @@
 from django.db.models import Count, Exists, OuterRef
 from django.shortcuts import get_object_or_404
+from django.utils.timezone import now
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.response import Response
 
@@ -15,24 +16,17 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
     pass
 
 
-class EventViewSet(viewsets.ViewSet):
+class EventViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     permission_classes = [permissions.IsAuthenticated]
-
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = EventSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        queryset = self.get_queryset()
-        event = get_object_or_404(queryset, pk=pk)
-        serializer = EventSerializer(event)
-        return Response(serializer.data)
+    serializer_class = EventSerializer
+    pagination_class = None
 
     def get_queryset(self):
         user = self.request.user
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
         queryset = Event.objects.filter(city=user.city) \
+                                .filter(end_at__gt=now()) \
                                 .annotate(booked=Exists(booked)) \
                                 .annotate(taken_seats=Count('participants')) \
                                 .order_by('start_at')

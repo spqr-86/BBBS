@@ -6,7 +6,7 @@ from ..serializers import CitySerializer
 
 
 class CityViewSet(ReadOnlyModelViewSet):
-    queryset = City.objects.all().order_by('-is_primary')
+    queryset = City.objects.all().order_by('-is_primary', 'name')
     serializer_class = CitySerializer
     permission_classes = [AllowAny]
     pagination_class = None
