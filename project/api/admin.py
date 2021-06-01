@@ -2,8 +2,8 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlencode
+from django.utils.translation import gettext_lazy as _
 
 from . import models
 from .fields import fields

@@ -9,7 +9,6 @@ from .question import QuestionSerializer
 from .tag import TagSerializer
 from .video import VideoSerializer
 
-
 __all__ = [
     'ArticleSerializer',
     'CitySerializer',
