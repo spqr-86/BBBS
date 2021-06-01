@@ -49,8 +49,10 @@ class EventAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.events_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
-        return super(EventAdmin, self).formfield_for_foreignkey(
-                                                db_field, request, **kwargs)
+        return super(
+            EventAdmin,
+            self
+        ).formfield_for_foreignkey(db_field, request, **kwargs)
 
     def taken_seats(self, obj):
         from django.utils.html import format_html
@@ -111,8 +113,10 @@ class PlaceAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.places_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
-        return super(PlaceAdmin, self).formfield_for_foreignkey(
-                                                db_field, request, **kwargs)
+        return super(
+            PlaceAdmin,
+            self
+        ).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(models.Region)

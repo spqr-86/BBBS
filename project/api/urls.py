@@ -23,13 +23,21 @@ v1_router.register(r'afisha/event-participants',
 app_name = 'api'
 
 urlpatterns = [
-     path('v1/main/',
-          views.MainViewSet.as_view(), name='main'),
-     path('v1/profile/',
-          views.ProfileViewSet.as_view(), name='profile'),
-     path('v1/token/',
-          TokenObtainPairView.as_view(), name='token_obtain_pair'),
-     path('v1/token/refresh/',
-          TokenRefreshView.as_view(), name='token_refresh'),
-     path('v1/', include((v1_router.urls, 'v1'), namespace='v1')),
+    path(
+        'v1/main/',
+        views.MainViewSet.as_view(), name='main'
+    ),
+    path(
+        'v1/profile/',
+        views.ProfileViewSet.as_view(), name='profile'
+    ),
+    path(
+        'v1/token/',
+        TokenObtainPairView.as_view(), name='token_obtain_pair'
+    ),
+    path(
+        'v1/token/refresh/',
+        TokenRefreshView.as_view(), name='token_refresh'
+    ),
+    path('v1/', include((v1_router.urls, 'v1'), namespace='v1')),
 ]

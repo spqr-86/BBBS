@@ -15,7 +15,7 @@ def get_events(request):
     else:
         city = get_object_or_404(City, id=request.GET.get('city'))
     queryset = Event.objects.filter(end_at__gt=now(), city=city) \
-                    .annotate(remain_seats=F('seats')-Count('participants'))
+                    .annotate(remain_seats=F('seats') - Count('participants'))
     if user.is_authenticated:
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
         queryset = queryset.annotate(booked=Exists(booked))
