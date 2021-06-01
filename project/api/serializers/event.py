@@ -16,15 +16,12 @@ class EventSerializer(serializers.ModelSerializer):
 
 class MainEventSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
-    remain_seats = serializers.SerializerMethodField()
+    remain_seats = serializers.IntegerField(read_only=True)
     booked = serializers.BooleanField(default=False, read_only=True)
 
     class Meta:
         model = Event
         exclude = ['city', 'participants', 'seats']
-
-    def get_remain_seats(self, obj):
-        return obj.participants.count()
 
 
 class ParticipantSerializer(serializers.ModelSerializer):

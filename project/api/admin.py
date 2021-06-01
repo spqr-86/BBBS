@@ -74,7 +74,7 @@ class HistoryAdmin(MixinAdmin):
 @admin.register(models.Main)
 class MainAdmin(MixinAdmin):
     list_display = ('id', 'title')
-    filter_horizontal = ('events', 'histories', 'places', 'articles',
+    filter_horizontal = ('histories', 'places', 'articles',
                          'movies', 'video', 'questions')
 
 

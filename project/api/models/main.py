@@ -9,10 +9,6 @@ class Main(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
-    events = ManyToManyField(
-        'api.Event',
-        verbose_name=_('События'),
-    )
     histories = ManyToManyField(
         'api.History',
         verbose_name=_('Истории'),

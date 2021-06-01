@@ -1,12 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, Serializer, SerializerMethodField
 
-from ..models import Main
+from ..models import Event, Main
 from ..serializers import (ArticleSerializer, MainEventSerializer,
                            HistorySerializer, MovieSerializer, PlaceSerializer,
                            QuestionSerializer, VideoSerializer)
 
 
-class MainSerializer(ModelSerializer):
+class MainSerializer(Serializer):
     events = MainEventSerializer(many=True, required=False, read_only=True)
     histories = HistorySerializer(many=True, required=False, read_only=True)
     places = PlaceSerializer(many=True, required=False, read_only=True)
