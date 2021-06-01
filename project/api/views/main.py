@@ -24,13 +24,8 @@ class MainViewSet(RetrieveAPIView):
     serializer_class = MainSerializer
     permission_classes = [AllowAny]
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = queryset.last()
-        return obj
-
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
+        instance = self.get_queryset().last()
         if instance:
             instance.events = get_events(request)
         serializer = self.get_serializer(instance)
