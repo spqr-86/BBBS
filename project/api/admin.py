@@ -115,13 +115,6 @@ class PlaceAdmin(MixinAdmin):
                                                 db_field, request, **kwargs)
 
 
-@admin.register(models.Participant)
-class ParticipantAdmin(MixinAdmin):
-    list_display = ('id', 'event', 'participant')
-    search_fields = ('event', 'participant')
-    autocomplete_fields = ('event', 'participant')
-
-
 @admin.register(models.Region)
 class RegionAdmin(MixinAdmin):
     list_display = ('id', 'name')
