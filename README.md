@@ -25,7 +25,10 @@
 
 Чтобы установить все зависимости, из корня проекта выполняем:
 
-```pip3 install -r requirements.txt```  
+```pip3 install -r requirements.txt``` для прода
+
+
+```pip3 install -r requirements_dev.txt``` для разработки
 
 2.
 
@@ -37,7 +40,10 @@
 
 Чтобы установить все зависимости, из корня проекта выполняем:
 
-```pipenv install``` для прода и ```pipenv install --dev``` для разработки
+```pipenv install``` для прода
+
+
+```pipenv install --dev``` для разработки
 
 
 ### Настройки проекта
