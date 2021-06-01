@@ -1,5 +1,4 @@
 from django.db.models import Count, Exists, F, OuterRef
-from django.forms.models import model_to_dict
 from django.utils.timezone import now
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import RetrieveAPIView
@@ -32,8 +31,7 @@ class MainViewSet(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        events = get_events(request)
-        main = model_to_dict(instance)
-        main['events'] = events
-        serializer = self.get_serializer(main)
+        if instance:
+            instance.events = get_events(request)
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
