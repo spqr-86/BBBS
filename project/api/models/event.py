@@ -59,7 +59,7 @@ class Event(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ('id',)
+        ordering = ('-start_at',)
         verbose_name = _('Событие')
         verbose_name_plural = _('События')
         permissions = (
