@@ -1,6 +1,6 @@
-from rest_framework.serializers import ModelSerializer, Serializer, SerializerMethodField
+from rest_framework.serializers import Serializer
 
-from ..models import Event, Main
+from ..models import Main
 from ..serializers import (ArticleSerializer, MainEventSerializer,
                            HistorySerializer, MovieSerializer, PlaceSerializer,
                            QuestionSerializer, VideoSerializer)
