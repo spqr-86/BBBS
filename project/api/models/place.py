@@ -33,8 +33,6 @@ class Place(models.Model):
         verbose_name=_('Город'),
         related_name='places',
         on_delete=models.CASCADE,
-        blank=True,
-        null=True,
     )
 
     class Meta:
