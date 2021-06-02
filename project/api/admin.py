@@ -2,8 +2,8 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlencode
+from django.utils.translation import gettext_lazy as _
 
 from . import models
 from .fields import fields
@@ -49,8 +49,10 @@ class EventAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.events_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
-        return super(EventAdmin, self).formfield_for_foreignkey(
-                                                db_field, request, **kwargs)
+        return super(
+            EventAdmin,
+            self
+        ).formfield_for_foreignkey(db_field, request, **kwargs)
 
     def taken_seats(self, obj):
         from django.utils.html import format_html
@@ -74,8 +76,8 @@ class HistoryAdmin(MixinAdmin):
 @admin.register(models.Main)
 class MainAdmin(MixinAdmin):
     list_display = ('id', 'title')
-    filter_horizontal = ('histories', 'places', 'articles',
-                         'movies', 'video', 'questions')
+    filter_horizontal = ('articles', 'movies', 'questions')
+    autocomplete_fields = ('history', 'video')
 
 
 @admin.register(models.Movie)
@@ -111,15 +113,10 @@ class PlaceAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.places_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
-        return super(PlaceAdmin, self).formfield_for_foreignkey(
-                                                db_field, request, **kwargs)
-
-
-@admin.register(models.Participant)
-class ParticipantAdmin(MixinAdmin):
-    list_display = ('id', 'event', 'participant')
-    search_fields = ('event', 'participant')
-    autocomplete_fields = ('event', 'participant')
+        return super(
+            PlaceAdmin,
+            self
+        ).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(models.Region)

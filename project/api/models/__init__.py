@@ -5,8 +5,8 @@ from .history import History
 from .main import Main
 from .movie import Movie
 from .place import Place
-from .region import Region
 from .question import Question
+from .region import Region
 from .tag import Tag
 from .video import Video
 
