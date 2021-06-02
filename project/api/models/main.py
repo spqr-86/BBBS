@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.fields import CharField
-from django.db.models.fields.related import ManyToManyField
+from django.db.models.fields.related import ForeignKey, ManyToManyField
 from django.utils.translation import gettext_lazy as _
 
 
@@ -9,13 +9,12 @@ class Main(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
-    histories = ManyToManyField(
+    history = ForeignKey(
         'api.History',
         verbose_name=_('Истории'),
-    )
-    places = ManyToManyField(
-        'api.Place',
-        verbose_name=_('Места'),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
     articles = ManyToManyField(
         'api.Article',
@@ -25,9 +24,12 @@ class Main(models.Model):
         'api.Movie',
         verbose_name=_('Фильмы'),
     )
-    video = ManyToManyField(
+    video = ForeignKey(
         'api.Video',
         verbose_name=_('Видео'),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
     questions = ManyToManyField(
         'api.Question',
