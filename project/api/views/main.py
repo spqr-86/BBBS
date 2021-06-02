@@ -1,25 +1,22 @@
 from django.db.models import Count, Exists, F, OuterRef
 from django.utils.timezone import now
-from rest_framework.generics import RetrieveAPIView, get_object_or_404
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from ..models import City, Event, Main
+from ..models import Event, Main
 from ..serializers.main import MainSerializer
 
 
 def get_events(request):
     user = request.user
-    if user.is_authenticated:
-        city = user.city
-    else:
-        city = get_object_or_404(City, id=request.GET.get('city'))
-    queryset = Event.objects.filter(end_at__gt=now(), city=city) \
+    queryset = Event.objects.filter(end_at__gt=now()) \
                     .annotate(remain_seats=F('seats') - Count('participants'))
     if user.is_authenticated:
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-        queryset = queryset.annotate(booked=Exists(booked))
-    return queryset
+        queryset = queryset.filter(city=user.city) \
+                           .annotate(booked=Exists(booked))
+    return queryset.order_by('start_at')
 
 
 class MainViewSet(RetrieveAPIView):
