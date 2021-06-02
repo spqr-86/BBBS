@@ -178,5 +178,6 @@ EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))
 
 
 if int(ENV.get('DJANGO_DEVELOPMENT', default=False)):
-    from .settings_dev import ALLOWED_HOSTS, DEBUG, INSTALLED_APPS_DEV, SIMPLE_JWT # noqa (F401, E501)
+    from .settings_dev import (ALLOWED_HOSTS, DEBUG,  # noqa (F401, E501)
+                               INSTALLED_APPS_DEV, SIMPLE_JWT)
     INSTALLED_APPS += INSTALLED_APPS_DEV
