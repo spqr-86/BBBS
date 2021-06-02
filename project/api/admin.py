@@ -76,8 +76,8 @@ class HistoryAdmin(MixinAdmin):
 @admin.register(models.Main)
 class MainAdmin(MixinAdmin):
     list_display = ('id', 'title')
-    filter_horizontal = ('histories', 'places', 'articles',
-                         'movies', 'video', 'questions')
+    filter_horizontal = ('articles', 'movies', 'questions')
+    autocomplete_fields = ('history', 'video')
 
 
 @admin.register(models.Movie)

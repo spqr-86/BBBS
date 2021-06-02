@@ -8,12 +8,12 @@ from ..serializers import (ArticleSerializer, HistorySerializer,
 
 
 class MainSerializer(Serializer):
-    events = MainEventSerializer(many=True, required=False, read_only=True)
-    histories = HistorySerializer(many=True, required=False, read_only=True)
-    places = PlaceSerializer(many=True, required=False, read_only=True)
+    event = MainEventSerializer(required=False, read_only=True)
+    history = HistorySerializer(required=False, read_only=True)
+    place = PlaceSerializer(required=False, read_only=True)
     articles = ArticleSerializer(many=True, required=False, read_only=True)
     movies = MovieSerializer(many=True, required=False, read_only=True)
-    video = VideoSerializer(many=True, required=False, read_only=True)
+    video = VideoSerializer(required=False, read_only=True)
     questions = QuestionSerializer(many=True, required=False, read_only=True)
 
     class Meta:
