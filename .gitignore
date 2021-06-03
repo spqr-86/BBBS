@@ -130,8 +130,6 @@ dmypy.json
 .pyre/
 
 
-migrations/
-
 .vscode/
 .DS_Store
 *.json
