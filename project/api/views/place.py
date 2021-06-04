@@ -8,7 +8,6 @@ from ..serializers import PlaceSerializer
 
 class PlaceViewSet(
     GenericViewSet,
-    mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin
 ):
