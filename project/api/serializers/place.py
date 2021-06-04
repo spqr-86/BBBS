@@ -7,5 +7,5 @@ class PlaceSerializer(serializers.ModelSerializer):
     choosen = serializers.BooleanField(default=False, read_only=True)
 
     class Meta:
-        fields = '__all__'
+        exclude = ['city']
         model = Place

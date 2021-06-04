@@ -42,9 +42,9 @@ class ParticipantViewSet(ListCreateDelViewSet):
         return Participant.objects.filter(participant=self.request.user)
 
     def create(self, request):
-        event = get_object_or_404(Event, id=self.request.POST.get('event'))
+        event = get_object_or_404(Event, id=self.request.data.get('event'))
         self.check_object_permissions(self.request, event)
-        serializer = self.get_serializer(data=self.request.POST)
+        serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
