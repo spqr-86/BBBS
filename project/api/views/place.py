@@ -1,6 +1,6 @@
 from rest_framework import mixins, permissions, viewsets
-from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import GenericViewSet
 
 from ..models import Place
 from ..serializers import PlaceSerializer
