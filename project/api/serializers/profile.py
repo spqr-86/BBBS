@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(source='pk', read_only=True)
+
     class Meta:
-        fields = ['username', 'first_name', 'last_name', 'email', 'city']
+        fields = ['id', 'user', 'city']
         model = User

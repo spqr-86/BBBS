@@ -5,5 +5,5 @@ from ..models import City
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
+        exclude = ['region']
         model = City
