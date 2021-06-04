@@ -4,7 +4,7 @@ from .event import EventViewSet, ParticipantViewSet
 from .history import HistoryViewSet
 from .main import MainViewSet
 from .movie import MovieView
-from .place import PlaceViewSet
+from .place import PlaceViewSet, PlacesViewSet
 from .profile import ProfileViewSet
 from .question import QuestionViewSet
 from .tag import TagViewSet
@@ -18,6 +18,7 @@ __all__ = [
     'MainViewSet',
     'HistoryViewSet',
     'PlaceViewSet',
+    'PlacesViewSet',
     'ProfileViewSet',
     'TagViewSet',
     'MovieView',
