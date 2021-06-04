@@ -34,6 +34,17 @@ class Place(models.Model):
         related_name='places',
         on_delete=models.CASCADE,
     )
+    chosen = models.BooleanField(
+        verbose_name=_('Выбор наставника'),
+        default=False
+    )
+    address = models.CharField(
+        verbose_name=_('Адрес'),
+        max_length=200
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице')
+    )
 
     class Meta:
         app_label = 'api'
