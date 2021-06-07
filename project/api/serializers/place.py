@@ -6,5 +6,5 @@ from ..models import Place
 class PlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
-        exclude = ['city']
         model = Place
+        fields = '__all__'
