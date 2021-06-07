@@ -1,4 +1,5 @@
-from rest_framework import mixins, permissions, viewsets
+from rest_framework import mixins, permissions
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet
 
@@ -6,18 +7,21 @@ from ..models import Place
 from ..serializers import PlaceSerializer
 
 
-class PlaceViewSet(
+class PlacesViewSet(
     GenericViewSet,
+    mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin
 ):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class PlacesViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = PageNumberPagination
+
+    def perform_create(self, serializer):
+        chosen = (serializer.validated_data['chosen']
+                  or self.request.user.is_staff)
+        serializer.save(
+            chosen=chosen
+        )
