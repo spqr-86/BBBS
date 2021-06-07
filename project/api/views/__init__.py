@@ -6,6 +6,7 @@ from .main import MainViewSet
 from .movie import MovieView
 from .place import PlacesViewSet, PlaceViewSet
 from .profile import ProfileViewSet
+from .right import RightViewSet
 from .question import QuestionViewSet
 from .tag import TagViewSet
 from .video import VideoView
@@ -20,6 +21,7 @@ __all__ = [
     'PlaceViewSet',
     'PlacesViewSet',
     'ProfileViewSet',
+    'RightViewSet',
     'TagViewSet',
     'MovieView',
     'VideoView',
