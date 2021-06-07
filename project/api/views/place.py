@@ -1,4 +1,4 @@
-from rest_framework import mixins, permissions, viewsets
+from rest_framework import mixins, permissions
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 
@@ -6,18 +6,12 @@ from ..models import Place
 from ..serializers import PlaceSerializer
 
 
-class PlaceViewSet(
+class PlacesViewSet(
     GenericViewSet,
-    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin
 ):
-    queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class PlacesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     permission_classes = [permissions.AllowAny]
