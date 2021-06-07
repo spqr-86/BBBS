@@ -45,6 +45,11 @@ class Place(models.Model):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице')
     )
+    tags = models.ManyToManyField(
+        to='api.Tag',
+        verbose_name='Тег(и)',
+        related_name='places'
+    )
 
     class Meta:
         app_label = 'api'
