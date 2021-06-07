@@ -10,22 +10,29 @@ from ..serializers.main import MainSerializer
 
 def get_event(request):
     user = request.user
-    if not user.is_authenticated:
-        return None
-    booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-    event = Event.objects.filter(end_at__gt=now(), city=user.city) \
-                 .annotate(remain_seats=F('seats') - Count('participants')) \
-                 .annotate(booked=Exists(booked)) \
-                 .order_by('start_at').first()
-    return event
+    city = request.data.get('city')
+    events = Event.objects.filter(end_at__gt=now()) \
+                  .annotate(remain_seats=F('seats') - Count('participants'))
+    if user.is_authenticated:
+        booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
+        events = events.filter(city=user.city).annotate(booked=Exists(booked))
+        return events.order_by('start_at').first()
+    if city is not None:
+        events = events.filter(city=city)
+    return events.order_by('start_at').first()
 
 
 def get_place(request):
     user = request.user
+    city = request.data.get('city')
     places = Place.objects.all()
     if user.is_authenticated:
         if places.filter(city=user.city).exists():
             return places.filter(city=user.city).last()
+        return places.last()
+    if city is not None:
+        if places.filter(city=city).exists():
+            return places.filter(city=city).last()
     return places.last()
 
 
