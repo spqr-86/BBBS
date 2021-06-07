@@ -6,8 +6,8 @@ from .main import MainViewSet
 from .movie import MovieView
 from .place import PlacesViewSet
 from .profile import ProfileViewSet
-from .right import RightViewSet
 from .question import QuestionViewSet
+from .right import RightViewSet
 from .tag import TagViewSet
 from .video import VideoView
 

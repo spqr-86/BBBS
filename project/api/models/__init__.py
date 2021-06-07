@@ -5,9 +5,9 @@ from .event import Event, Participant
 from .history import History
 from .movie import Movie
 from .place import Place
-from .right import Right
 from .question import Question
 from .region import Region
+from .right import Right
 from .tag import Tag
 from .video import Video
 
