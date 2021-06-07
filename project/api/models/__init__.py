@@ -4,6 +4,7 @@ from .event import Event, Participant
 from .history import History
 from .movie import Movie
 from .place import Place
+from .right import Right
 from .question import Question
 from .region import Region
 from .tag import Tag
@@ -17,6 +18,7 @@ __all__ = [
     'History',
     'Question',
     'Place',
+    'Right',
     'Region',
     'Tag',
     'Movie',
