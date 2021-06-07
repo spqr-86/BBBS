@@ -12,6 +12,7 @@ v1_router.register(r'history', views.HistoryViewSet, basename='history')
 v1_router.register(r'places', views.PlacesViewSet, basename='places')
 # Согласовано с куратором: 1 эндпоинт для place/places
 v1_router.register(r'tags', views.TagViewSet, basename='tag')
+v1_router.register(r'rights', views.RightViewSet, basename='right')
 v1_router.register(r'movies', views.MovieView, basename='movies')
 v1_router.register(r'videos', views.VideoView, basename='videos')
 v1_router.register(r'questions', views.QuestionViewSet, basename='questions')

@@ -73,13 +73,6 @@ class HistoryAdmin(MixinAdmin):
     search_fields = ('title', 'image_url')
 
 
-@admin.register(models.Main)
-class MainAdmin(MixinAdmin):
-    list_display = ('id', 'title')
-    filter_horizontal = ('articles', 'movies', 'questions')
-    autocomplete_fields = ('history', 'video')
-
-
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
@@ -117,6 +110,18 @@ class PlaceAdmin(MixinAdmin):
             PlaceAdmin,
             self
         ).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(models.Right)
+class RightAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'color')
+    search_fields = ('title', 'description')
+    list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
 
 
 @admin.register(models.Region)

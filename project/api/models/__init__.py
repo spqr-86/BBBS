@@ -2,9 +2,9 @@ from .article import Article
 from .city import City
 from .event import Event, Participant
 from .history import History
-from .main import Main
 from .movie import Movie
 from .place import Place
+from .right import Right
 from .question import Question
 from .region import Region
 from .tag import Tag
@@ -16,9 +16,9 @@ __all__ = [
     'Event',
     'Participant',
     'History',
-    'Main',
     'Question',
     'Place',
+    'Right',
     'Region',
     'Tag',
     'Movie',
