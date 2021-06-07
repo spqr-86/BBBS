@@ -73,13 +73,6 @@ class HistoryAdmin(MixinAdmin):
     search_fields = ('title', 'image_url')
 
 
-@admin.register(models.Main)
-class MainAdmin(MixinAdmin):
-    list_display = ('id', 'title')
-    filter_horizontal = ('articles', 'movies', 'questions')
-    autocomplete_fields = ('history', 'video')
-
-
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
