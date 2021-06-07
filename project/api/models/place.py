@@ -50,6 +50,14 @@ class Place(models.Model):
         verbose_name='Тег(и)',
         related_name='places'
     )
+    activity_type = models.ForeignKey(
+        to='api.ActivityType',
+        verbose_name='Вид активности',
+        related_name='places',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         app_label = 'api'
