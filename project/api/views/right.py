@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
@@ -11,6 +12,8 @@ from ..serializers import RightSerializer, TagSerializer
 class RightViewSet(ReadOnlyModelViewSet):
     queryset = Right.objects.all()
     serializer_class = RightSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['tags', ]
     permission_classes = [AllowAny]
     pagination_class = PageNumberPagination
 
