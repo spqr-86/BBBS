@@ -112,6 +112,18 @@ class PlaceAdmin(MixinAdmin):
         ).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
+@admin.register(models.Right)
+class RightAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'color')
+    search_fields = ('title', 'description')
+    list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
+
+
 @admin.register(models.Region)
 class RegionAdmin(MixinAdmin):
     list_display = ('id', 'name')
