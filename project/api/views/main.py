@@ -4,8 +4,20 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from ..models import Event, Main, Place
+from ..models import Article, Event, History, Movie, Place, Question, Video
 from ..serializers.main import MainSerializer
+
+
+class MainPage:
+    def __init__(self, event=None, history=None, place=None,
+                 articles=None, movies=None, video=None, questions=None):
+        self.event = event
+        self.history = history
+        self.place = place
+        self.articles = articles
+        self.movies = movies
+        self.video = video
+        self.questions = questions
 
 
 def get_event(request):
@@ -37,14 +49,17 @@ def get_place(request):
 
 
 class MainViewSet(RetrieveAPIView):
-    queryset = Main.objects.all()
     serializer_class = MainSerializer
     permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_queryset().last()
-        if instance:
-            instance.event = get_event(request)
-            instance.place = get_place(request)
+        instance = MainPage()
+        instance.event = get_event(request)
+        instance.history = History.objects.all().last()
+        instance.place = get_place(request)
+        instance.articles = Article.objects.all()
+        instance.movies = Movie.objects.all()
+        instance.video = Video.objects.all().last()
+        instance.questions = Question.objects.all()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
