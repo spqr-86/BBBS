@@ -1,9 +1,8 @@
-from rest_framework import serializers
-
+from .base import BaseSerializer
 from ..models import History
 
 
-class HistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        exclude = ['output_to_main', ]
+class HistorySerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        tags = None
         model = History

@@ -1,9 +1,8 @@
-from rest_framework import serializers
-
+from .base import BaseSerializer
 from ..models import Video
 
 
-class VideoSerializer(serializers.ModelSerializer):
-    class Meta:
-        exclude = ['output_to_main', ]
+class VideoSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        tags = None
         model = Video
