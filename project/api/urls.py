@@ -10,7 +10,7 @@ v1_router = DefaultRouter()
 v1_router.register(r'articles', views.ArticleViewSet, basename='article')
 v1_router.register(r'history', views.HistoryViewSet, basename='history')
 v1_router.register(r'places', views.PlacesViewSet, basename='places')
-v1_router.register(r'place', views.PlaceViewSet, basename='place')
+# Согласовано с куратором: 1 эндпоинт для place/places
 v1_router.register(r'tags', views.TagViewSet, basename='tag')
 v1_router.register(r'rights', views.RightViewSet, basename='right')
 v1_router.register(r'movies', views.MovieView, basename='movies')

@@ -45,6 +45,19 @@ class Place(models.Model):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице')
     )
+    tags = models.ManyToManyField(
+        to='api.Tag',
+        verbose_name='Тег(и)',
+        related_name='places'
+    )
+    activity_type = models.ForeignKey(
+        to='api.ActivityType',
+        verbose_name='Вид активности',
+        related_name='places',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         app_label = 'api'

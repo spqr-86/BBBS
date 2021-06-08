@@ -12,6 +12,15 @@ class Question(models.Model):
         verbose_name=_('Тег(и)'),
         related_name='questions',
     )
+    answer = models.CharField(
+        max_length=200,
+        verbose_name=_('Ответ'),
+        blank=True,
+        null=True
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице')
+    )
 
     class Meta:
         app_label = 'api'
