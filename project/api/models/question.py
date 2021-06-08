@@ -19,7 +19,8 @@ class Question(models.Model):
         null=True
     )
     output_to_main = models.BooleanField(
-        verbose_name=_('Отображать на главной странице')
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
     )
 
     class Meta:

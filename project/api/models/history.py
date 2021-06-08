@@ -12,6 +12,10 @@ class History(models.Model):
         blank=True,
         null=True,
     )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+    )
 
     class Meta:
         app_label = 'api'
