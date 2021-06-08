@@ -1,12 +1,7 @@
-from rest_framework import serializers
-
 from ..models import Place
-from .tag import TagSerializer
+from .base import BaseSerializer
 
 
-class PlaceSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False, read_only=True)
-
-    class Meta:
+class PlaceSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Place
-        fields = '__all__'
