@@ -5,5 +5,5 @@ from ..models import Video
 
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
+        exclude = ['output_to_main', ]
         model = Video
-        fields = ('id', 'title', 'info', 'link', 'image_url', 'duration')

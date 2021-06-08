@@ -5,5 +5,5 @@ from ..models import History
 
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
+        exclude = ['output_to_main', ]
         model = History

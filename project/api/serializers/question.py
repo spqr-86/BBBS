@@ -8,5 +8,5 @@ class QuestionSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False, read_only=True)
 
     class Meta:
-        fields = '__all__'
+        exclude = ['output_to_main', ]
         model = Question

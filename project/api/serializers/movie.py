@@ -8,5 +8,5 @@ class MovieSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False, read_only=True)
 
     class Meta:
+        exclude = ['output_to_main', ]
         model = Movie
-        fields = ('id', 'image_url', 'title', 'info', 'link', 'tags')

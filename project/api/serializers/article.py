@@ -5,5 +5,5 @@ from ..models import Article
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
+        exclude = ['output_to_main', ]
         model = Article
