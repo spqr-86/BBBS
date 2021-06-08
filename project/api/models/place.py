@@ -43,7 +43,8 @@ class Place(models.Model):
         max_length=200
     )
     output_to_main = models.BooleanField(
-        verbose_name=_('Отображать на главной странице')
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
     )
     tags = models.ManyToManyField(
         to='api.Tag',

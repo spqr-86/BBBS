@@ -25,6 +25,10 @@ class Video(models.Model):
         default=0,
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+    )
 
     class Meta:
         app_label = 'api'

@@ -14,6 +14,10 @@ class Article(models.Model):
         verbose_name=_('Цвет'),
         default='#FF0000',
     )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+    )
 
     def colortile(self):
         if self.color:
