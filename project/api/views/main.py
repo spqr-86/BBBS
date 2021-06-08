@@ -22,15 +22,12 @@ class MainPage:
 
 def get_event(request):
     user = request.user
-    city = request.data.get('city')
-    events = Event.objects.filter(end_at__gt=now()) \
+    if not user.is_authenticated:
+        return None
+    booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
+    events = Event.objects.filter(end_at__gt=now(), city=user.city) \
+                  .annotate(booked=Exists(booked)) \
                   .annotate(remain_seats=F('seats') - Count('participants'))
-    if user.is_authenticated:
-        booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-        events = events.filter(city=user.city).annotate(booked=Exists(booked))
-        return events.order_by('start_at').first()
-    if city is not None:
-        events = events.filter(city=city)
     return events.order_by('start_at').first()
 
 
@@ -55,11 +52,11 @@ class MainViewSet(RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = MainPage()
         instance.event = get_event(request)
-        instance.history = History.objects.all().last()
+        instance.history = History.objects.filter(output_to_main=True).last()
         instance.place = get_place(request)
-        instance.articles = Article.objects.all()
-        instance.movies = Movie.objects.all()
-        instance.video = Video.objects.all().last()
-        instance.questions = Question.objects.all()
+        instance.articles = Article.objects.filter(output_to_main=True).all()
+        instance.movies = Movie.objects.filter(output_to_main=True).all()
+        instance.video = Video.objects.filter(output_to_main=True).last()
+        instance.questions = Question.objects.filter(output_to_main=True).all()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

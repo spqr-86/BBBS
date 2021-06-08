@@ -1,4 +1,5 @@
 from .article import ArticleSerializer
+from .base import BaseSerializer
 from .city import CitySerializer
 from .event import EventSerializer, MainEventSerializer, ParticipantSerializer
 from .history import HistorySerializer
@@ -12,6 +13,7 @@ from .video import VideoSerializer
 
 __all__ = [
     'ArticleSerializer',
+    'BaseSerializer',
     'CitySerializer',
     'EventSerializer',
     'MainEventSerializer',
