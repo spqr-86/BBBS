@@ -15,6 +15,12 @@ class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
 
+@admin.register(models.ActivityType)
+class ActivityAdmin(MixinAdmin):
+    list_display = ('id', 'name', )
+    search_fields = ('name', )
+
+
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
     list_display = ('id', 'title', 'color')
@@ -91,9 +97,10 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link', 'city')
+    list_display = ('id', 'title', 'address', 'image_url',
+                    'link', 'city', 'activity_type')
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', )
+    list_filter = ('city', 'activity_type')
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
