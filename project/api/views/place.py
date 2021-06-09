@@ -6,10 +6,7 @@ from ..serializers import PlaceSerializer
 from . import GetListPostPutMixin, TagMixin
 
 
-class PlacesViewSet(
-    GetListPostPutMixin,
-    TagMixin
-):
+class PlacesViewSet(GetListPostPutMixin, TagMixin):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
