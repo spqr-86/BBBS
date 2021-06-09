@@ -3,6 +3,7 @@ from .city import CityViewSet
 from .event import EventViewSet, ParticipantViewSet
 from .history import HistoryViewSet
 from .main import MainViewSet
+from .mixins import GetListPostPutMixin, TagMixin
 from .movie import MovieView
 from .place import PlacesViewSet
 from .profile import ProfileViewSet
@@ -25,4 +26,6 @@ __all__ = [
     'MovieView',
     'VideoView',
     'QuestionViewSet',
+    'GetListPostPutMixin',
+    'TagMixin'
 ]
