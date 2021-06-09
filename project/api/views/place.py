@@ -6,18 +6,11 @@ from ..serializers import PlaceSerializer
 from . import GetListPostPutMixin, TagMixin
 
 
-class PlacesViewSet(
-    GetListPostPutMixin,
-    TagMixin
-):
+class PlacesViewSet(GetListPostPutMixin, TagMixin):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = PageNumberPagination
 
     def perform_create(self, serializer):
-        chosen = (serializer.validated_data['chosen']
-                  or self.request.user.is_staff)
-        serializer.save(
-            chosen=chosen
-        )
+        serializer.save(chosen=self.request.user.is_mentor)

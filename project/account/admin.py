@@ -9,9 +9,10 @@ User = get_user_model()
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'username', 'email', 'first_name',
-                    'last_name', 'city', 'region', 'is_staff')
+                    'last_name', 'city', 'region', 'is_staff', 'is_mentor')
     search_fields = ('username', 'email', 'first_name', 'last_name', 'city')
-    list_filter = ('city', 'region', 'is_staff', 'is_active', 'is_superuser')
+    list_filter = ('city', 'region', 'is_mentor',
+                   'is_staff', 'is_active', 'is_superuser')
     autocomplete_fields = ('city', 'region')
     readonly_fields = ('date_joined', 'last_login')
 
@@ -23,7 +24,8 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('first_name', 'last_name', 'email', 'city', 'region')
         }),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups'),
+            'fields': ('is_active', 'is_mentor',
+                       'is_staff', 'is_superuser', 'groups'),
         }),
         (_('Important dates'), {
             'fields': ('last_login', 'date_joined')

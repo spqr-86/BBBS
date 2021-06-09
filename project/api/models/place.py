@@ -1,22 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .validators import age_validator
+
 
 class Place(models.Model):
     title = models.CharField(
-        verbose_name=_('Заголовок'),
+        verbose_name=_('Название'),
         max_length=200,
-    )
-    name = models.CharField(
-        verbose_name=_('Имя'),
-        max_length=200,
-    )
-    info = models.CharField(
-        verbose_name=_('Информация'),
-        max_length=500,
     )
     description = models.TextField(
-        verbose_name=_('Описание'),
+        verbose_name=_('Комментарий'),
     )
     image_url = models.URLField(
         verbose_name=_('Изображение'),
@@ -24,7 +18,7 @@ class Place(models.Model):
         null=True,
     )
     link = models.URLField(
-        verbose_name=_('Ссылка'),
+        verbose_name=_('Сайт'),
         blank=True,
         null=True,
     )
@@ -48,16 +42,23 @@ class Place(models.Model):
     )
     tags = models.ManyToManyField(
         to='api.Tag',
-        verbose_name='Тег(и)',
+        verbose_name=_('Тег(и)'),
         related_name='places'
     )
     activity_type = models.ForeignKey(
         to='api.ActivityType',
-        verbose_name='Вид активности',
+        verbose_name=_('Вид активности'),
         related_name='places',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
+        on_delete=models.PROTECT,
+    )
+    sex = models.CharField(
+        verbose_name=_('Пол ребёнка'),
+        max_length=6,
+        choices=(('male', _('Мальчик')), ('female', _('Девочка'))),
+    )
+    age = models.SmallIntegerField(
+        verbose_name=_('Возраст ребёнка'),
+        validators=[age_validator],
     )
 
     class Meta:

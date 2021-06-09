@@ -18,7 +18,6 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventSerializer
     pagination_class = PageNumberPagination
