@@ -1,9 +1,9 @@
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 
+from .mixins import GetListPostPutMixin, TagMixin
 from ..models import Place
 from ..serializers import PlaceSerializer
-from . import GetListPostPutMixin, TagMixin
 
 
 class PlacesViewSet(GetListPostPutMixin, TagMixin):
