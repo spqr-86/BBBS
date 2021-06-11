@@ -27,5 +27,5 @@ __all__ = [
     'VideoView',
     'QuestionViewSet',
     'GetListPostPutMixin',
-    'TagMixin'
+    'TagMixin',
 ]

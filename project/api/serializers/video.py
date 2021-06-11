@@ -1,8 +1,7 @@
-from .base import BaseSerializer
 from ..models import Video
+from .base import BaseSerializer
 
 
 class VideoSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
-        tags = None
         model = Video

@@ -4,7 +4,6 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from ..models import Right
 from ..serializers import RightSerializer
-
 from . import TagMixin
 
 

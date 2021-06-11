@@ -10,3 +10,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['id', 'user', 'city']
         model = User
+
+
+class MentorSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['first_name', 'email']
+        model = User

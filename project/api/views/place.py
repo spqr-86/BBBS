@@ -3,7 +3,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from ..models import Place
 from ..serializers import PlaceSerializer
-from . import GetListPostPutMixin, TagMixin
+from .mixins import GetListPostPutMixin, TagMixin
 
 
 class PlacesViewSet(GetListPostPutMixin, TagMixin):

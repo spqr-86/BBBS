@@ -1,5 +1,5 @@
-from .base import BaseSerializer
 from ..models import Movie
+from .base import BaseSerializer
 
 
 class MovieSerializer(BaseSerializer):
