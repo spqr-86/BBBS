@@ -25,6 +25,12 @@ class Video(models.Model):
         default=0,
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
+    tags = models.ManyToManyField(
+        'api.Tag',
+        verbose_name=_('Теги'),
+        related_name='videos',
+        blank=True,
+    )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
