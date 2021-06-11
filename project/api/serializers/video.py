@@ -1,5 +1,5 @@
-from .base import BaseSerializer
 from ..models import Video
+from .base import BaseSerializer
 
 
 class VideoSerializer(BaseSerializer):

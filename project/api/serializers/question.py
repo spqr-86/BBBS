@@ -1,5 +1,5 @@
-from .base import BaseSerializer
 from ..models import Question
+from .base import BaseSerializer
 
 
 class QuestionSerializer(BaseSerializer):

@@ -1,9 +1,9 @@
 from rest_framework import validators
 from rest_framework.serializers import CurrentUserDefault
 
+from ..models import History
 from .base import BaseSerializer
 from .profile import MentorSerializer
-from ..models import History
 
 
 class HistorySerializer(BaseSerializer):
