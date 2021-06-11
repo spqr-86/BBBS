@@ -45,7 +45,7 @@ class Place(models.Model):
     tags = models.ManyToManyField(
         to='api.Tag',
         verbose_name=_('Тег(и)'),
-        related_name='places'
+        related_name='places',
     )
     activity_type = models.ForeignKey(
         to='api.ActivityType',

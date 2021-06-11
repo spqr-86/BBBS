@@ -16,7 +16,7 @@ class Question(models.Model):
         max_length=200,
         verbose_name=_('Ответ'),
         blank=True,
-        null=True
+        null=True,
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
