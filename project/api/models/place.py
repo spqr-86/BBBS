@@ -8,6 +8,7 @@ class Place(models.Model):
     title = models.CharField(
         verbose_name=_('Название'),
         max_length=200,
+        unique=True,
     )
     description = models.TextField(
         verbose_name=_('Комментарий'),
@@ -19,6 +20,7 @@ class Place(models.Model):
     )
     link = models.URLField(
         verbose_name=_('Сайт'),
+        unique=True,
         blank=True,
         null=True,
     )
@@ -51,7 +53,7 @@ class Place(models.Model):
         related_name='places',
         on_delete=models.PROTECT,
     )
-    sex = models.CharField(
+    gender = models.CharField(
         verbose_name=_('Пол ребёнка'),
         max_length=6,
         choices=(('male', _('Мальчик')), ('female', _('Девочка'))),
