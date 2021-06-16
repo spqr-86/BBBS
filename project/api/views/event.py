@@ -2,6 +2,7 @@ from django.db.models import Count, Exists, OuterRef
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from rest_framework import mixins, permissions, status, viewsets
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from ..models import Event, Participant
@@ -17,10 +18,9 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventSerializer
-    pagination_class = None
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -36,7 +36,7 @@ class EventViewSet(viewsets.ModelViewSet):
 class ParticipantViewSet(ListCreateDelViewSet):
     permission_classes = [IsUsersCity, permissions.IsAuthenticated]
     serializer_class = ParticipantSerializer
-    pagination_class = None
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return Participant.objects.filter(participant=self.request.user)

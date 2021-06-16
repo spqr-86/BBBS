@@ -1,9 +1,8 @@
-from rest_framework import serializers
-
 from ..models import Article
+from .base import BaseSerializer
 
 
-class ArticleSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = '__all__'
+class ArticleSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        tags = None
         model = Article

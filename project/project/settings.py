@@ -14,7 +14,7 @@ SECRET_KEY = ENV['SECRET_KEY']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ENV['ALLOWED_HOSTS'].split()
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition

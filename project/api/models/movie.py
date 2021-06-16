@@ -23,7 +23,10 @@ class Movie(models.Model):
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='movies',
-        blank=True,
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
     )
 
     class Meta:

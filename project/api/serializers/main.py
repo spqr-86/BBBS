@@ -1,6 +1,5 @@
 from rest_framework.serializers import Serializer
 
-from ..models import Main
 from ..serializers import (ArticleSerializer, HistorySerializer,
                            MainEventSerializer, MovieSerializer,
                            PlaceSerializer, QuestionSerializer,
@@ -15,7 +14,3 @@ class MainSerializer(Serializer):
     movies = MovieSerializer(many=True, required=False, read_only=True)
     video = VideoSerializer(required=False, read_only=True)
     questions = QuestionSerializer(many=True, required=False, read_only=True)
-
-    class Meta:
-        exclude = ['id', 'title']
-        model = Main

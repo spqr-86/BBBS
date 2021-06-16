@@ -15,6 +15,12 @@ class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
 
+@admin.register(models.ActivityType)
+class ActivityAdmin(MixinAdmin):
+    list_display = ('id', 'name', )
+    search_fields = ('name', )
+
+
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
     list_display = ('id', 'title', 'color')
@@ -73,13 +79,6 @@ class HistoryAdmin(MixinAdmin):
     search_fields = ('title', 'image_url')
 
 
-@admin.register(models.Main)
-class MainAdmin(MixinAdmin):
-    list_display = ('id', 'title')
-    filter_horizontal = ('articles', 'movies', 'questions')
-    autocomplete_fields = ('history', 'video')
-
-
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
@@ -98,9 +97,10 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'name', 'info', 'image_url', 'link', 'city')
+    list_display = ('id', 'title', 'address', 'image_url',
+                    'link', 'city', 'activity_type')
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', )
+    list_filter = ('city', 'activity_type')
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -117,6 +117,18 @@ class PlaceAdmin(MixinAdmin):
             PlaceAdmin,
             self
         ).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(models.Right)
+class RightAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'color')
+    search_fields = ('title', 'description')
+    list_filter = ('tags', )
+    autocomplete_fields = ('tags', )
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
 
 
 @admin.register(models.Region)

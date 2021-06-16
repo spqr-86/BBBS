@@ -1,10 +1,7 @@
-from rest_framework import serializers
-
 from ..models import Place
+from .base import BaseSerializer
 
 
-class PlaceSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        exclude = ['city']
+class PlaceSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Place

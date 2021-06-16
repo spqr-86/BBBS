@@ -20,3 +20,7 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
     )
+    is_mentor = models.BooleanField(
+        verbose_name=_('Наставник'),
+        default=False,
+    )
