@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    image: t0rk/bbbs:latest
     restart: always
     volumes:
+      - ./db.sqlite3:/code/project/db.sqlite3
       - static_value:/code/project/static/
       - media_value:/code/project/media/
   nginx:
