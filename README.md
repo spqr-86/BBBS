@@ -56,24 +56,3 @@
 Для хранения переменных используется файл .env, его нужно создать самостоятельно по примеру example.env
 
 Переменная DJANGO_DEVELOPMENT определяет будет ли использован файл с настройками для разработки: settings_dev.py
-
-### Запуск контейнеров Docker
-Для запуска контейнеров на вашем машине должен быть установлен Docker Desktop.
-
-1. Клонируйте репозиторий в нужный каталог.
-
-2. Создайте файл .env по примеру: example.env.
-
-3. Создайте контейнеры Docker при помощи команды docker-compose:
-
-```docker-compose up --build```
-
-4. Выполните миграции:
-
-```docker-compose exec web python manage.py migrate --noinput```
-
-6. Создайте суперпользователя:
-
-```docker-compose exec web python manage.py createsuperuser```
-
-Админка сайта будет доступна по адресу: http://127.0.0.1/admin/
