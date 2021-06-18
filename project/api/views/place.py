@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import LimitOffsetPagination
 
 from ..filters import PlaceFilter
 from ..models import Place
@@ -11,7 +11,7 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    pagination_class = PageNumberPagination
+    pagination_class = LimitOffsetPagination
     filter_class = PlaceFilter
 
     def perform_create(self, serializer):

@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
@@ -11,4 +11,4 @@ class VideoView(ReadOnlyModelViewSet, TagMixin):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     permission_classes = [AllowAny]
-    pagination_class = PageNumberPagination
+    pagination_class = LimitOffsetPagination
