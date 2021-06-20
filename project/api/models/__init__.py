@@ -1,5 +1,6 @@
 from .activity_types import ActivityType
 from .article import Article
+from .book import Book
 from .city import City
 from .event import Event, Participant
 from .history import History
@@ -14,6 +15,7 @@ from .video import Video
 __all__ = [
     'ActivityType',
     'Article',
+    'Book',
     'City',
     'Event',
     'Participant',
