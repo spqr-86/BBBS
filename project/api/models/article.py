@@ -10,6 +10,18 @@ class Article(models.Model):
         verbose_name=_('Заголовок'),
         max_length=200,
     )
+    info = models.CharField(
+        verbose_name=_('Информация'),
+        max_length=200,
+    )
+    annotation = models.TextField(
+        verbose_name=_('Аннотация'),
+        max_length=1024,
+    )
+    image_url = models.URLField(
+        verbose_name=_('Ссылка на изображение'),
+        max_length=192,
+    )
     color = fields.ColorField(
         verbose_name=_('Цвет'),
         default='#FF0000',
