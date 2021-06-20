@@ -31,12 +31,35 @@ class ArticleAdmin(MixinAdmin):
     }
 
 
+@admin.register(models.Book)
+class BookAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'info', 'color')
+    search_fields = ('title', 'info')
+    autocomplete_fields = ('tags', )
+    formfield_overrides = {
+        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+                            'style': 'height: 100px; width: 100px;'})}
+    }
+
+
+@admin.register(models.Catalog)
+class CatalogAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'image_url')
+    search_fields = ('title', )
+
+
 @admin.register(models.City)
 class CityAdmin(MixinAdmin):
     list_display = ('id', 'name', 'region', 'is_primary')
     search_fields = ('name', )
     list_filter = ('region', 'is_primary')
     autocomplete_fields = ('region', )
+
+
+@admin.register(models.Diary)
+class DiaryAdmin(MixinAdmin):
+    list_display = ('id', 'mentor', 'place', 'date', 'mark')
+    search_fields = ('place', )
 
 
 @admin.register(models.Event)
@@ -101,6 +124,7 @@ class PlaceAdmin(MixinAdmin):
                     'link', 'city', 'activity_type')
     search_fields = ('title', 'name', 'info')
     list_filter = ('city', 'activity_type')
+    autocomplete_fields = ('tags', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -148,3 +172,4 @@ class TagAdmin(MixinAdmin):
 class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
+    autocomplete_fields = ('tags', )

@@ -1,4 +1,4 @@
-from django.db.models import Count, Exists, OuterRef
+from django.db.models import Count, Exists, F, OuterRef
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from rest_framework import mixins, permissions, status, viewsets
@@ -26,10 +26,11 @@ class EventViewSet(viewsets.ModelViewSet):
         user = self.request.user
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
         queryset = Event.objects.filter(city=user.city) \
-                                .filter(end_at__gt=now()) \
-                                .annotate(booked=Exists(booked)) \
-                                .annotate(taken_seats=Count('participants')) \
-                                .order_by('start_at')
+                        .filter(end_at__gt=now()) \
+                        .annotate(booked=Exists(booked)) \
+                        .annotate(
+                            remain_seats=F('seats') - Count('participants')) \
+                        .order_by('start_at')
         return queryset
 
 
