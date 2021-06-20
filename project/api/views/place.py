@@ -14,5 +14,15 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
     pagination_class = LimitOffsetPagination
     filter_class = PlaceFilter
 
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if user.is_authenticated:
+            return queryset.filter(city=user.city)
+        city = self.request.data.get('city')
+        if city is not None:
+            return queryset.filter(city=city)
+        return queryset
+
     def perform_create(self, serializer):
         serializer.save(chosen=self.request.user.is_mentor)
