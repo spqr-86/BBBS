@@ -1,7 +1,12 @@
+from rest_framework import serializers
+
 from ..models import Book
-from .base import BaseSerializer
+from .tag import TagSerializer
 
 
-class BookSerializer(BaseSerializer):
-    class Meta(BaseSerializer.Meta):
+class BookSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, required=False, read_only=True)
+
+    class Meta:
         model = Book
+        fields = '__all__'
