@@ -9,6 +9,7 @@ v1_router = DefaultRouter()
 
 v1_router.register(r'articles', views.ArticleViewSet, basename='article')
 v1_router.register(r'books', views.BookView, basename='book')
+v1_router.register(r'catalog', views.CatalogView, basename='catalog')
 v1_router.register(r'history', views.HistoryViewSet, basename='history')
 v1_router.register(r'places', views.PlacesViewSet, basename='places')
 v1_router.register(r'tags', views.TagViewSet, basename='tag')

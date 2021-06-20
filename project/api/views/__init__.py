@@ -1,5 +1,6 @@
 from .article import ArticleViewSet
 from .book import BookView
+from .catalog import CatalogView
 from .city import CityViewSet
 from .diary import DiaryViewSet
 from .event import EventViewSet, ParticipantViewSet
@@ -16,6 +17,7 @@ from .video import VideoView
 
 __all__ = [
     'ArticleViewSet',
+    'CatalogView',
     'CityViewSet',
     'DiaryViewSet',
     'EventViewSet',

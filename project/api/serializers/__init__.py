@@ -1,6 +1,7 @@
 from .article import ArticleSerializer
 from .base import BaseSerializer
 from .book import BookSerializer
+from .catalog import CatalogSerializer
 from .city import CitySerializer
 from .diary import DiarySerializer
 from .event import EventSerializer, MainEventSerializer, ParticipantSerializer
@@ -17,6 +18,7 @@ __all__ = [
     'ArticleSerializer',
     'BaseSerializer',
     'BookSerializer',
+    'CatalogSerializer',
     'CitySerializer',
     'DiarySerializer',
     'EventSerializer',

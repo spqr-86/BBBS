@@ -42,6 +42,12 @@ class BookAdmin(MixinAdmin):
     }
 
 
+@admin.register(models.Catalog)
+class CatalogAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'image_url')
+    search_fields = ('title', )
+
+
 @admin.register(models.City)
 class CityAdmin(MixinAdmin):
     list_display = ('id', 'name', 'region', 'is_primary')
