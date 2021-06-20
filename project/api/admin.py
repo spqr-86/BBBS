@@ -50,6 +50,12 @@ class CityAdmin(MixinAdmin):
     autocomplete_fields = ('region', )
 
 
+@admin.register(models.Diary)
+class DiaryAdmin(MixinAdmin):
+    list_display = ('id', 'place', 'date', 'mark')
+    search_fields = ('place', )
+
+
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
