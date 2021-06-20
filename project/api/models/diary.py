@@ -1,14 +1,26 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 
+User = get_user_model()
+
+
 class Diary(models.Model):
+    mentor = models.ForeignKey(
+        User,
+        verbose_name=_('Наставник'),
+        on_delete=models.CASCADE,
+        related_name='diaries',
+    )
     place = models.CharField(
         verbose_name=_('Место встречи'),
         max_length=128,
     )
     date = models.DateField(
         verbose_name=_('Дата'),
+        default=now,
     )
     description = models.TextField(
         verbose_name=_('Описание встречи'),

@@ -52,7 +52,7 @@ class CityAdmin(MixinAdmin):
 
 @admin.register(models.Diary)
 class DiaryAdmin(MixinAdmin):
-    list_display = ('id', 'place', 'date', 'mark')
+    list_display = ('id', 'mentor', 'place', 'date', 'mark')
     search_fields = ('place', )
 
 
