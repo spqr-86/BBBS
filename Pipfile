@@ -26,6 +26,7 @@ pytest = "*"
 pytest-django = "*"
 django-extensions = "*"
 werkzeug = "*"
+drf-yasg = "*"
 
 [requires]
 python_version = "3.9"
