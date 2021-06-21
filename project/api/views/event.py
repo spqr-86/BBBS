@@ -5,6 +5,7 @@ from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
+from ..filters import EventFilter
 from ..models import Event, Participant
 from ..permissions import IsUsersCity
 from ..serializers import EventSerializer, ParticipantSerializer
@@ -21,6 +22,7 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventSerializer
     pagination_class = LimitOffsetPagination
+    filter_class = EventFilter
 
     def get_queryset(self):
         user = self.request.user

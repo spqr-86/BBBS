@@ -20,7 +20,7 @@ class History(models.Model):
         max_length=100,
     )
     together_since = models.DateField(
-        verbose_name=_(''),
+        verbose_name=_('Вместе с'),
     )
     image_url = models.URLField(
         verbose_name=_('Изображение'),
