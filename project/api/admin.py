@@ -14,6 +14,15 @@ User = get_user_model()
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'tags':
+            kwargs['queryset'] = models.Tag.objects.filter(
+                                 category=self.model._meta.verbose_name_plural)
+        return super(
+            MixinAdmin,
+            self
+        ).formfield_for_manytomany(db_field, request, **kwargs)
+
 
 @admin.register(models.ActivityType)
 class ActivityAdmin(MixinAdmin):
@@ -35,7 +44,6 @@ class ArticleAdmin(MixinAdmin):
 class BookAdmin(MixinAdmin):
     list_display = ('id', 'title', 'info', 'color')
     search_fields = ('title', 'info')
-    autocomplete_fields = ('tags', )
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
@@ -107,7 +115,6 @@ class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
 
 
 @admin.register(models.Question)
@@ -115,7 +122,6 @@ class QuestionAdmin(MixinAdmin):
     list_display = ('id', 'title', )
     search_fields = ('title', )
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
 
 
 @admin.register(models.Place)
@@ -124,7 +130,6 @@ class PlaceAdmin(MixinAdmin):
                     'link', 'city', 'activity_type')
     search_fields = ('title', 'name', 'info')
     list_filter = ('city', 'activity_type')
-    autocomplete_fields = ('tags', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -148,7 +153,6 @@ class RightAdmin(MixinAdmin):
     list_display = ('id', 'title', 'color')
     search_fields = ('title', 'description')
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
@@ -163,8 +167,10 @@ class RegionAdmin(MixinAdmin):
 
 @admin.register(models.Tag)
 class TagAdmin(MixinAdmin):
-    list_display = ('id', 'name', 'slug')
-    search_fields = ('name', 'slug')
+    list_display = ('id', 'name', 'category', 'slug')
+    list_editable = ('category', )
+    search_fields = ('name', 'category', 'slug')
+    list_filter = ('category', )
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -172,4 +178,3 @@ class TagAdmin(MixinAdmin):
 class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'image_url', 'link', 'duration')
     search_fields = ('title',)
-    autocomplete_fields = ('tags', )

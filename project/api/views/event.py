@@ -18,7 +18,7 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
     pass
 
 
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventSerializer
     pagination_class = LimitOffsetPagination
@@ -30,8 +30,7 @@ class EventViewSet(viewsets.ModelViewSet):
         queryset = Event.objects.filter(city=user.city) \
                         .filter(end_at__gt=now()) \
                         .annotate(booked=Exists(booked)) \
-                        .annotate(
-                            remain_seats=F('seats') - Count('participants')) \
+                        .annotate(remain_seats=F('seats')-Count('participants')) \
                         .order_by('start_at')
         return queryset
 
