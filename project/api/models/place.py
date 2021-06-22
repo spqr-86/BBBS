@@ -1,3 +1,5 @@
+import requests
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -17,6 +19,12 @@ class Place(models.Model):
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
+    )
+    image = models.ImageField(
+        upload_to='places/',
+        verbose_name=_('Фото'),
+        blank=True,
+        null=True
     )
     link = models.URLField(
         verbose_name=_('Сайт'),
@@ -74,3 +82,18 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        if Place.objects.exists():
+            new_id = Place.objects.order_by('-id').first().id + 1
+        else:
+            new_id = 1
+        if self.image_url and not self.image:
+            response = requests.get(self.image_url)
+            image = open(
+                settings.MEDIA_ROOT / f'places/{new_id}_pic.jpg', 'wb'
+            )
+            image.write(response.content)
+            image.close()
+            self.image = image.name
+        return super().save(*args, **kwargs)
