@@ -11,6 +11,10 @@ class Movie(models.Model):
         verbose_name=_('Информация'),
         max_length=512,
     )
+    annotation = models.TextField(
+        verbose_name=_('Аннотация'),
+        max_length=1024,
+    )
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,

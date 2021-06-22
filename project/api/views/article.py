@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
@@ -10,4 +10,4 @@ class ArticleViewSet(ReadOnlyModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = [AllowAny]
-    pagination_class = PageNumberPagination
+    pagination_class = LimitOffsetPagination
