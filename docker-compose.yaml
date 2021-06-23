@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
       - ./db.sqlite3:/code/project/db.sqlite3
+      - ./.env:/code/.env
       - static_value:/code/project/static/
       - media_value:/code/project/media/
   nginx:

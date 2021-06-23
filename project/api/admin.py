@@ -176,5 +176,5 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url', 'link', 'duration')
+    list_display = ('id', 'title', 'link', 'duration')
     search_fields = ('title',)

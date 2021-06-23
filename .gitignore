@@ -133,4 +133,7 @@ dmypy.json
 .vscode/
 .DS_Store
 *.json
+
+# develop directories
+media/
 =======
