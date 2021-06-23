@@ -9,6 +9,7 @@ class DiarySerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     date = serializers.DateField(default=now().date())
+    image = serializers.ImageField()
 
     class Meta:
         fields = '__all__'
