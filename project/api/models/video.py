@@ -72,7 +72,7 @@ class Video(models.Model):
                 video_thumbnail_url = get_image_url_from_link(self.link)
                 response = requests.get(video_thumbnail_url)
                 image = open(
-                    settings.MEDIA_ROOT / f'videos/{new_id}_pic.jpg', 'wb'
+                    settings.MEDIA_ROOT / f'{Video.image.field.upload_to}{new_id}_pic.jpg', 'wb'
                 )
                 image.write(response.content)
                 image.close()
