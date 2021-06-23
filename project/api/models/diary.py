@@ -26,10 +26,11 @@ class Diary(models.Model):
         verbose_name=_('Описание встречи'),
         max_length=1024,
     )
-    image_url = models.URLField(
-        verbose_name=_('Ссылка на изображение'),
-        max_length=192,
+    image = models.ImageField(
+        verbose_name=_('Изображение'),
+        upload_to='diaries/',
         blank=True,
+        null=True,
     )
     mark = models.CharField(
         verbose_name=_('Как прошло время'),
