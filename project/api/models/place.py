@@ -83,12 +83,12 @@ class Place(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs) -> None:
+    def load_image(self, *, save=False):
         if Place.objects.exists():
             new_id = Place.objects.order_by('-id').first().id + 1
         else:
             new_id = 1
-        if self.image_url and not self.image:
+        try:
             response = requests.get(self.image_url)
             image = open(
                 settings.MEDIA_ROOT / f'places/{new_id}_pic.jpg', 'wb'
@@ -96,4 +96,12 @@ class Place(models.Model):
             image.write(response.content)
             image.close()
             self.image = image.name
+            if save:
+                self.save()
+        except Exception as e:
+            print(e)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.image_url and not self._image:
+            self.load_image()
         return super().save(*args, **kwargs)
