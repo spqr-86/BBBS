@@ -2,8 +2,8 @@ from rest_framework import permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 
 from ..models import Diary
-from ..serializers import DiarySerializer
 from ..permissions import IsOwner
+from ..serializers import DiarySerializer
 
 
 class DiaryViewSet(viewsets.ModelViewSet):
