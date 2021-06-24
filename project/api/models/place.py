@@ -98,8 +98,8 @@ class Place(models.Model):
             self.image = image.name
             if save:
                 self.save()
-        except Exception as e:
-            print(e)
+        except requests.exceptions.ConnectionError:
+            pass
 
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self._image:
