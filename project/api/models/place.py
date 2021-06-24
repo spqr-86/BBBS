@@ -1,12 +1,11 @@
-import requests
-from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .mixins import ImageFromUrlMixin
 from .validators import age_validator
 
 
-class Place(models.Model):
+class Place(models.Model, ImageFromUrlMixin):
     title = models.CharField(
         verbose_name=_('Название'),
         max_length=200,
@@ -82,24 +81,6 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
-
-    def load_image(self, *, save=False):
-        if Place.objects.exists():
-            new_id = Place.objects.order_by('-id').first().id + 1
-        else:
-            new_id = 1
-        try:
-            response = requests.get(self.image_url)
-            image = open(
-                settings.MEDIA_ROOT / f'places/{new_id}_pic.jpg', 'wb'
-            )
-            image.write(response.content)
-            image.close()
-            self.image = image.name
-            if save:
-                self.save()
-        except requests.exceptions.ConnectionError:
-            pass
 
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
