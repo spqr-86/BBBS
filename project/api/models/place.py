@@ -102,6 +102,6 @@ class Place(models.Model):
             pass
 
     def save(self, *args, **kwargs) -> None:
-        if self.image_url and not self._image:
+        if self.image_url and not self.image:
             self.load_image()
         return super().save(*args, **kwargs)
