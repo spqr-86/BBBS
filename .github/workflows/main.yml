@@ -3,6 +3,8 @@ on:
   push:
     branches: [ Artem ]
 
+jobs:
+
   send_message:
     runs-on: ubuntu-latest
     steps:
