@@ -1,7 +1,7 @@
 name: Docker hub update
 on:
   push:
-    branches: [ integration ]
+    branches: [ Artem ]
 
 jobs:
   build_and_push_to_docker_hub:
@@ -31,6 +31,7 @@ jobs:
     - name: Send notification
       uses: appleboy/telegram-action@master
       with:
-        to: ${{ secrets.CHAT_ID }}
+        to: 88833601
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        message: Docker образ обновлен.
+        message: Docker образ обновлен.\nTest
+          _test2_
