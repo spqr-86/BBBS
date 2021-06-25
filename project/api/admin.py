@@ -32,12 +32,8 @@ class ActivityAdmin(MixinAdmin):
 
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'color')
-    search_fields = ('title', 'color')
-    formfield_overrides = {
-        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
-                            'style': 'height: 100px; width: 100px;'})}
-    }
+    list_display = ('id', 'title')
+    search_fields = ('title', )
 
 
 @admin.register(models.Book)
@@ -106,8 +102,9 @@ class EventAdmin(MixinAdmin):
 
 @admin.register(models.History)
 class HistoryAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url')
-    search_fields = ('title', 'image_url')
+    list_display = ('id', 'title', 'mentor', 'child')
+    search_fields = ('title', )
+    list_filter = ('mentor', 'child')
 
 
 @admin.register(models.Movie)
@@ -150,13 +147,9 @@ class PlaceAdmin(MixinAdmin):
 
 @admin.register(models.Right)
 class RightAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'color')
+    list_display = ('id', 'title')
     search_fields = ('title', 'description')
     list_filter = ('tags', )
-    formfield_overrides = {
-        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
-                            'style': 'height: 100px; width: 100px;'})}
-    }
 
 
 @admin.register(models.Region)

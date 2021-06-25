@@ -31,10 +31,10 @@ class Video(models.Model, ImageFromUrlMixin):
         max_length=512,
     )
     image = models.ImageField(
+        verbose_name=_('Изображение'),
         upload_to='videos/',
         blank=True,
         null=True,
-        verbose_name=_('Изображение')
     )
     link = models.URLField(
         verbose_name=_('Ссылка на видеоролик'),

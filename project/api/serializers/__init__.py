@@ -10,7 +10,7 @@ from .movie import MovieSerializer
 from .place import PlaceSerializer
 from .profile import ProfileSerializer
 from .question import QuestionSerializer
-from .right import RightSerializer
+from .right import RightListSerializer, RightRetrieveSerializer
 from .tag import TagSerializer
 from .video import VideoSerializer
 
@@ -27,7 +27,8 @@ __all__ = [
     'HistorySerializer',
     'PlaceSerializer',
     'ProfileSerializer',
-    'RightSerializer',
+    'RightListSerializer',
+    'RightRetrieveSerializer',
     'TagSerializer',
     'MovieSerializer',
     'VideoSerializer',

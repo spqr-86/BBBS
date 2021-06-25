@@ -8,7 +8,8 @@ class VideoSerializer(BaseSerializer):
     image = serializers.ImageField(
         max_length=None,
         allow_empty_file=False,
-        use_url=False
+        use_url=False,
+        required=False,
     )
 
     class Meta(BaseSerializer.Meta):
