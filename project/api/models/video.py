@@ -1,6 +1,5 @@
 import requests
 import urllib
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -34,7 +33,8 @@ class Video(models.Model, ImageFromUrlMixin):
     image = models.ImageField(
         upload_to='videos/',
         blank=True,
-        null=True
+        null=True,
+        verbose_name=_('Изображение')
     )
     link = models.URLField(
         verbose_name=_('Ссылка на видеоролик'),
@@ -66,6 +66,9 @@ class Video(models.Model, ImageFromUrlMixin):
 
     def save(self, *args, **kwargs) -> None:
         if self.link and not self.image:
-            video_thumbnail_url = get_image_url_from_link(self.link)
-            self.load_image(image_url=video_thumbnail_url)
+            try:
+                video_thumbnail_url = get_image_url_from_link(self.link)
+                self.load_image(image_url=video_thumbnail_url)
+            except ConnectionError:
+                super().save(*args, **kwargs)
         return super().save(*args, **kwargs)
