@@ -1,9 +1,10 @@
 import requests
 import urllib
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from .mixins import ImageFromUrlMixin
 
 
 def get_image_url_from_link(video_url: str) -> str:
@@ -20,7 +21,7 @@ def get_image_url_from_link(video_url: str) -> str:
         raise ConnectionError
 
 
-class Video(models.Model):
+class Video(models.Model, ImageFromUrlMixin):
     title = models.CharField(
         verbose_name=_('Заголовок'),
         max_length=128,
@@ -32,7 +33,8 @@ class Video(models.Model):
     image = models.ImageField(
         upload_to='videos/',
         blank=True,
-        null=True
+        null=True,
+        verbose_name=_('Изображение')
     )
     link = models.URLField(
         verbose_name=_('Ссылка на видеоролик'),
@@ -63,20 +65,10 @@ class Video(models.Model):
         return self.title
 
     def save(self, *args, **kwargs) -> None:
-        if Video.objects.exists():
-            new_id = Video.objects.latest('id').id + 1
-        else:
-            new_id = 1
         if self.link and not self.image:
             try:
                 video_thumbnail_url = get_image_url_from_link(self.link)
-                response = requests.get(video_thumbnail_url)
-                image = open(
-                    settings.MEDIA_ROOT / f'videos/{new_id}_pic.jpg', 'wb'
-                )
-                image.write(response.content)
-                image.close()
-                self.image = image.name
+                self.load_image(image_url=video_thumbnail_url)
             except ConnectionError:
-                return super().save(*args, **kwargs)
+                super().save(*args, **kwargs)
         return super().save(*args, **kwargs)
