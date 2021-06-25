@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from ..models import Article, Event, History, Movie, Place, Question, Video
 from ..serializers.main import MainSerializer
-from ..utils.movie import Castraitor
+from ..utils.castraitor import Castraitor
 
 
 class MainPage:
