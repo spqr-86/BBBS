@@ -1,3 +1,4 @@
+import os
 import requests
 
 from django.conf import settings
@@ -12,6 +13,8 @@ class ImageFromUrlMixin:
         directory = self.__class__.image.field.upload_to
         try:
             response = requests.get(image_url)
+            if not os.path.isdir(settings.MEDIA_ROOT / f'{directory}'):
+                os.mkdir(settings.MEDIA_ROOT / f'{directory}')
             with open(
                 settings.MEDIA_ROOT / f'{directory}/{new_id}_pic.jpg',
                 'wb'
