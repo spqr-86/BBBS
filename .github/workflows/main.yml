@@ -33,4 +33,9 @@ jobs:
       with:
         to: ${{ secrets.CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        message: Docker образ обновлен.
+        message: "Docker образ обновлен.\n
+                  Чтобы загрузить обновление:\n
+                  docker pull t0rk/bbbs:latest\n
+                  docker-compose stop web\n
+                  docker-compose rm web\n
+                  docker-compose up -d\n"
