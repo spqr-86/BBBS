@@ -7,9 +7,10 @@ class CatalogSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(
         max_length=None,
         allow_empty_file=False,
-        use_url=False
+        use_url=False,
+        required=False,
     )
-    
+
     class Meta:
         model = Catalog
         fields = '__all__'
