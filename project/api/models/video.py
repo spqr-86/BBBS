@@ -5,6 +5,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .mixins import ImageFromUrlMixin
+
 
 def get_image_url_from_link(video_url: str) -> str:
     '''для получения url независимо от вида ссылки на видео youtube'''
@@ -20,7 +22,7 @@ def get_image_url_from_link(video_url: str) -> str:
         raise ConnectionError
 
 
-class Video(models.Model):
+class Video(models.Model, ImageFromUrlMixin):
     title = models.CharField(
         verbose_name=_('Заголовок'),
         max_length=128,
@@ -63,20 +65,7 @@ class Video(models.Model):
         return self.title
 
     def save(self, *args, **kwargs) -> None:
-        if Video.objects.exists():
-            new_id = Video.objects.latest('id').id + 1
-        else:
-            new_id = 1
         if self.link and not self.image:
-            try:
-                video_thumbnail_url = get_image_url_from_link(self.link)
-                response = requests.get(video_thumbnail_url)
-                image = open(
-                    settings.MEDIA_ROOT / f'{Video.image.field.upload_to}{new_id}_pic.jpg', 'wb'
-                )
-                image.write(response.content)
-                image.close()
-                self.image = image.name
-            except ConnectionError:
-                return super().save(*args, **kwargs)
+            video_thumbnail_url = get_image_url_from_link(self.link)
+            self.load_image(image_url=video_thumbnail_url)
         return super().save(*args, **kwargs)
