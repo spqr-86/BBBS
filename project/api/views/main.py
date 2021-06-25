@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from ..models import Article, Event, History, Movie, Place, Question, Video
 from ..serializers.main import MainSerializer
+from ..utils.movie import Castraitor
 
 
 class MainPage:
@@ -49,14 +50,18 @@ class MainViewSet(RetrieveAPIView):
     serializer_class = MainSerializer
     permission_classes = [AllowAny]
 
+    MOVIES_LENGTH = 7
+    QUESTION_LENGTH = 10
+    ARTICLES_LENGTH = 2
+
     def retrieve(self, request, *args, **kwargs):
         instance = MainPage()
         instance.event = get_event(request)
         instance.history = History.objects.filter(output_to_main=True).last()
         instance.place = get_place(request)
-        instance.articles = Article.objects.filter(output_to_main=True).all()
-        instance.movies = Movie.objects.filter(output_to_main=True).all()
+        instance.articles = Castraitor(Article, self.ARTICLES_LENGTH, '-id').get_n_records()
+        instance.movies = Castraitor(Movie, self.MOVIES_LENGTH, '-id').get_n_records()
         instance.video = Video.objects.filter(output_to_main=True).last()
-        instance.questions = Question.objects.filter(output_to_main=True).all()
+        instance.questions = Castraitor(Question, self.QUESTION_LENGTH, '-id').get_n_records()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
