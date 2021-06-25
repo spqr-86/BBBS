@@ -112,7 +112,7 @@ class HistoryAdmin(MixinAdmin):
 
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url', 'link')
+    list_display = ('id', 'title', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
 
