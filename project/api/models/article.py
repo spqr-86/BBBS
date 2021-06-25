@@ -3,9 +3,10 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from ..fields import fields
+from .mixins import ImageFromUrlMixin
 
 
-class Article(models.Model):
+class Article(models.Model, ImageFromUrlMixin):
     title = models.CharField(
         verbose_name=_('Заголовок'),
         max_length=200,
@@ -21,6 +22,12 @@ class Article(models.Model):
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,
+    )
+    image = models.ImageField(
+        upload_to='articles/',
+        verbose_name=_('Фото'),
+        blank=True,
+        null=True
     )
     color = fields.ColorField(
         verbose_name=_('Цвет'),
@@ -45,3 +52,8 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        if self.image_url and not self.image:
+            self.load_image(image_url=self.image_url)
+        return super().save(*args, **kwargs)

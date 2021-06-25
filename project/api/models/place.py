@@ -84,5 +84,5 @@ class Place(models.Model, ImageFromUrlMixin):
 
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
-            self.load_image()
+            self.load_image(image_url=self.image_url)
         return super().save(*args, **kwargs)
