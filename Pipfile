@@ -21,6 +21,7 @@ PyJWT = "==2.1.0"
 djangorestframework-camel-case = "*"
 django-cors-headers = "*"
 pillow = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pytest = "*"
