@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = ENV['SECRET_KEY']
 
-DEBUG = False
+DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
@@ -68,12 +68,24 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': ENV.get('DB_NAME'),
+            'USER': ENV.get('POSTGRES_USER'),
+            'PASSWORD': ENV.get('POSTGRES_PASSWORD'),
+            'HOST': ENV.get('DB_HOST'),
+            'PORT': ENV.get('DB_PORT'),
+        }
+    }
 
 
 # User model
@@ -180,7 +192,6 @@ EMAIL_USE_SSL = int(ENV.get('EMAIL_USE_SSL', default=False))
 EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))
 
 
-if int(ENV.get('DJANGO_DEVELOPMENT', default=False)):
-    from .settings_dev import (ALLOWED_HOSTS, DEBUG,  # noqa (F401, E501)
-                               INSTALLED_APPS_DEV, SIMPLE_JWT)
+if DEBUG:
+    from .settings_dev import (ALLOWED_HOSTS, INSTALLED_APPS_DEV, SIMPLE_JWT)  # noqa (F401, E501)
     INSTALLED_APPS += INSTALLED_APPS_DEV
