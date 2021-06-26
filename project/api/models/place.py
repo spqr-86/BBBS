@@ -20,8 +20,8 @@ class Place(models.Model, ImageFromUrlMixin):
         null=True,
     )
     image = models.ImageField(
-        upload_to='places/',
         verbose_name=_('Фото'),
+        upload_to='places/',
         blank=True,
         null=True
     )
