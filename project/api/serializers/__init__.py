@@ -4,7 +4,8 @@ from .book import BookSerializer
 from .catalog import CatalogSerializer
 from .city import CitySerializer
 from .diary import DiarySerializer
-from .event import EventSerializer, MainEventSerializer, ParticipantSerializer
+from .event import (EventSerializer, MainEventSerializer,
+                    ParticipantSerializer, DateEventSerializer)
 from .history import HistorySerializer
 from .movie import MovieSerializer
 from .place import PlaceSerializer
@@ -23,6 +24,7 @@ __all__ = [
     'DiarySerializer',
     'EventSerializer',
     'MainEventSerializer',
+    'DateEventSerializer',
     'ParticipantSerializer',
     'HistorySerializer',
     'PlaceSerializer',
