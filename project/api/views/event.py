@@ -45,7 +45,8 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     def months(self, request):
         dates = Event.objects.filter(start_at__gt=now()) \
                               .dates('start_at', 'month')
-        months = set([date.month for date in dates])
+        months = list(set([date.month for date in dates]))
+        months.sort()
         date = Date(months=months)
         serializer = DateEventSerializer(date)
         return Response(serializer.data)
