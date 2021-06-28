@@ -20,7 +20,7 @@ class GetListPostPutMixin(
 
 
 class TagFilter(FilterSet):
-    tags = CharFilter(field_name="tags__slug", method='filter_tags')
+    tags = CharFilter(field_name='tags__slug', method='filter_tags')
 
     def filter_tags(self, queryset, slug, tags):
         return queryset.filter(tags__slug__in=tags.split(','))
