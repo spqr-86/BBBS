@@ -9,6 +9,7 @@ services:
       - ./.env:/code/.env
       - static_value:/code/project/static/
       - media_value:/code/project/media/
+
   nginx:
     image: nginx:1.19.3
     ports:
@@ -19,7 +20,14 @@ services:
       - media_value:/var/html/media/
     depends_on:
       - web
-  
+
+  front:
+    image: t0rk/nicolas_cage:latest
+    ports:
+      - '180:80'
+    depends_on:
+      - nginx
+
 volumes:
   static_value:
   media_value:
