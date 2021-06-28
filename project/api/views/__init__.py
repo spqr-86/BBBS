@@ -3,7 +3,7 @@ from .book import BookView
 from .catalog import CatalogView
 from .city import CityViewSet
 from .diary import DiaryViewSet
-from .event import EventViewSet, ParticipantViewSet
+from .event import EventViewSet, ParticipantViewSet, MyEventsArchive
 from .history import HistoryViewSet
 from .main import MainViewSet
 from .mixins import GetListPostPutMixin, TagMixin
@@ -34,4 +34,5 @@ __all__ = [
     'QuestionViewSet',
     'GetListPostPutMixin',
     'TagMixin',
+    'MyEventsArchive'
 ]

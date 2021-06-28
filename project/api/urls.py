@@ -24,7 +24,7 @@ v1_router.register(r'afisha/event-participants',
                    views.ParticipantViewSet,
                    basename='event-participant')
 v1_router.register(r'events-participant/archive',
-                   views.event.MyEventsArchive,
+                   views.MyEventsArchive,
                    basename='my-events-archive')
 
 app_name = 'api'
