@@ -14,9 +14,15 @@ class PlaceFilter(FilterSet):
 
 
 class EventFilter(FilterSet):
-    month = NumberFilter(field_name='start_at', lookup_expr='month')
-    year = NumberFilter(field_name='start_at', lookup_expr='year')
+    months = CharFilter(field_name='start_at', method='filter_months')
+    years = CharFilter(field_name='start_at', method='filter_years')
+
+    def filter_months(self, queryset, slug, months):
+        return queryset.filter(start_at__month__in=months.split(','))
+
+    def filter_years(self, queryset, slug, years):
+        return queryset.filter(start_at__year__in=years.split(','))
 
     class Meta:
         model = Event
-        fields = ['month', 'year']
+        fields = ['months', 'years']

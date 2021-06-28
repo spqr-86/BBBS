@@ -2,13 +2,15 @@ from django.db.models import Count, Exists, F, OuterRef
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from rest_framework import mixins, permissions, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
 from ..filters import EventFilter
 from ..models import Event, Participant
 from ..permissions import IsUsersCity
-from ..serializers import EventSerializer, ParticipantSerializer
+from ..serializers import (EventSerializer,
+                           ParticipantSerializer, DateEventSerializer)
 
 
 class ListCreateDelViewSet(mixins.ListModelMixin,
@@ -16,6 +18,11 @@ class ListCreateDelViewSet(mixins.ListModelMixin,
                            mixins.DestroyModelMixin,
                            viewsets.GenericViewSet):
     pass
+
+
+class Date:
+    def __init__(self, months=None):
+        self.months = months
 
 
 class EventViewSet(viewsets.ReadOnlyModelViewSet):
@@ -33,6 +40,18 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
                         .annotate(remain_seats=F('seats')-Count('participants')) \
                         .order_by('-booked', 'start_at')
         return queryset
+
+    @action(methods=['get'], detail=False)
+    def months(self, request):
+        user = request.user
+        dates = Event.objects.filter(city=user.city) \
+                             .filter(start_at__gt=now()) \
+                             .dates('start_at', 'month')
+        months = list(set([date.month for date in dates]))
+        months.sort()
+        date = Date(months=months)
+        serializer = DateEventSerializer(date)
+        return Response(serializer.data)
 
 
 class ParticipantViewSet(ListCreateDelViewSet):

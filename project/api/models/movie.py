@@ -35,7 +35,7 @@ class Movie(models.Model, ImageFromUrlMixin):
     )
     image = models.ImageField(
         verbose_name=_('Изображение'),
-        upload_to='videos/',
+        upload_to='movies/',
         blank=True,
         null=True,
     )

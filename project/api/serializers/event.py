@@ -11,7 +11,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        exclude = ['participants', 'tags']
+        exclude = ['participants']
 
 
 class MainEventSerializer(serializers.ModelSerializer):
@@ -22,6 +22,13 @@ class MainEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         exclude = ['city', 'participants', 'seats']
+
+
+class DateEventSerializer(serializers.Serializer):
+    months = serializers.ListField(required=False, read_only=True)
+
+    class Meta:
+        fields = '__all__'
 
 
 class ParticipantSerializer(serializers.ModelSerializer):
