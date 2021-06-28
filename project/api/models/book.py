@@ -27,6 +27,9 @@ class Book(models.Model):
         verbose_name=_('Теги'),
         related_name='books',
     )
+    url = models.URLField(
+        verbose_name=_('Ссылка')
+    )
 
     def colortile(self):
         if self.color:
