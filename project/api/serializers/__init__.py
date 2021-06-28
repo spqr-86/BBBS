@@ -1,6 +1,7 @@
 from .article import ArticleSerializer
 from .base import BaseSerializer
 from .book import BookSerializer
+from .booktype import BookTypeSerializer
 from .catalog import CatalogSerializer
 from .city import CitySerializer
 from .diary import DiarySerializer
@@ -19,6 +20,7 @@ __all__ = [
     'ArticleSerializer',
     'BaseSerializer',
     'BookSerializer',
+    'BookTypeSerializer',
     'CatalogSerializer',
     'CitySerializer',
     'DiarySerializer',
