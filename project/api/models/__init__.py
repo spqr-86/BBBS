@@ -1,6 +1,7 @@
 from .activity_types import ActivityType
 from .article import Article
 from .book import Book
+from .booktype import BookType
 from .catalog import Catalog
 from .city import City
 from .diary import Diary
@@ -18,6 +19,7 @@ __all__ = [
     'ActivityType',
     'Article',
     'Book',
+    'BookType',
     'Catalog',
     'City',
     'Diary',
