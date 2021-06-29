@@ -43,8 +43,10 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=['get'], detail=False)
     def months(self, request):
-        dates = Event.objects.filter(start_at__gt=now()) \
-                              .dates('start_at', 'month')
+        user = request.user
+        dates = Event.objects.filter(city=user.city) \
+                             .filter(start_at__gt=now()) \
+                             .dates('start_at', 'month')
         months = list(set([date.month for date in dates]))
         months.sort()
         date = Date(months=months)
