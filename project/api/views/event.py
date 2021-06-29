@@ -54,6 +54,16 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
+class MyEventsArchive(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsUsersCity, permissions.IsAuthenticated]
+    serializer_class = EventSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        return Event.objects.filter(participants=self.request.user,
+                                    start_at__lt=now())
+
+
 class ParticipantViewSet(ListCreateDelViewSet):
     permission_classes = [IsUsersCity, permissions.IsAuthenticated]
     serializer_class = ParticipantSerializer
