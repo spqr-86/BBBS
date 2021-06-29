@@ -21,13 +21,6 @@ services:
     depends_on:
       - web
 
-  front:
-    image: t0rk/nicolas_cage:latest
-    ports:
-      - '180:80'
-    depends_on:
-      - nginx
-
 volumes:
   static_value:
   media_value:
