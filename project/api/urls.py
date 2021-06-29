@@ -20,12 +20,9 @@ v1_router.register(r'questions', views.QuestionViewSet, basename='questions')
 v1_router.register(r'cities', views.CityViewSet, basename='city')
 v1_router.register(r'profile/diaries', views.DiaryViewSet, basename='diary')
 v1_router.register(r'afisha/events', views.EventViewSet, basename='event')
-v1_router.register(r'afisha/event-participants',
-                   views.ParticipantViewSet,
-                   basename='event-participant')
-v1_router.register(r'events-participant/archive',
-                   views.MyEventsArchive,
-                   basename='my-events-archive')
+v1_router.register(r'afisha/event-participants/archive', views.MyEventsArchive, basename='my-events-archive')  # noqa (E501)
+v1_router.register(r'afisha/event-participants', views.ParticipantViewSet, basename='event-participant')  # noqa (E501)
+
 
 app_name = 'api'
 
