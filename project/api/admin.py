@@ -17,7 +17,8 @@ class MixinAdmin(admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'tags':
             kwargs['queryset'] = models.Tag.objects.filter(
-                                 category=self.model._meta.verbose_name_plural)
+                category=self.model._meta.verbose_name_plural
+            )
         return super(
             MixinAdmin,
             self
@@ -36,14 +37,30 @@ class ArticleAdmin(MixinAdmin):
     search_fields = ('title', )
 
 
-@admin.register(models.Book)
-class BookAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'info', 'color')
-    search_fields = ('title', 'info')
+@admin.register(models.BookType)
+class BookTypeAdmin(MixinAdmin):
+    list_display = ('id', 'name', 'slug', 'color')
+    search_fields = ('name', 'slug', 'color')
+    prepopulated_fields = {'slug': ('name',)}
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
     }
+
+
+@admin.register(models.Book)
+class BookAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'info', 'type', 'get_color')
+    search_fields = ('title', 'info', 'color')
+
+    @admin.display(description=_('Цвет'))
+    def get_color(self, obj):
+        try:
+            color = obj.type.color
+        except AttributeError:
+            color = None
+        return color
+    get_color.admin_order_field = 'color'
 
 
 @admin.register(models.Catalog)

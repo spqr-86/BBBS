@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from ..fields import fields
-
 
 class Book(models.Model):
     title = models.CharField(
@@ -18,14 +16,15 @@ class Book(models.Model):
         verbose_name=_('Аннотация'),
         max_length=1024,
     )
-    color = fields.ColorField(
-        verbose_name=_('Цвет'),
-        default='#FF0000',
+    type = models.ForeignKey(
+        'api.BookType',
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_('Тип'),
+        related_name='books'
     )
-    tags = models.ManyToManyField(
-        'api.Tag',
-        verbose_name=_('Теги'),
-        related_name='books',
+    url = models.URLField(
+        verbose_name=_('Ссылка')
     )
 
     def colortile(self):

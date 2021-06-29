@@ -17,7 +17,7 @@ class Castraitor:
         return self.n
 
     def get_n_records(self) -> QuerySet:
-        all_model_records = self.model.objects.all()
-        if len(all_model_records) < self.n:
-            return all_model_records
-        return self.model.objects.all().order_by(self.order_field)[:self.n]
+        model_records = self.model.objects.filter(output_to_main=True)
+        if len(model_records) < self.n:
+            return model_records.order_by(self.order_field)
+        return model_records.order_by(self.order_field)[:self.n]
