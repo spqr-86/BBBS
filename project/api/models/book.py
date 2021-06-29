@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from .booktype import BookType
-
 
 class Book(models.Model):
     title = models.CharField(
@@ -19,7 +17,7 @@ class Book(models.Model):
         max_length=1024,
     )
     type = models.ForeignKey(
-        to=BookType,
+        'api.BookType',
         on_delete=models.SET_NULL,
         null=True,
         verbose_name=_('Тип'),

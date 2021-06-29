@@ -39,8 +39,9 @@ class ArticleAdmin(MixinAdmin):
 
 @admin.register(models.BookType)
 class BookTypeAdmin(MixinAdmin):
-    list_display = ('id', 'name', 'color')
-    search_fields = ('name', 'color')
+    list_display = ('id', 'name', 'slug', 'color')
+    search_fields = ('name', 'slug', 'color')
+    prepopulated_fields = {'slug': ('name',)}
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
@@ -53,8 +54,12 @@ class BookAdmin(MixinAdmin):
     search_fields = ('title', 'info', 'color')
 
     @admin.display(description=_('Цвет'))
-    def get_color(self, klass):
-        return klass.type.color
+    def get_color(self, obj):
+        try:
+            color = obj.type.color
+        except AttributeError:
+            color = None
+        return color
     get_color.admin_order_field = 'color'
 
 
