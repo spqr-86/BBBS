@@ -7,7 +7,7 @@ from . import GetListPostPutMixin, TagMixin
 
 
 class QuestionViewSet(GetListPostPutMixin, TagMixin):
-    queryset = Question.objects.all()
+    queryset = Question.objects.exclude(answer=None)
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
