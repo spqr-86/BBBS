@@ -17,6 +17,10 @@ class Article(models.Model, ImageFromUrlMixin):
         verbose_name=_('Аннотация'),
         max_length=1024,
     )
+    article_url = models.URLField(
+        verbose_name=_('Ссылка на статью'),
+        max_length=192,
+    )
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,
