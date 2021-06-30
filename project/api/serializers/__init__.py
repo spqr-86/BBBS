@@ -1,4 +1,5 @@
 from .article import ArticleSerializer
+from .activity_types import ActivityTypeSerializer
 from .base import BaseSerializer
 from .book import BookSerializer
 from .booktype import BookTypeSerializer
@@ -18,6 +19,7 @@ from .video import VideoSerializer
 
 __all__ = [
     'ArticleSerializer',
+    'ActivityTypeSerializer',
     'BaseSerializer',
     'BookSerializer',
     'BookTypeSerializer',
