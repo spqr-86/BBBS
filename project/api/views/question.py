@@ -1,7 +1,6 @@
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-
 from ..models import Question
 from ..serializers import QuestionSerializer
 from . import GetListPostPutMixin, TagMixin
