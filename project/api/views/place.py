@@ -19,7 +19,7 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
         user = self.request.user
         if user.is_authenticated:
             return queryset.filter(city=user.city)
-        city = self.request.data.get('city')
+        city = self.request.GET.get('city')
         if city is not None:
             return queryset.filter(city=city)
         return queryset
