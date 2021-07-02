@@ -133,9 +133,16 @@ class MovieAdmin(MixinAdmin):
 
 @admin.register(models.Question)
 class QuestionAdmin(MixinAdmin):
-    list_display = ('id', 'title', )
+    list_display = ('id', 'title', 'get_answer')
     search_fields = ('title', )
     list_filter = ('tags', )
+
+    @admin.display(description=_('Ответ'))
+    def get_answer(self, obj):
+        answer = obj.answer
+        if answer is not None:
+            return f'{answer[:50]}..'
+        return answer
 
 
 @admin.register(models.Place)
@@ -144,6 +151,7 @@ class PlaceAdmin(MixinAdmin):
                     'link', 'city', 'activity_type')
     search_fields = ('title', 'name', 'info')
     list_filter = ('city', 'activity_type')
+    radio_fields = {'gender': admin.HORIZONTAL}
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

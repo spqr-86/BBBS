@@ -36,7 +36,9 @@ class TagMixin:
     def tags(self, request):
         related_query_name = self.queryset.model._meta.get_field('tags') \
                                  .related_query_name()
-        filter_key = f'{related_query_name}__isnull'
-        tags = Tag.objects.filter(**{filter_key: False}).distinct()
+        filter_key = f'{related_query_name}__in'
+        tags = Tag.objects.filter(
+            **{filter_key: self.queryset}
+        ).distinct()
         serializer = TagSerializer(tags, many=True)
         return Response(serializer.data)
