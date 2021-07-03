@@ -17,7 +17,7 @@ class PlaceFilter(FilterSet):
 
     class Meta:
         model = Place
-        fields = ['age', 'tags', 'chosen']
+        fields = ['age', 'tags', 'chosen', 'age_restriction']
 
 
 class EventFilter(FilterSet):
