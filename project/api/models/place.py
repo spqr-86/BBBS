@@ -70,14 +70,14 @@ class Place(models.Model, ImageFromUrlMixin):
         validators=[age_validator],
     )
     age_restriction = models.CharField(
-        verbose_name=_('Возрастные ограничения'),
+        verbose_name=_('Целевой возраст'),
         max_length=50,
         choices=(
             (_('8-10'), _('8-10')),
             (_('11-13'), _('11-13')),
             (_('14-17'), _('14-17')),
-            (_('18+'), _('18+')),
-            (_('Без ограничений'), _('Без ограничений'))
+            (_('18'), _('18')),
+            (_('any'), _('Любой'))
         ),
     )
 

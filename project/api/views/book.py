@@ -12,7 +12,7 @@ from ..serializers import BookSerializer, BookTypeSerializer
 
 
 class TypeFilter(FilterSet):
-    type = CharFilter(field_name='type__slug', method='filter_types')
+    types = CharFilter(field_name='type__slug', method='filter_types')
 
     def filter_types(self, queryset, slug, types):
         return queryset.filter(type__slug__in=(types.split(',')))
