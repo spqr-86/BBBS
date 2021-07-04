@@ -46,6 +46,10 @@ class Article(models.Model, ImageFromUrlMixin):
         return self.title
 
     def save(self, *args, **kwargs) -> None:
+        if Article.objects.exists():
+            print('exists')
+        else:
+            print('doesn\'t exist')
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
         return super().save(*args, **kwargs)

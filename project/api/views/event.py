@@ -37,7 +37,8 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = Event.objects.filter(city=user.city) \
                         .filter(end_at__gt=now()) \
                         .annotate(booked=Exists(booked)) \
-                        .annotate(remain_seats=F('seats')-Count('participants')) \
+                        .annotate(
+                            remain_seats=F('seats')-Count('participants')) \
                         .order_by('-booked', 'start_at')
         return queryset
 
