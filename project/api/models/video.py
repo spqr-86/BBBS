@@ -54,6 +54,10 @@ class Video(models.Model, ImageFromUrlMixin):
         verbose_name=_('Отображать на главной странице'),
         default=False,
     )
+    pinned_full_size = models.BooleanField(
+        verbose_name=_('Отображать с полноразмерным видео вверху страницы'),
+        default=False,
+    )
 
     class Meta:
         app_label = 'api'
