@@ -6,7 +6,7 @@ from .tag import TagSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, read_only=True)
+    tags = TagSerializer(read_only=True)
     remain_seats = serializers.IntegerField(read_only=True)
     booked = serializers.BooleanField(read_only=True)
 
@@ -20,12 +20,6 @@ class DateEventSerializer(serializers.Serializer):
 
     class Meta:
         fields = '__all__'
-
-
-class ProfileEventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = ['id', 'title', 'start_at']
 
 
 class ParticipantWriteSerializer(serializers.ModelSerializer):
@@ -46,7 +40,7 @@ class ParticipantWriteSerializer(serializers.ModelSerializer):
 
 
 class ParticipantReadSerializer(serializers.ModelSerializer):
-    event = ProfileEventSerializer()
+    event = EventSerializer()
 
     class Meta:
         model = Participant

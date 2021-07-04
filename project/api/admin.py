@@ -86,8 +86,9 @@ class DiaryAdmin(MixinAdmin):
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'get_start_at',
-                    'get_end_at', 'city', 'taken_seats', 'seats')
+                    'get_end_at', 'city', 'taken_seats', 'seats', 'tags')
     search_fields = ('title', 'contact', 'address', 'city')
+    list_editable = ('tags', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -100,6 +101,10 @@ class EventAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.events_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
+        if db_field.name == 'tags':
+            kwargs['queryset'] = models.Tag.objects.filter(
+                category=self.model._meta.verbose_name_plural
+            )
         return super(
             EventAdmin,
             self
