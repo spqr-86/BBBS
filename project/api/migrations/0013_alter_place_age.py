@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import api.models.validators
+import api.validators
 
 
 class Migration(migrations.Migration):
@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='place',
             name='age',
-            field=models.SmallIntegerField(validators=[api.models.validators.age_validator], verbose_name='Возраст ребёнка'),
+            field=models.SmallIntegerField(validators=[api.validators.age_validator], verbose_name='Возраст ребёнка'),
         ),
     ]
