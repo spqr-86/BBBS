@@ -50,10 +50,11 @@ class Event(models.Model):
         verbose_name=_('Участники'),
         related_name='events',
     )
-    tags = models.ManyToManyField(
+    tags = models.ForeignKey(
         to='api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='events',
+        on_delete=models.PROTECT,
     )
 
     class Meta:
