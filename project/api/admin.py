@@ -50,7 +50,7 @@ class BookTypeAdmin(MixinAdmin):
 
 @admin.register(models.Book)
 class BookAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'info', 'type', 'get_color')
+    list_display = ('id', 'title', 'author', 'year', 'type', 'get_color')
     search_fields = ('title', 'info', 'color')
 
     @admin.display(description=_('Цвет'))
@@ -85,7 +85,8 @@ class DiaryAdmin(MixinAdmin):
 
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
+    list_display = ('id', 'title', 'get_start_at',
+                    'get_end_at', 'city', 'taken_seats', 'seats')
     search_fields = ('title', 'contact', 'address', 'city')
 
     def get_queryset(self, request):
@@ -115,6 +116,14 @@ class EventAdmin(MixinAdmin):
         return format_html('<a href="{}">{} чел.</a>', url, count)
 
     taken_seats.short_description = 'Кол-во участников'
+
+    @admin.display(description=_('Время начала'))
+    def get_start_at(self, obj):
+        return obj.start_at.strftime('%Y-%m-%d %H:%M')
+
+    @admin.display(description=_('Время окончания'))
+    def get_end_at(self, obj):
+        return obj.end_at.strftime('%Y-%m-%d %H:%M')
 
 
 @admin.register(models.History)

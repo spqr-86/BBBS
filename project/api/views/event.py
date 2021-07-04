@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from ..filters import EventFilter
 from ..models import Event, Participant
 from ..permissions import IsUsersCity
-from ..serializers import (EventSerializer,
-                           ParticipantSerializer, DateEventSerializer)
+from ..serializers import (EventSerializer, ParticipantWriteSerializer,
+                           ParticipantReadSerializer, DateEventSerializer)
 
 
 class ListCreateDelViewSet(mixins.ListModelMixin,
@@ -45,7 +45,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     def months(self, request):
         user = request.user
         dates = Event.objects.filter(city=user.city) \
-                             .filter(start_at__gt=now()) \
+                             .filter(end_at__gt=now()) \
                              .dates('start_at', 'month')
         months = list(set([date.month for date in dates]))
         months.sort()
@@ -61,13 +61,17 @@ class MyEventsArchive(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Event.objects.filter(participants=self.request.user,
-                                    start_at__lt=now())
+                                    end_at__lt=now())
 
 
 class ParticipantViewSet(ListCreateDelViewSet):
     permission_classes = [IsUsersCity, permissions.IsAuthenticated]
-    serializer_class = ParticipantSerializer
     pagination_class = LimitOffsetPagination
+
+    def get_serializer_class(self):
+        if self.action in ('list', 'retrieve'):
+            return ParticipantReadSerializer
+        return ParticipantWriteSerializer
 
     def get_queryset(self):
         return Participant.objects.filter(participant=self.request.user)
