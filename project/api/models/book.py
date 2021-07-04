@@ -2,15 +2,21 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from ..validators import year_validator
+
 
 class Book(models.Model):
     title = models.CharField(
         verbose_name=_('Заголовок'),
         max_length=128,
     )
-    info = models.CharField(
-        verbose_name=_('Информация'),
+    author = models.CharField(
+        verbose_name=_('Автор'),
         max_length=256,
+    )
+    year = models.SmallIntegerField(
+        verbose_name=_('Год публикации'),
+        validators=[year_validator],
     )
     annotation = models.TextField(
         verbose_name=_('Аннотация'),

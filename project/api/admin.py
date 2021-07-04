@@ -50,7 +50,7 @@ class BookTypeAdmin(MixinAdmin):
 
 @admin.register(models.Book)
 class BookAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'info', 'type', 'get_color')
+    list_display = ('id', 'title', 'author', 'year', 'type', 'get_color')
     search_fields = ('title', 'info', 'color')
 
     @admin.display(description=_('Цвет'))
