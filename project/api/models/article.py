@@ -36,7 +36,8 @@ class Article(models.Model, ImageFromUrlMixin):
         default=False,
     )
     pinned_full_size = models.BooleanField(
-        verbose_name=_('Отображать с полноразмерным изображением вверху страницы'),
+        verbose_name=_('Отображать с полноразмерным '
+                       'изображением вверху страницы'),
         default=False,
     )
 
@@ -52,6 +53,6 @@ class Article(models.Model, ImageFromUrlMixin):
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
-        if self.pinned_full_size and Article.objects.filter(pinned_full_size=True).exists():
-            Article.objects.filter(pinned_full_size=True).update(pinned_full_size=False)
+        if self.pinned_full_size:
+            self.__class__.objects.filter(pinned_full_size=True).update(pinned_full_size=False)  # noqa E501
         return super().save(*args, **kwargs)
