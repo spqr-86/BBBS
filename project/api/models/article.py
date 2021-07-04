@@ -53,7 +53,5 @@ class Article(models.Model, ImageFromUrlMixin):
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
         if self.pinned_full_size and Article.objects.filter(pinned_full_size=True).exists():
-            previous_pinned_object = Article.objects.get(pinned_full_size=True)
-            previous_pinned_object.pinned_full_size = False
-            previous_pinned_object.save()
+            Article.objects.filter(pinned_full_size=True).update(pinned_full_size=False)
         return super().save(*args, **kwargs)
