@@ -6,7 +6,6 @@ class Tag(models.Model):
     name = models.CharField(
         verbose_name=_('Название тега'),
         max_length=50,
-        unique=True,
     )
     category = models.CharField(
         verbose_name=_('Категория тега'),
