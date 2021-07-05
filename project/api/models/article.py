@@ -24,12 +24,14 @@ class Article(models.Model, ImageFromUrlMixin):
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,
+        blank=True,
+        null=True,
     )
     image = models.ImageField(
         upload_to='articles/',
         verbose_name=_('Фото'),
         blank=True,
-        null=True
+        null=True,
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),

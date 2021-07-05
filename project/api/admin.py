@@ -33,8 +33,9 @@ class ActivityAdmin(MixinAdmin):
 
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
-    list_display = ('id', 'title')
+    list_display = ('id', 'title', 'pinned_full_size')
     search_fields = ('title', )
+    list_filter = ('pinned_full_size', )
 
 
 @admin.register(models.BookType)
@@ -209,5 +210,6 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'duration')
-    search_fields = ('title',)
+    list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
+    search_fields = ('title', )
+    list_filter = ('pinned_full_size', )
