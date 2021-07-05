@@ -40,7 +40,7 @@ class ParticipantWriteSerializer(serializers.ModelSerializer):
 
 
 class ParticipantReadSerializer(serializers.ModelSerializer):
-    event = EventSerializer()
+    event = EventSerializer(read_only=True)
 
     class Meta:
         model = Participant

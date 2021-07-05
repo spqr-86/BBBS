@@ -34,12 +34,12 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = self.request.user
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-        queryset = Event.objects.filter(city=user.city) \
-                        .filter(end_at__gt=now()) \
-                        .annotate(booked=Exists(booked)) \
-                        .annotate(remain_seats=F('seats')-Count('participants')) \
-                        .order_by('-booked', 'start_at')
-        return queryset
+        remain_seats = F('seats')-Count('participants')
+        return Event.objects.filter(city=user.city) \
+                            .filter(end_at__gt=now()) \
+                            .annotate(booked=Exists(booked)) \
+                            .annotate(remain_seats=remain_seats) \
+                            .order_by('start_at')
 
     @action(methods=['get'], detail=False)
     def months(self, request):
@@ -74,7 +74,8 @@ class ParticipantViewSet(ListCreateDelViewSet):
         return ParticipantWriteSerializer
 
     def get_queryset(self):
-        return Participant.objects.filter(participant=self.request.user)
+        return Participant.objects.filter(participant=self.request.user) \
+                                  .filter(event__end_at__gt=now())
 
     def create(self, request):
         event = get_object_or_404(Event, id=self.request.data.get('event'))
