@@ -1,4 +1,4 @@
-name: Docker hub update
+name: Docker Hub Dev Image Update
 on:
   push:
     branches: [ integration ]
@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/bbbs:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/bbbs_dev:latest
 
   send_message:
     runs-on: ubuntu-latest
@@ -33,9 +33,9 @@ jobs:
       with:
         to: ${{ secrets.CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        message: "Docker образ обновлен.\n
+        message: "Dev-образ обновлен.\n
                   Чтобы загрузить обновление:\n
-                  docker pull t0rk/bbbs:latest\n
+                  docker pull ${{ secrets.DOCKER_USERNAME }}/bbbs_dev:latest\n
                   docker-compose stop web\n
                   docker-compose rm web\n
                   docker-compose up -d\n"
