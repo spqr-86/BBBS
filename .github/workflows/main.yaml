@@ -55,7 +55,7 @@ jobs:
     - name: send message
       uses: appleboy/telegram-action@master
       with:
-        to: -490603652
+        to: ${{ secrets.CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         message: "${{ github.workflow }} successfully completed!\n
                   http://${{ secrets.HOST }}/"
