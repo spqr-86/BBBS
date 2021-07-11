@@ -34,7 +34,7 @@ class Event(models.Model):
         verbose_name=_('Время окончания'),
     )
     seats = models.PositiveSmallIntegerField(
-        verbose_name=_('Максимальное число участников'),
+        verbose_name=_('Количество мест'),
         validators=[validators.MinValueValidator(1)],
     )
     city = models.ForeignKey(
@@ -49,6 +49,12 @@ class Event(models.Model):
         through_fields=('event', 'participant'),
         verbose_name=_('Участники'),
         related_name='events',
+    )
+    tags = models.ForeignKey(
+        to='api.Tag',
+        verbose_name=_('Тег(и)'),
+        related_name='events',
+        on_delete=models.PROTECT,
     )
 
     class Meta:

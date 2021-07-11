@@ -33,8 +33,9 @@ class ActivityAdmin(MixinAdmin):
 
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
-    list_display = ('id', 'title')
+    list_display = ('id', 'title', 'pinned_full_size')
     search_fields = ('title', )
+    list_filter = ('pinned_full_size', )
 
 
 @admin.register(models.BookType)
@@ -50,7 +51,7 @@ class BookTypeAdmin(MixinAdmin):
 
 @admin.register(models.Book)
 class BookAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'info', 'type', 'get_color')
+    list_display = ('id', 'title', 'author', 'year', 'type', 'get_color')
     search_fields = ('title', 'info', 'color')
 
     @admin.display(description=_('Цвет'))
@@ -85,8 +86,10 @@ class DiaryAdmin(MixinAdmin):
 
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
+    list_display = ('id', 'title', 'get_start_at',
+                    'get_end_at', 'city', 'taken_seats', 'seats', 'tags')
     search_fields = ('title', 'contact', 'address', 'city')
+    list_editable = ('tags', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -99,6 +102,10 @@ class EventAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.events_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
+        if db_field.name == 'tags':
+            kwargs['queryset'] = models.Tag.objects.filter(
+                category=self.model._meta.verbose_name_plural
+            )
         return super(
             EventAdmin,
             self
@@ -115,6 +122,14 @@ class EventAdmin(MixinAdmin):
         return format_html('<a href="{}">{} чел.</a>', url, count)
 
     taken_seats.short_description = 'Кол-во участников'
+
+    @admin.display(description=_('Время начала'))
+    def get_start_at(self, obj):
+        return obj.start_at.strftime('%Y-%m-%d %H:%M')
+
+    @admin.display(description=_('Время окончания'))
+    def get_end_at(self, obj):
+        return obj.end_at.strftime('%Y-%m-%d %H:%M')
 
 
 @admin.register(models.History)
@@ -147,10 +162,11 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'address', 'image_url',
-                    'link', 'city', 'activity_type')
+    list_display = ('id', 'title', 'address',
+                    'link', 'city', 'activity_type', 'age', 'age_restriction')
+    list_editable = ('age_restriction', )
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', 'activity_type')
+    list_filter = ('city', 'activity_type', 'age_restriction')
     radio_fields = {'gender': admin.HORIZONTAL}
 
     def get_queryset(self, request):
@@ -194,5 +210,6 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'duration')
-    search_fields = ('title',)
+    list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
+    search_fields = ('title', )
+    list_filter = ('pinned_full_size', )

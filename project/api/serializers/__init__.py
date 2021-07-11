@@ -6,8 +6,8 @@ from .booktype import BookTypeSerializer
 from .catalog import CatalogSerializer
 from .city import CitySerializer
 from .diary import DiarySerializer
-from .event import (EventSerializer, MainEventSerializer,
-                    ParticipantSerializer, DateEventSerializer)
+from .event import (EventSerializer, ParticipantWriteSerializer,
+                    ParticipantReadSerializer, DateEventSerializer)
 from .history import HistorySerializer
 from .movie import MovieSerializer
 from .place import PlaceSerializer
@@ -27,9 +27,9 @@ __all__ = [
     'CitySerializer',
     'DiarySerializer',
     'EventSerializer',
-    'MainEventSerializer',
     'DateEventSerializer',
-    'ParticipantSerializer',
+    'ParticipantWriteSerializer',
+    'ParticipantReadSerializer',
     'HistorySerializer',
     'PlaceSerializer',
     'ProfileSerializer',

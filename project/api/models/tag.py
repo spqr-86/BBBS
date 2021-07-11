@@ -6,7 +6,6 @@ class Tag(models.Model):
     name = models.CharField(
         verbose_name=_('Название тега'),
         max_length=50,
-        unique=True,
     )
     category = models.CharField(
         verbose_name=_('Категория тега'),
@@ -18,6 +17,7 @@ class Tag(models.Model):
             (_('Вопросы'), _('Вопросы')),
             (_('Права'), _('Права')),
             (_('Видеоролики'), _('Видеоролики')),
+            (_('События'), _('События')),
         ),
     )
     slug = models.SlugField(

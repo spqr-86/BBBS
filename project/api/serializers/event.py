@@ -6,18 +6,9 @@ from .tag import TagSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(read_only=True)
     remain_seats = serializers.IntegerField(read_only=True)
-    booked = serializers.BooleanField(default=False, read_only=True)
-
-    class Meta:
-        model = Event
-        exclude = ['participants']
-
-
-class MainEventSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, read_only=True)
-    remain_seats = serializers.IntegerField(read_only=True)
-    booked = serializers.BooleanField(default=False, read_only=True)
+    booked = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Event
@@ -31,7 +22,7 @@ class DateEventSerializer(serializers.Serializer):
         fields = '__all__'
 
 
-class ParticipantSerializer(serializers.ModelSerializer):
+class ParticipantWriteSerializer(serializers.ModelSerializer):
     participant = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
@@ -46,3 +37,11 @@ class ParticipantSerializer(serializers.ModelSerializer):
                 message=_('Вы уже зарегестрированы на это событие')
             )
         ]
+
+
+class ParticipantReadSerializer(serializers.ModelSerializer):
+    event = EventSerializer(read_only=True)
+
+    class Meta:
+        model = Participant
+        fields = ['id', 'event']

@@ -54,6 +54,10 @@ class Video(models.Model, ImageFromUrlMixin):
         verbose_name=_('Отображать на главной странице'),
         default=False,
     )
+    pinned_full_size = models.BooleanField(
+        verbose_name=_('Отображать с полноразмерным видео вверху страницы'),
+        default=False,
+    )
 
     class Meta:
         app_label = 'api'
@@ -71,4 +75,6 @@ class Video(models.Model, ImageFromUrlMixin):
                 self.load_image(image_url=video_thumbnail_url)
             except ConnectionError:
                 super().save(*args, **kwargs)
+        if self.pinned_full_size:
+            self.__class__.objects.filter(pinned_full_size=True).update(pinned_full_size=False)  # noqa E501
         return super().save(*args, **kwargs)

@@ -1,13 +1,13 @@
 from rest_framework.serializers import Serializer
 
 from ..serializers import (ArticleSerializer, HistorySerializer,
-                           MainEventSerializer, MovieSerializer,
+                           EventSerializer, MovieSerializer,
                            PlaceSerializer, QuestionSerializer,
                            VideoSerializer)
 
 
 class MainSerializer(Serializer):
-    event = MainEventSerializer(required=False, read_only=True)
+    event = EventSerializer(required=False, read_only=True)
     history = HistorySerializer(required=False, read_only=True)
     place = PlaceSerializer(required=False, read_only=True)
     articles = ArticleSerializer(many=True, required=False, read_only=True)

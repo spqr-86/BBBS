@@ -8,7 +8,7 @@ from .mixins import GetListPostPutMixin, TagMixin
 
 
 class PlacesViewSet(GetListPostPutMixin, TagMixin):
-    queryset = Place.objects.all()
+    queryset = Place.objects.exclude(tags=None)
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
