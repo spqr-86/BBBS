@@ -1,6 +1,10 @@
 from .article import ArticleViewSet
+from .activity_types import ActivityTypeView
+from .book import BookView
+from .catalog import CatalogView
 from .city import CityViewSet
-from .event import EventViewSet, ParticipantViewSet
+from .diary import DiaryViewSet
+from .event import EventViewSet, ParticipantViewSet, MyEventsArchive
 from .history import HistoryViewSet
 from .main import MainViewSet
 from .mixins import GetListPostPutMixin, TagMixin
@@ -14,7 +18,10 @@ from .video import VideoView
 
 __all__ = [
     'ArticleViewSet',
+    'ActivityTypeView',
+    'CatalogView',
     'CityViewSet',
+    'DiaryViewSet',
     'EventViewSet',
     'ParticipantViewSet',
     'MainViewSet',
@@ -23,9 +30,11 @@ __all__ = [
     'ProfileViewSet',
     'RightViewSet',
     'TagViewSet',
+    'BookView',
     'MovieView',
     'VideoView',
     'QuestionViewSet',
     'GetListPostPutMixin',
     'TagMixin',
+    'MyEventsArchive'
 ]

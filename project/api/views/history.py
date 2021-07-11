@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import LimitOffsetPagination
 
 from ..models import History
 from ..serializers import HistorySerializer
@@ -10,4 +10,4 @@ class HistoryViewSet(GetListPostPutMixin):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    pagination_class = PageNumberPagination
+    pagination_class = LimitOffsetPagination

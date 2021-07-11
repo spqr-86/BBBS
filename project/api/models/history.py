@@ -20,12 +20,13 @@ class History(models.Model):
         max_length=100,
     )
     together_since = models.DateField(
-        verbose_name=_(''),
+        verbose_name=_('Вместе с'),
     )
-    image_url = models.URLField(
+    image = models.ImageField(
         verbose_name=_('Изображение'),
+        upload_to='history/',
         blank=True,
-        null=True,
+        null=True
     )
     description = models.TextField(
         verbose_name=_('Текст истории'),

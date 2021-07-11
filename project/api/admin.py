@@ -14,6 +14,16 @@ User = get_user_model()
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'tags':
+            kwargs['queryset'] = models.Tag.objects.filter(
+                category=self.model._meta.verbose_name_plural
+            )
+        return super(
+            MixinAdmin,
+            self
+        ).formfield_for_manytomany(db_field, request, **kwargs)
+
 
 @admin.register(models.ActivityType)
 class ActivityAdmin(MixinAdmin):
@@ -23,12 +33,41 @@ class ActivityAdmin(MixinAdmin):
 
 @admin.register(models.Article)
 class ArticleAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'color')
-    search_fields = ('title', 'color')
+    list_display = ('id', 'title', 'pinned_full_size')
+    search_fields = ('title', )
+    list_filter = ('pinned_full_size', )
+
+
+@admin.register(models.BookType)
+class BookTypeAdmin(MixinAdmin):
+    list_display = ('id', 'name', 'slug', 'color')
+    search_fields = ('name', 'slug', 'color')
+    prepopulated_fields = {'slug': ('name',)}
     formfield_overrides = {
         fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
     }
+
+
+@admin.register(models.Book)
+class BookAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'author', 'year', 'type', 'get_color')
+    search_fields = ('title', 'info', 'color')
+
+    @admin.display(description=_('Цвет'))
+    def get_color(self, obj):
+        try:
+            color = obj.type.color
+        except AttributeError:
+            color = None
+        return color
+    get_color.admin_order_field = 'color'
+
+
+@admin.register(models.Catalog)
+class CatalogAdmin(MixinAdmin):
+    list_display = ('id', 'title', 'image_url')
+    search_fields = ('title', )
 
 
 @admin.register(models.City)
@@ -39,10 +78,18 @@ class CityAdmin(MixinAdmin):
     autocomplete_fields = ('region', )
 
 
+@admin.register(models.Diary)
+class DiaryAdmin(MixinAdmin):
+    list_display = ('id', 'mentor', 'place', 'date', 'mark')
+    search_fields = ('place', )
+
+
 @admin.register(models.Event)
 class EventAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'start_at', 'end_at', 'city', 'taken_seats')
+    list_display = ('id', 'title', 'get_start_at',
+                    'get_end_at', 'city', 'taken_seats', 'seats', 'tags')
     search_fields = ('title', 'contact', 'address', 'city')
+    list_editable = ('tags', )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -55,6 +102,10 @@ class EventAdmin(MixinAdmin):
         if (db_field.name == 'city'
                 and not user.has_perm('api.events_in_all_cities')):
             kwargs['queryset'] = models.City.objects.filter(region=user.region)
+        if db_field.name == 'tags':
+            kwargs['queryset'] = models.Tag.objects.filter(
+                category=self.model._meta.verbose_name_plural
+            )
         return super(
             EventAdmin,
             self
@@ -72,35 +123,51 @@ class EventAdmin(MixinAdmin):
 
     taken_seats.short_description = 'Кол-во участников'
 
+    @admin.display(description=_('Время начала'))
+    def get_start_at(self, obj):
+        return obj.start_at.strftime('%Y-%m-%d %H:%M')
+
+    @admin.display(description=_('Время окончания'))
+    def get_end_at(self, obj):
+        return obj.end_at.strftime('%Y-%m-%d %H:%M')
+
 
 @admin.register(models.History)
 class HistoryAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url')
-    search_fields = ('title', 'image_url')
+    list_display = ('id', 'title', 'mentor', 'child')
+    search_fields = ('title', )
+    list_filter = ('mentor', 'child')
 
 
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url', 'link')
+    list_display = ('id', 'title', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
 
 
 @admin.register(models.Question)
 class QuestionAdmin(MixinAdmin):
-    list_display = ('id', 'title', )
+    list_display = ('id', 'title', 'get_answer')
     search_fields = ('title', )
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
+
+    @admin.display(description=_('Ответ'))
+    def get_answer(self, obj):
+        answer = obj.answer
+        if answer is not None:
+            return f'{answer[:50]}..'
+        return answer
 
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'address', 'image_url',
-                    'link', 'city', 'activity_type')
+    list_display = ('id', 'title', 'address',
+                    'link', 'city', 'activity_type', 'age', 'age_restriction')
+    list_editable = ('age_restriction', )
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', 'activity_type')
+    list_filter = ('city', 'activity_type', 'age_restriction')
+    radio_fields = {'gender': admin.HORIZONTAL}
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -121,14 +188,9 @@ class PlaceAdmin(MixinAdmin):
 
 @admin.register(models.Right)
 class RightAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'color')
+    list_display = ('id', 'title')
     search_fields = ('title', 'description')
     list_filter = ('tags', )
-    autocomplete_fields = ('tags', )
-    formfield_overrides = {
-        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
-                            'style': 'height: 100px; width: 100px;'})}
-    }
 
 
 @admin.register(models.Region)
@@ -139,12 +201,15 @@ class RegionAdmin(MixinAdmin):
 
 @admin.register(models.Tag)
 class TagAdmin(MixinAdmin):
-    list_display = ('id', 'name', 'slug')
-    search_fields = ('name', 'slug')
+    list_display = ('id', 'name', 'category', 'slug')
+    list_editable = ('category', )
+    search_fields = ('name', 'category', 'slug')
+    list_filter = ('category', )
     prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'image_url', 'link', 'duration')
-    search_fields = ('title',)
+    list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
+    search_fields = ('title', )
+    list_filter = ('pinned_full_size', )

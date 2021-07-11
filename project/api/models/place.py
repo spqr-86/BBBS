@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .validators import age_validator
+from ..validators import age_validator
+from .mixins import ImageFromUrlMixin
 
 
-class Place(models.Model):
+class Place(models.Model, ImageFromUrlMixin):
     title = models.CharField(
         verbose_name=_('Название'),
         max_length=200,
@@ -17,6 +18,12 @@ class Place(models.Model):
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
+    )
+    image = models.ImageField(
+        verbose_name=_('Фото'),
+        upload_to='places/',
+        blank=True,
+        null=True
     )
     link = models.URLField(
         verbose_name=_('Сайт'),
@@ -62,6 +69,17 @@ class Place(models.Model):
         verbose_name=_('Возраст ребёнка'),
         validators=[age_validator],
     )
+    age_restriction = models.CharField(
+        verbose_name=_('Целевой возраст'),
+        max_length=50,
+        choices=(
+            (_('8-10'), _('8-10')),
+            (_('11-13'), _('11-13')),
+            (_('14-17'), _('14-17')),
+            (_('18'), _('18')),
+            (_('any'), _('Любой'))
+        ),
+    )
 
     class Meta:
         app_label = 'api'
@@ -74,3 +92,8 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        if self.image_url and not self.image:
+            self.load_image(image_url=self.image_url)
+        return super().save(*args, **kwargs)

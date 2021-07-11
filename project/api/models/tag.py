@@ -6,7 +6,19 @@ class Tag(models.Model):
     name = models.CharField(
         verbose_name=_('Название тега'),
         max_length=50,
-        unique=True,
+    )
+    category = models.CharField(
+        verbose_name=_('Категория тега'),
+        max_length=50,
+        choices=(
+            (_('Книги'), _('Книги')),
+            (_('Фильмы'), _('Фильмы')),
+            (_('Места'), _('Места')),
+            (_('Вопросы'), _('Вопросы')),
+            (_('Права'), _('Права')),
+            (_('Видеоролики'), _('Видеоролики')),
+            (_('События'), _('События')),
+        ),
     )
     slug = models.SlugField(
         verbose_name=_('Слаг (Ссылка)'),
@@ -15,9 +27,9 @@ class Tag(models.Model):
 
     class Meta:
         app_label = 'api'
-        ordering = ('id',)
+        ordering = ('category', 'name')
         verbose_name = _('Тег')
         verbose_name_plural = _('Теги')
 
     def __str__(self):
-        return f'{self.name}: {self.slug}'
+        return f'{self.category}: {self.name}'
