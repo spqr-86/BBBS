@@ -23,13 +23,13 @@ django-cors-headers = "*"
 pillow = "*"
 psycopg2 = "*"
 requests = "*"
+drf-yasg = "*"
 
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
 django-extensions = "*"
 werkzeug = "*"
-drf-yasg = "*"
 
 [requires]
 python_version = "3.9"
