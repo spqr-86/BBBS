@@ -15,7 +15,9 @@ SECRET_KEY = ENV['SECRET_KEY']
 DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'web:8000']
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 
 # Application definition
