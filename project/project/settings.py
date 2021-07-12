@@ -15,7 +15,9 @@ SECRET_KEY = ENV['SECRET_KEY']
 DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'web:8000']
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 
 # Application definition
@@ -80,11 +82,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': ENV.get('DB_NAME'),
+            'NAME': ENV.get('POSTGRES_DB'),
             'USER': ENV.get('POSTGRES_USER'),
             'PASSWORD': ENV.get('POSTGRES_PASSWORD'),
-            'HOST': ENV.get('DB_HOST'),
-            'PORT': ENV.get('DB_PORT'),
+            'HOST': ENV.get('DB_HOST', 'db'),
+            'PORT': ENV.get('DB_PORT', 5432),
         }
     }
 
