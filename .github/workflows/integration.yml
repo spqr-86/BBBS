@@ -57,6 +57,7 @@ jobs:
             sudo docker-compose stop
             sudo docker-compose rm backend
             sudo docker-compose rm frontend
+            sudo docker-compose rm nginx
             sudo docker volume rm admin_react_build
             touch .env 
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} > .env
