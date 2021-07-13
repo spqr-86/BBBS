@@ -22,7 +22,6 @@ services:
       - db
     env_file:
       - ./.env
-    entrypoint: entrypoint.sh
   frontend:
     image: hlystovea/bbbs_front:latest
     volumes:
