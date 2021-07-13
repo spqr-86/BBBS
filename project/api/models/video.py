@@ -58,6 +58,10 @@ class Video(models.Model, ImageFromUrlMixin):
         verbose_name=_('Отображать с полноразмерным видео вверху страницы'),
         default=False,
     )
+    resource_group = models.BooleanField(
+        verbose_name=_('Ресурсная группа'),
+        default=False
+    )
 
     class Meta:
         app_label = 'api'

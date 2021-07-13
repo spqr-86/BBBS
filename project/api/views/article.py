@@ -7,7 +7,7 @@ from ..serializers import ArticleSerializer
 
 
 class ArticleViewSet(ReadOnlyModelViewSet):
-    queryset = Article.objects.all()
+    queryset = Article.objects.all().order_by('pinned_full_size', '-id')
     serializer_class = ArticleSerializer
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
