@@ -23,6 +23,8 @@ django-cors-headers = "*"
 pillow = "*"
 requests = "*"
 drf-yasg = "*"
+django-tinymce = "*"
+django-summernote = "*"
 
 [dev-packages]
 pytest = "*"

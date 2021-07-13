@@ -34,7 +34,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = self.request.user
         booked = Event.objects.filter(pk=OuterRef('pk'), participants=user)
-        remain_seats = F('seats')-Count('participants')
+        remain_seats = F('seats') - Count('participants')
         return Event.objects.filter(city=user.city) \
                             .filter(end_at__gt=now()) \
                             .annotate(booked=Exists(booked)) \
