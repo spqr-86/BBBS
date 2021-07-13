@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.USER  }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          source: "docker-compose.yaml,nginx/default.conf,entrypoint.sh"
+          source: "docker-compose.yaml,nginx/default.conf"
           target: "~/"
           overwrite: true
 
