@@ -24,6 +24,7 @@ pillow = "*"
 psycopg2 = "*"
 requests = "*"
 drf-yasg = "*"
+django-tinymce = "*"
 
 [dev-packages]
 pytest = "*"

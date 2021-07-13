@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 
 from .mixins import ImageFromUrlMixin
 
@@ -18,6 +19,9 @@ class Catalog(models.Model, ImageFromUrlMixin):
         verbose_name=_('Фото'),
         blank=True,
         null=True
+    )
+    content = HTMLField(
+        verbose_name=_('Содержание статьи'),
     )
 
     class Meta:
