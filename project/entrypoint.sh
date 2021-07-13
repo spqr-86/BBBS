@@ -2,6 +2,8 @@
 
 set -e
 
+sleep 10
+
 echo "${0}: running migrations."
 python manage.py migrate --noinput
 

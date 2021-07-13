@@ -212,4 +212,4 @@ class TagAdmin(MixinAdmin):
 class VideoAdmin(MixinAdmin):
     list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
     search_fields = ('title', )
-    list_filter = ('pinned_full_size', )
+    list_filter = ('pinned_full_size', 'resource_group')

@@ -96,7 +96,7 @@ class Participant(models.Model):
     )
     participant = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE
     )
 
     class Meta:
