@@ -12,7 +12,7 @@ services:
   backend:
     image: hlystovea/bbbs_back:latest
     restart: always
-    command: ['chmod +x *.sh', 'gunicorn project.wsgi --bind 0.0.0.0:8000']
+    command: gunicorn project.wsgi --bind 0.0.0.0:8000
     ports:
       - '8000:8000'
     volumes:
@@ -22,6 +22,7 @@ services:
       - db
     env_file:
       - ./.env
+    entrypoint: entrypoint.sh
   frontend:
     image: hlystovea/bbbs_front:latest
     volumes:
