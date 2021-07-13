@@ -1,4 +1,5 @@
 from django import forms
+from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -133,10 +134,11 @@ class EventAdmin(MixinAdmin):
 
 
 @admin.register(models.History)
-class HistoryAdmin(MixinAdmin):
+class HistoryAdmin(SummernoteModelAdmin):
     list_display = ('id', 'title', 'mentor', 'child')
     search_fields = ('title', )
     list_filter = ('mentor', 'child')
+    summernote_fields = ('description', )
 
 
 @admin.register(models.Movie)

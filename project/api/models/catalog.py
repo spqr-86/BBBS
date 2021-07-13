@@ -20,9 +20,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
         blank=True,
         null=True
     )
-    content = HTMLField(
-        verbose_name=_('Содержание статьи'),
-    )
+    content = HTMLField()
 
     class Meta:
         app_label = 'api'
