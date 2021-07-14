@@ -14,7 +14,7 @@ class VideoView(ReadOnlyModelViewSet, TagMixin):
             exclude_keys['resource_group'] = True
         return Video.objects.exclude(
             **exclude_keys
-        ).order_by('pinned_full_size', '-id')
+        ).order_by('-pinned_full_size', '-id')
 
     serializer_class = VideoSerializer
     permission_classes = [AllowAny]
