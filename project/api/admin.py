@@ -144,9 +144,16 @@ class HistoryAdmin(SummernoteModelAdmin):
 
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link')
+    list_display = ('id', 'title', 'link', 'image_tag')
     search_fields = ('title',)
     list_filter = ('tags', )
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 60%"/>',
+            instance.image.url
+        )
 
 
 @admin.register(models.Question)
@@ -171,6 +178,13 @@ class PlaceAdmin(MixinAdmin):
     search_fields = ('title', 'name', 'info')
     list_filter = ('city', 'activity_type', 'age_restriction', 'moderation_flag')
     radio_fields = {'gender': admin.HORIZONTAL}
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 100%"/>',
+            instance.image.url
+        )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -217,7 +231,6 @@ class VideoAdmin(MixinAdmin):
     search_fields = ('title', )
     list_filter = ('pinned_full_size', 'resource_group')
     readonly_fields = ('image_tag',)
-
 
     def image_tag(self, instance):
         return format_html(
