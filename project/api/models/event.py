@@ -55,6 +55,7 @@ class Event(models.Model):
         verbose_name=_('Тег(и)'),
         related_name='events',
         on_delete=models.PROTECT,
+        limit_choices_to={'category': _('События')},
     )
 
     class Meta:

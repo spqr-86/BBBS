@@ -1,5 +1,6 @@
-import requests
 import urllib
+
+import requests
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -47,6 +48,7 @@ class Movie(models.Model, ImageFromUrlMixin):
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='movies',
+        limit_choices_to={'category': _('Фильмы')},
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),

@@ -9,8 +9,12 @@ from rest_framework.response import Response
 from ..filters import EventFilter
 from ..models import Event, Participant
 from ..permissions import IsUsersCity
-from ..serializers import (EventSerializer, ParticipantWriteSerializer,
-                           ParticipantReadSerializer, DateEventSerializer)
+from ..serializers import (
+    DateEventSerializer,
+    EventSerializer,
+    ParticipantReadSerializer,
+    ParticipantWriteSerializer,
+)
 
 
 class ListCreateDelViewSet(mixins.ListModelMixin,

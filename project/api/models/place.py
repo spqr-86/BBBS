@@ -57,6 +57,7 @@ class Place(models.Model, ImageFromUrlMixin):
         to='api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='places',
+        limit_choices_to={'category': _('Места')},
     )
     activity_type = models.ForeignKey(
         to='api.ActivityType',

@@ -1,9 +1,8 @@
 import os
+
 import requests
-
-from django.utils.timezone import now
 from django.conf import settings
-
+from django.utils.timezone import now
 
 
 class ImageFromUrlMixin:
