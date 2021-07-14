@@ -42,7 +42,6 @@ class Video(models.Model, ImageFromUrlMixin):
     )
     duration = models.PositiveIntegerField(
         verbose_name=_('Продолжительность видеоролика в сек.'),
-        default=0,
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
     tags = models.ManyToManyField(

@@ -165,11 +165,11 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'address',
-                    'link', 'city', 'activity_type', 'age', 'age_restriction')
+    list_display = ('id', 'title', 'address', 'link', 'city',
+                    'activity_type', 'age', 'age_restriction', 'moderation_flag')
     list_editable = ('age_restriction', )
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', 'activity_type', 'age_restriction')
+    list_filter = ('city', 'activity_type', 'age_restriction', 'moderation_flag')
     radio_fields = {'gender': admin.HORIZONTAL}
 
     def get_queryset(self, request):
