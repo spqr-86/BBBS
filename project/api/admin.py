@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html
 
 from . import models
 from .fields import fields
@@ -212,6 +213,14 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
+    list_display = ('id', 'title', 'link', 'image_tag', 'duration', 'pinned_full_size')
     search_fields = ('title', )
     list_filter = ('pinned_full_size', 'resource_group')
+    readonly_fields = ('image_tag',)
+
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 100%"/>',
+            instance.image.url
+        )
