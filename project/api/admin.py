@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
-from django_summernote.admin import SummernoteModelAdmin
 
 from . import models
 from .fields import fields
@@ -136,11 +135,10 @@ class EventAdmin(MixinAdmin):
 
 
 @admin.register(models.History)
-class HistoryAdmin(SummernoteModelAdmin):
+class HistoryAdmin(MixinAdmin):
     list_display = ('id', 'title', 'mentor', 'child')
     search_fields = ('title', )
     list_filter = ('mentor', 'child')
-    summernote_fields = ('description', )
 
 
 @admin.register(models.Movie)
