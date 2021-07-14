@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
@@ -141,8 +142,21 @@ class HistoryAdmin(MixinAdmin):
     list_filter = ('mentor', 'child')
 
 
+class MovieAdminForm(forms.ModelForm):
+    class Meta:
+        fields = '__all__'
+        model = models.Movie
+
+    def clean_tags(self):
+        tags = self.cleaned_data.get('tags')
+        if tags.count() > 4:
+            raise ValidationError(_('Выберите не более 4-х тегов'))
+        return self.cleaned_data['tags']
+
+
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
+    form = MovieAdminForm
     list_display = ('id', 'title', 'link', 'image_tag')
     search_fields = ('title',)
     list_filter = ('tags', )
