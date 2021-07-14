@@ -1,15 +1,14 @@
 import os
 import requests
 
+from django.utils.timezone import now
 from django.conf import settings
+
 
 
 class ImageFromUrlMixin:
     def load_image(self, *, image_url, save=False):
-        if self.__class__.objects.exists():
-            new_id = self.__class__.objects.latest('id').id + 1
-        else:
-            new_id = 1
+        new_id = str(now().timestamp())
         directory = self.__class__.image.field.upload_to
         try:
             response = requests.get(image_url)
