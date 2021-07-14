@@ -20,7 +20,7 @@ class ImageFromUrlMixin:
                 'wb'
             ) as image:
                 image.write(response.content)
-                self.image = image.name
+                self.image = f'{directory}/{new_id}_pic.jpg'
             if save:
                 self.save()
         except requests.exceptions.ConnectionError:
