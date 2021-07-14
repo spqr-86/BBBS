@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'account',
     'tinymce',
     'django_summernote',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -184,3 +185,5 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+ADMIN_HONEYPOT_EMAIL_ADMINS = False
