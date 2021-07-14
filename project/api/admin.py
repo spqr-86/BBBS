@@ -164,7 +164,7 @@ class MovieAdmin(MixinAdmin):
 
     def image_tag(self, instance):
         return format_html(
-            '<img src="{0}" style="max-width: 60%"/>',
+            '<img src="{0}" style="max-height: 50px"/>',
             instance.image.url
         )
 
@@ -196,7 +196,7 @@ class PlaceAdmin(MixinAdmin):
 
     def image_tag(self, instance):
         return format_html(
-            '<img src="{0}" style="max-width: 100%"/>',
+            '<img src="{0}" style="max-height: 50px"/>',
             instance.image.url
         )
 
@@ -241,13 +241,14 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'image_tag', 'duration', 'pinned_full_size')
+    list_display = ('id', 'title', 'link', 'image_tag',
+                    'duration', 'pinned_full_size')
     search_fields = ('title', )
     list_filter = ('pinned_full_size', 'resource_group')
     readonly_fields = ('image_tag',)
 
     def image_tag(self, instance):
         return format_html(
-            '<img src="{0}" style="max-width: 100%"/>',
+            '<img src="{0}" style="max-height: 50px"/>',
             instance.image.url
         )
