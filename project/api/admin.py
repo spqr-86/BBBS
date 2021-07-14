@@ -144,7 +144,7 @@ class HistoryAdmin(SummernoteModelAdmin):
 
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'image_tag')
+    list_display = ('id', 'title', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
     readonly_fields = ('image_tag',)
