@@ -33,7 +33,7 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
     def first(self, request):
         return Response(
             self.serializer_class(
-                self.queryset.order_by(
+                self.get_queryset().order_by(
                     '-chosen',
                     '-id',
                 ).first()
