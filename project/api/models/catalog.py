@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 
 from .mixins import ImageFromUrlMixin
 
@@ -19,6 +20,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
         blank=True,
         null=True
     )
+    content = HTMLField()
 
     class Meta:
         app_label = 'api'

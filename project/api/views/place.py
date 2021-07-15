@@ -1,5 +1,7 @@
 from rest_framework import permissions
+from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.response import Response
 
 from ..filters import PlaceFilter
 from ..models import Place
@@ -8,7 +10,7 @@ from .mixins import GetListPostPutMixin, TagMixin
 
 
 class PlacesViewSet(GetListPostPutMixin, TagMixin):
-    queryset = Place.objects.exclude(tags=None)
+    queryset = Place.objects.exclude(moderation_flag=True)
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
@@ -38,3 +40,14 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
             age_restriction = 'any'
         serializer.save(chosen=self.request.user.is_mentor,
                         age_restriction=age_restriction)
+
+    @action(methods=['get'], detail=False)
+    def first(self, request):
+        return Response(
+            self.serializer_class(
+                self.queryset.order_by(
+                    'chosen',
+                    '-id'
+                ).first()
+            ).data
+        )

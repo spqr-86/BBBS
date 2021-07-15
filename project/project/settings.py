@@ -14,8 +14,10 @@ SECRET_KEY = ENV['SECRET_KEY']
 
 DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'web:8000']
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 
 # Application definition
@@ -30,8 +32,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'drf_yasg',
     'api',
     'account',
+    'tinymce',
+    'django_summernote',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +85,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': ENV.get('DB_NAME'),
-            'USER': ENV.get('POSTGRES_USER'),
-            'PASSWORD': ENV.get('POSTGRES_PASSWORD'),
-            'HOST': ENV.get('DB_HOST'),
-            'PORT': ENV.get('DB_PORT'),
+            'NAME': ENV['POSTGRES_DB'],
+            'USER': ENV.get('POSTGRES_USER', 'user'),
+            'PASSWORD': ENV.get('POSTGRES_PASSWORD', 'password'),
+            'HOST': ENV.get('DB_HOST', 'db'),
+            'PORT': ENV.get('DB_PORT', 5432),
         }
     }
 
@@ -117,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 
-LANGUAGE_CODE = ENV.get('LANGUAGE_CODE', default='en-us')
+LANGUAGE_CODE = ENV.get('LANGUAGE_CODE', default='ru-Ru')
 
 TIME_ZONE = ENV.get('TIME_ZONE', default='UTC')
 
@@ -180,20 +186,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
 
-
-# Email backends
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = ENV.get('EMAIL_HOST')
-EMAIL_HOST_USER = ENV.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = ENV.get('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = int(ENV.get('EMAIL_PORT', default=587))
-EMAIL_USE_SSL = int(ENV.get('EMAIL_USE_SSL', default=False))
-EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))
-
-
-if DEBUG:
-    from .settings_dev import (ALLOWED_HOSTS, INSTALLED_APPS_DEV, SIMPLE_JWT)  # noqa (F401, E501)
-    INSTALLED_APPS += INSTALLED_APPS_DEV
-
 MAX_TAGS_COUNT = 4
+
+ADMIN_HONEYPOT_EMAIL_ADMINS = False

@@ -42,7 +42,6 @@ class Video(models.Model, ImageFromUrlMixin):
     )
     duration = models.PositiveIntegerField(
         verbose_name=_('Продолжительность видеоролика в сек.'),
-        default=0,
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
     tags = models.ManyToManyField(
@@ -57,6 +56,10 @@ class Video(models.Model, ImageFromUrlMixin):
     pinned_full_size = models.BooleanField(
         verbose_name=_('Отображать с полноразмерным видео вверху страницы'),
         default=False,
+    )
+    resource_group = models.BooleanField(
+        verbose_name=_('Ресурсная группа'),
+        default=False
     )
 
     class Meta:

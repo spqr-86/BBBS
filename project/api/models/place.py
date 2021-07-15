@@ -49,6 +49,10 @@ class Place(models.Model, ImageFromUrlMixin):
         verbose_name=_('Отображать на главной странице'),
         default=False,
     )
+    moderation_flag = models.BooleanField(
+        verbose_name=_('Отметка о модерации'),
+        default=False,
+    )
     tags = models.ManyToManyField(
         to='api.Tag',
         verbose_name=_('Тег(и)'),

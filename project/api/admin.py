@@ -1,9 +1,11 @@
 from django import forms
+from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html
 
 from . import models, forms_movie
 from .fields import fields
@@ -133,10 +135,11 @@ class EventAdmin(MixinAdmin):
 
 
 @admin.register(models.History)
-class HistoryAdmin(MixinAdmin):
+class HistoryAdmin(SummernoteModelAdmin):
     list_display = ('id', 'title', 'mentor', 'child')
     search_fields = ('title', )
     list_filter = ('mentor', 'child')
+    summernote_fields = ('description', )
 
 
 @admin.register(models.Movie)
@@ -145,6 +148,13 @@ class MovieAdmin(MixinAdmin):
     search_fields = ('title',)
     list_filter = ('tags', )
     form = forms_movie.MovieForm
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 60%"/>',
+            instance.image.url
+        )
 
 
 @admin.register(models.Question)
@@ -163,12 +173,19 @@ class QuestionAdmin(MixinAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'address',
-                    'link', 'city', 'activity_type', 'age', 'age_restriction')
+    list_display = ('id', 'title', 'address', 'link', 'city',
+                    'activity_type', 'age', 'age_restriction', 'moderation_flag')
     list_editable = ('age_restriction', )
     search_fields = ('title', 'name', 'info')
-    list_filter = ('city', 'activity_type', 'age_restriction')
+    list_filter = ('city', 'activity_type', 'age_restriction', 'moderation_flag')
     radio_fields = {'gender': admin.HORIZONTAL}
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 100%"/>',
+            instance.image.url
+        )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -211,6 +228,13 @@ class TagAdmin(MixinAdmin):
 
 @admin.register(models.Video)
 class VideoAdmin(MixinAdmin):
-    list_display = ('id', 'title', 'link', 'duration', 'pinned_full_size')
+    list_display = ('id', 'title', 'link', 'image_tag', 'duration', 'pinned_full_size')
     search_fields = ('title', )
-    list_filter = ('pinned_full_size', )
+    list_filter = ('pinned_full_size', 'resource_group')
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, instance):
+        return format_html(
+            '<img src="{0}" style="max-width: 100%"/>',
+            instance.image.url
+        )

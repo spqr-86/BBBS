@@ -12,3 +12,11 @@ class VideoView(ReadOnlyModelViewSet, TagMixin):
     serializer_class = VideoSerializer
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        exclude_keys = {}
+        if not self.request.user.is_authenticated:
+            exclude_keys['resource_group'] = True
+        return Video.objects.exclude(
+            **exclude_keys
+        ).order_by('-pinned_full_size', '-id')
