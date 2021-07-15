@@ -35,6 +35,7 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
             self.serializer_class(
                 self.queryset.order_by(
                     '-chosen',
+                    'id',
                 ).first()
             ).data
         )
