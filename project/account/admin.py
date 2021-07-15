@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name', 'city')
     list_filter = ('city', 'region', 'is_mentor',
                    'is_staff', 'is_active', 'is_superuser')
-    autocomplete_fields = ('city', 'region')
+    autocomplete_fields = ('city', 'region', 'curator')
     readonly_fields = ('date_joined', 'last_login')
 
     fieldsets = (
@@ -21,11 +21,11 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'password')
         }),
         (_('Personal info'), {
-            'fields': ('first_name', 'last_name', 'email', 'city', 'region')
+            'fields': ('first_name', 'last_name', 'email',
+                       'city', 'region', 'is_mentor', 'curator')
         }),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_mentor',
-                       'is_staff', 'is_superuser', 'groups'),
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups'),
         }),
         (_('Important dates'), {
             'fields': ('last_login', 'date_joined')
