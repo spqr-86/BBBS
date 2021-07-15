@@ -78,6 +78,9 @@ class Event(models.Model):
         if self.end_at < now():
             errors['end_at'] = ValidationError(
                 _('Конец события не может быть в прошлом'))
+        if self.start_at < self.end_at:
+            errors['end_at'] = ValidationError(
+                _('Конец события должен быть в один день с началом'))
         if errors:
             raise ValidationError(errors)
 
