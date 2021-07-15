@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 
-from . import models
+from . import models, forms_movie
 from .fields import fields
 
 User = get_user_model()
@@ -144,6 +144,7 @@ class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'link')
     search_fields = ('title',)
     list_filter = ('tags', )
+    form = forms_movie.MovieForm
 
 
 @admin.register(models.Question)

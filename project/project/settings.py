@@ -195,3 +195,5 @@ EMAIL_USE_TLS = int(ENV.get('EMAIL_USE_TLS', default=False))
 if DEBUG:
     from .settings_dev import (ALLOWED_HOSTS, INSTALLED_APPS_DEV, SIMPLE_JWT)  # noqa (F401, E501)
     INSTALLED_APPS += INSTALLED_APPS_DEV
+
+MAX_TAGS_COUNT = 4
