@@ -20,6 +20,7 @@ class Right(models.Model, ImageFromUrlMixin):
         'api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='rights',
+        limit_choices_to={'category': _('Права')},
     )
     raw_html = models.TextField(
         verbose_name=_('HTML'),

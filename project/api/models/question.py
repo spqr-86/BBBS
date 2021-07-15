@@ -11,6 +11,7 @@ class Question(models.Model):
         'api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='questions',
+        limit_choices_to={'category': _('Вопросы')},
     )
     answer = models.CharField(
         max_length=200,

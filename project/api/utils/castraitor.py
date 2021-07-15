@@ -1,5 +1,5 @@
-from django.db.models import QuerySet
 from django.db import models
+from django.db.models import QuerySet
 
 from ..exceptions import InvalidCountException
 
