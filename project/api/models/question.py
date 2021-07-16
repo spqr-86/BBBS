@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class Question(models.Model):
     title = models.CharField(
         verbose_name=_('Заголовок'),
-        max_length=200,
+        max_length=500,
     )
     tags = models.ManyToManyField(
         'api.Tag',
@@ -14,7 +14,7 @@ class Question(models.Model):
         limit_choices_to={'category': _('Вопросы')},
     )
     answer = models.CharField(
-        max_length=200,
+        max_length=2048,
         verbose_name=_('Ответ'),
         blank=True,
         null=True,

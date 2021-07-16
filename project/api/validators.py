@@ -21,19 +21,6 @@ def free_seats_validators(event):
         )
 
 
-def age_validator(value):
-    if value > 25:
-        raise ValidationError(
-            _('Слишком большой возраст для ребёнка'),
-            code='invalid',
-            params={'value': value})
-    elif value < 0:
-        raise ValidationError(
-            _('Возраст не может быть меньше 0'),
-            code='invalid',
-            params={'value': value})
-
-
 def year_validator(value):
     if value > now().year:
         raise ValidationError(
