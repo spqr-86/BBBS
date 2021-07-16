@@ -7,7 +7,7 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 
-from . import models
+from . import models, forms_movie
 from .fields import fields
 
 User = get_user_model()
@@ -160,6 +160,7 @@ class MovieAdmin(MixinAdmin):
     list_display = ('id', 'title', 'link', 'image_tag')
     search_fields = ('title',)
     list_filter = ('tags', )
+    form = forms_movie.MovieForm
     readonly_fields = ('image_tag',)
 
     def image_tag(self, instance):

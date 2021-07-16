@@ -27,7 +27,19 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(chosen=self.request.user.is_mentor)
+        age = self.request.data.get('age')
+        if 7 < int(age) < 11:
+            age_restriction = '8-10'
+        elif 10 < int(age) < 14:
+            age_restriction = '11-13'
+        elif 13 < int(age) < 18:
+            age_restriction = '14-17'
+        elif int(age) == 18:
+            age_restriction = '18'
+        else:
+            age_restriction = 'any'
+        serializer.save(chosen=self.request.user.is_mentor,
+                        age_restriction=age_restriction)
 
     @action(methods=['get'], detail=False)
     def first(self, request):
