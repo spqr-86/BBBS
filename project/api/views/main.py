@@ -35,7 +35,7 @@ def get_event(request):
 def get_place(request):
     user = request.user
     city = request.data.get('city')
-    places = Place.objects.filter(output_to_main=True)
+    places = Place.objects.filter(output_to_main=True, moderation_flag=True)
     if user.is_authenticated:
         if places.filter(city=user.city).exists():
             return places.filter(city=user.city).last()

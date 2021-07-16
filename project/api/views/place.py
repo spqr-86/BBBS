@@ -10,7 +10,7 @@ from .mixins import GetListPostPutMixin, TagMixin
 
 
 class PlacesViewSet(GetListPostPutMixin, TagMixin):
-    queryset = Place.objects.exclude(tags=None)
+    queryset = Place.objects.exclude(moderation_flag=False).order_by('-id')
     serializer_class = PlaceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
@@ -33,9 +33,9 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
     def first(self, request):
         return Response(
             self.serializer_class(
-                self.queryset.order_by(
-                    'chosen',
-                    '-id'
+                self.get_queryset().order_by(
+                    '-chosen',
+                    '-id',
                 ).first()
             ).data
         )

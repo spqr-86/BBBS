@@ -35,6 +35,10 @@ class History(models.Model):
         verbose_name=_('Отображать на главной странице'),
         default=False,
     )
+    raw_html = models.TextField(
+        verbose_name=_('HTML'),
+        max_length=4 * 10 ** 6
+    )
 
     class Meta:
         app_label = 'api'
@@ -49,3 +53,7 @@ class History(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.raw_html = ' '.join(self.raw_html.split())
+        return super().save(*args, **kwargs)

@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from tinymce.models import HTMLField
 
 from .mixins import ImageFromUrlMixin
 
@@ -20,7 +19,10 @@ class Catalog(models.Model, ImageFromUrlMixin):
         blank=True,
         null=True
     )
-    content = HTMLField()
+    raw_html = models.TextField(
+        verbose_name=_('HTML'),
+        max_length=4 * 10 ** 6
+    )
 
     class Meta:
         app_label = 'api'
@@ -34,4 +36,5 @@ class Catalog(models.Model, ImageFromUrlMixin):
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
+        self.raw_html = ' '.join(self.raw_html.split())
         return super().save(*args, **kwargs)

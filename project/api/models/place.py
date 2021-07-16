@@ -49,10 +49,15 @@ class Place(models.Model, ImageFromUrlMixin):
         verbose_name=_('Отображать на главной странице'),
         default=False,
     )
+    moderation_flag = models.BooleanField(
+        verbose_name=_('Отметка о модерации'),
+        default=False,
+    )
     tags = models.ManyToManyField(
         to='api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='places',
+        limit_choices_to={'category': _('Места')},
     )
     activity_type = models.ForeignKey(
         to='api.ActivityType',
@@ -73,11 +78,11 @@ class Place(models.Model, ImageFromUrlMixin):
         verbose_name=_('Целевой возраст'),
         max_length=50,
         choices=(
-            (_('8-10'), _('8-10')),
-            (_('11-13'), _('11-13')),
-            (_('14-17'), _('14-17')),
-            (_('18'), _('18')),
-            (_('any'), _('Любой'))
+            ('8-10', '8-10'),
+            ('11-13', '11-13'),
+            ('14-17', '14-17'),
+            ('18', '18+'),
+            ('any', _('Любой'))
         ),
     )
 

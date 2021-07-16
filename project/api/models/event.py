@@ -55,6 +55,7 @@ class Event(models.Model):
         verbose_name=_('Тег(и)'),
         related_name='events',
         on_delete=models.PROTECT,
+        limit_choices_to={'category': _('События')},
     )
 
     class Meta:
@@ -77,6 +78,9 @@ class Event(models.Model):
         if self.end_at < now():
             errors['end_at'] = ValidationError(
                 _('Конец события не может быть в прошлом'))
+        if self.start_at.date() != self.end_at.date():
+            errors['end_at'] = ValidationError(
+                _('Время окончания события должно быть в один день с началом'))
         if errors:
             raise ValidationError(errors)
 

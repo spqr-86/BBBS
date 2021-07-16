@@ -1,5 +1,6 @@
-import requests
 import urllib
+
+import requests
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -42,13 +43,13 @@ class Video(models.Model, ImageFromUrlMixin):
     )
     duration = models.PositiveIntegerField(
         verbose_name=_('Продолжительность видеоролика в сек.'),
-        default=0,
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='videos',
+        limit_choices_to={'category': _('Видеоролики')},
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
