@@ -17,17 +17,17 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('date_joined', 'last_login')
 
     fieldsets = (
-        (None, {
+        (_('Логин/пароль'), {
             'fields': ('username', 'password')
         }),
-        (_('Personal info'), {
-            'fields': ('first_name', 'last_name', 'email',
-                       'city', 'region', 'is_mentor', 'curator')
+        (_('Персональная информация'), {
+            'fields': (('first_name', 'last_name'), 'email',
+                       ('city', 'region'), 'is_mentor', 'curator')
         }),
-        (_('Permissions'), {
+        (_('Права доступа'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups'),
         }),
-        (_('Important dates'), {
+        (_('Даты последнего входа/регистрации'), {
             'fields': ('last_login', 'date_joined')
         }),
     )
@@ -38,7 +38,6 @@ class CustomUserAdmin(UserAdmin):
         disabled_fields = set()
         if not is_superuser:
             disabled_fields |= {
-                'username',
                 'is_superuser',
                 'user_permissions',
             }
