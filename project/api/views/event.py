@@ -83,9 +83,7 @@ class ParticipantViewSet(ListCreateDelViewSet):
 
     def create(self, request):
         id = self.request.data.get('event')
-        try:
-            id = int(id)
-        except ValueError:
+        if id is not None and not id.isdigit():
             return Response(
                 {'event': 'Число'},
                 status=status.HTTP_400_BAD_REQUEST
@@ -98,7 +96,13 @@ class ParticipantViewSet(ListCreateDelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk=None):
+        if pk is not None and not pk.isdigit():
+            return Response(
+                {'event': 'Неправильно указано событие. Введите число.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         instance = get_object_or_404(
-            Participant, event=pk, participant=request.user)
+            Participant, event=pk, participant=request.user
+        )
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
