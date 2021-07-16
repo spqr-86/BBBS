@@ -1,6 +1,7 @@
 from django.db.models import Count, Exists, F, OuterRef
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
@@ -85,7 +86,7 @@ class ParticipantViewSet(ListCreateDelViewSet):
         id = self.request.data.get('event')
         if id is not None and not id.isdigit():
             return Response(
-                {'event': 'Число'},
+                {'event': _('Введите pk события')},
                 status=status.HTTP_400_BAD_REQUEST
             )
         event = get_object_or_404(Event, id=id)
@@ -98,7 +99,7 @@ class ParticipantViewSet(ListCreateDelViewSet):
     def destroy(self, request, pk=None):
         if pk is not None and not pk.isdigit():
             return Response(
-                {'event': 'Неправильно указано событие. Введите число.'},
+                {'event': 'Неправильно указано событие. Введите pk.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         instance = get_object_or_404(
