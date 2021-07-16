@@ -1,14 +1,14 @@
-from django import forms
+from django.forms import TextInput
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 
-from . import models
+from . import forms, models
 from .fields import fields
+
 
 User = get_user_model()
 
@@ -46,7 +46,7 @@ class BookTypeAdmin(MixinAdmin):
     search_fields = ('name', 'slug', 'color')
     prepopulated_fields = {'slug': ('name',)}
     formfield_overrides = {
-        fields.ColorField: {'widget': forms.TextInput(attrs={'type': 'color',
+        fields.ColorField: {'widget': TextInput(attrs={'type': 'color',
                             'style': 'height: 100px; width: 100px;'})}
     }
 
@@ -142,21 +142,9 @@ class HistoryAdmin(MixinAdmin):
     list_filter = ('mentor', 'child')
 
 
-class MovieAdminForm(forms.ModelForm):
-    class Meta:
-        fields = '__all__'
-        model = models.Movie
-
-    def clean_tags(self):
-        tags = self.cleaned_data.get('tags')
-        if tags.count() > 4:
-            raise ValidationError(_('Выберите не более 4-х тегов'))
-        return self.cleaned_data['tags']
-
-
 @admin.register(models.Movie)
 class MovieAdmin(MixinAdmin):
-    form = MovieAdminForm
+    form = forms.MovieForm
     list_display = ('id', 'title', 'link', 'image_tag')
     search_fields = ('title',)
     list_filter = ('tags', )
