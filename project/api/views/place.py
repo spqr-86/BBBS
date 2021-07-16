@@ -34,12 +34,12 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
             age_restriction = '11-13'
         elif 13 < int(age) < 18:
             age_restriction = '14-17'
-        elif int(age) == 18:
-            age_restriction = '18'
         else:
-            age_restriction = 'any'
-        serializer.save(chosen=self.request.user.is_mentor,
-                        age_restriction=age_restriction)
+            age_restriction = '18'
+        serializer.save(
+            chosen=self.request.user.is_mentor,
+            age_restriction=age_restriction,
+        )
 
     @action(methods=['get'], detail=False)
     def first(self, request):

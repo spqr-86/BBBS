@@ -1,7 +1,7 @@
+from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from ..validators import age_validator
 from .mixins import ImageFromUrlMixin
 
 
@@ -27,7 +27,6 @@ class Place(models.Model, ImageFromUrlMixin):
     )
     link = models.URLField(
         verbose_name=_('Сайт'),
-        unique=True,
         blank=True,
         null=True,
     )
@@ -72,7 +71,10 @@ class Place(models.Model, ImageFromUrlMixin):
     )
     age = models.SmallIntegerField(
         verbose_name=_('Возраст ребёнка'),
-        validators=[age_validator],
+        validators=[
+            validators.MinValueValidator(8),
+            validators.MaxValueValidator(25),
+        ],
     )
     age_restriction = models.CharField(
         verbose_name=_('Целевой возраст'),
