@@ -80,7 +80,8 @@ class ParticipantViewSet(ListCreateDelViewSet):
 
     def get_queryset(self):
         return Participant.objects.filter(participant=self.request.user) \
-                                  .filter(event__end_at__gt=now())
+                                  .filter(event__end_at__gt=now()) \
+                                  .order_by('start_at')
 
     def create(self, request):
         id = self.request.data.get('event')
