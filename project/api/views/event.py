@@ -82,7 +82,15 @@ class ParticipantViewSet(ListCreateDelViewSet):
                                   .filter(event__end_at__gt=now())
 
     def create(self, request):
-        event = get_object_or_404(Event, id=self.request.data.get('event'))
+        id = self.request.data.get('event')
+        try:
+            id = int(id)
+        except ValueError:
+            return Response(
+                {'event': 'Число'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        event = get_object_or_404(Event, id=id)
         self.check_object_permissions(self.request, event)
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
