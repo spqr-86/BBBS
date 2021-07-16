@@ -45,7 +45,7 @@ class History(models.Model):
             models.UniqueConstraint(
                 fields=['mentor', 'child'],
                 name='mentor_and_child_uniq_together'),
-            ]
+        ]
 
     def __str__(self):
         return self.title
