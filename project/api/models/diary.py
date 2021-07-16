@@ -46,6 +46,12 @@ class Diary(models.Model):
         ordering = ('-date',)
         verbose_name = _('Дневник')
         verbose_name_plural = _('Дневники')
+        constraints = [
+            models.UniqueConstraint(
+                fields=('place', 'date', 'mentor'),
+                name='diary_place_date_uniquetogether',
+            )
+        ]
 
     def __str__(self):
         return self.place
