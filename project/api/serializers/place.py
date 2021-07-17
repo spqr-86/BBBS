@@ -16,6 +16,8 @@ class PlaceSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
         model = Place
         exclude = [
+            'city',
+            'image_url',
             'age_restriction',
             'output_to_main',
             'moderation_flag',
@@ -31,3 +33,16 @@ class PlaceSerializer(BaseSerializer):
                 _('Возраст не может быть меньше 8')
             )
         return value
+
+
+class PlaceListSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = Place
+        exclude = [
+            'city',
+            'image',
+            'image_url',
+            'age_restriction',
+            'output_to_main',
+            'moderation_flag',
+        ]

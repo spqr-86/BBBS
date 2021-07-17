@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from ..models import Right
-from ..serializers import RightListSerializer, RightRetrieveSerializer
+from ..serializers import RightListSerializer, RightSerializer
 from . import TagMixin
 
 
@@ -15,4 +15,4 @@ class RightViewSet(ReadOnlyModelViewSet, TagMixin):
     def get_serializer_class(self):
         if self.action == 'list':
             return RightListSerializer
-        return RightRetrieveSerializer
+        return RightSerializer

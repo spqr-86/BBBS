@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from ..filters import PlaceFilter
 from ..models import Place
-from ..serializers import PlaceSerializer
+from ..serializers import PlaceListSerializer, PlaceSerializer
 from .mixins import GetListPostPutMixin, TagMixin
 
 
@@ -15,6 +15,11 @@ class PlacesViewSet(GetListPostPutMixin, TagMixin):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
     filter_class = PlaceFilter
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PlaceListSerializer
+        return PlaceSerializer
 
     def get_queryset(self):
         queryset = self.queryset
