@@ -39,14 +39,6 @@ class ParticipantWriteSerializer(serializers.ModelSerializer):
             )
         ]
 
-    def is_valid(self, raise_exception):
-        id = self.initial_data.get('event')
-        if id is not None and not (isinstance(id, int) or id.isdigit()):
-            raise ValidationError(
-                'Введите pk события'
-            )
-        return super().is_valid(raise_exception=raise_exception)
-
 
 class ParticipantReadSerializer(serializers.ModelSerializer):
     event = EventSerializer(read_only=True)
