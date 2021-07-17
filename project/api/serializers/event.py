@@ -23,6 +23,7 @@ class DateEventSerializer(serializers.Serializer):
 
 
 class ParticipantWriteSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
     participant = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
