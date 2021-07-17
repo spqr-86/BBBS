@@ -1,5 +1,6 @@
 from django.db.models import Count, Exists, F, OuterRef
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
@@ -73,7 +74,7 @@ class ParticipantViewSet(ListCreateDelViewSet):
     pagination_class = LimitOffsetPagination
 
     def get_serializer_class(self):
-        if self.action in ('list', 'retrieve'):
+        if self.action == 'list':
             return ParticipantReadSerializer
         return ParticipantWriteSerializer
 
@@ -82,17 +83,9 @@ class ParticipantViewSet(ListCreateDelViewSet):
                                   .filter(event__end_at__gt=now()) \
                                   .order_by('event__start_at')
 
-    def create(self, request):
-        serializer = self.get_serializer(data=self.request.data)
-        serializer.is_valid(raise_exception=True)
-        event = get_object_or_404(Event, id=self.request.data.get('event'))
-        self.check_object_permissions(self.request, event)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def get_object(self):
-        return get_object_or_404(
-            queryset=self.get_serializer_class().Meta.model.objects.all(),
-            participant=self.request.user,
-            event_id=self.kwargs.get('pk')
-        )
+    def destroy(self, request, pk=None):
+        instance = get_object_or_404(
+            Participant, event=pk, participant=request.user)
+        self.perform_destroy(instance)
+        message = {'event': _('Запись на событие удалена')}
+        return Response(message, status=status.HTTP_204_NO_CONTENT)
