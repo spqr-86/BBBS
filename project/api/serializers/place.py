@@ -2,10 +2,11 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from ..models import Place
-from .base import BaseSerializer
+from .tag import TagSerializer
 
 
-class PlaceSerializer(BaseSerializer):
+class PlaceSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, required=False, read_only=True)
     image = serializers.ImageField(
         max_length=None,
         allow_empty_file=False,
@@ -13,7 +14,7 @@ class PlaceSerializer(BaseSerializer):
         required=False,
     )
 
-    class Meta(BaseSerializer.Meta):
+    class Meta:
         model = Place
         exclude = [
             'city',
@@ -35,10 +36,11 @@ class PlaceSerializer(BaseSerializer):
         return value
 
 
-class PlaceListSerializer(BaseSerializer):
-    class Meta(BaseSerializer.Meta):
+class PlaceListSerializer(serializers.ModelSerializer):
+    class Meta:
         model = Place
         exclude = [
+            'tags',
             'city',
             'image',
             'image_url',
