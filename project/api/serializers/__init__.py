@@ -8,8 +8,8 @@ from .city import CitySerializer
 from .diary import DiarySerializer
 from .event import (
     DateEventSerializer,
-    EventSerializer,
     EventListSerializer,
+    EventSerializer,
     ParticipantReadSerializer,
     ParticipantWriteSerializer,
 )

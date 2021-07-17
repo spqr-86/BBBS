@@ -1,9 +1,9 @@
 from django.db.models import Count, Exists, F, OuterRef
-from rest_framework.generics import get_object_or_404
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
@@ -11,8 +11,8 @@ from ..filters import EventFilter
 from ..models import Event, Participant
 from ..serializers import (
     DateEventSerializer,
-    EventSerializer,
     EventListSerializer,
+    EventSerializer,
     ParticipantReadSerializer,
     ParticipantWriteSerializer,
 )

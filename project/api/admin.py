@@ -1,6 +1,6 @@
-from django.forms import TextInput
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.forms import TextInput
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
@@ -8,7 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 from . import forms, models
 from .fields import fields
-
 
 User = get_user_model()
 
