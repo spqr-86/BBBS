@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, validators
+from rest_framework.exceptions import ValidationError
 
 from ..models import Event, Participant
 from .tag import TagSerializer
@@ -37,6 +38,14 @@ class ParticipantWriteSerializer(serializers.ModelSerializer):
                 message=_('Вы уже зарегестрированы на это событие')
             )
         ]
+
+    def is_valid(self, raise_exception):
+        id = self.initial_data.get('event')
+        if id is not None and not (isinstance(id, int) or id.isdigit()):
+            raise ValidationError(
+                'Введите pk события'
+            )
+        return super().is_valid(raise_exception=raise_exception)
 
 
 class ParticipantReadSerializer(serializers.ModelSerializer):

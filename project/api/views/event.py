@@ -84,23 +84,17 @@ class ParticipantViewSet(ListCreateDelViewSet):
                                   .order_by('event__start_at')
 
     def create(self, request):
-        id = self.request.data.get('event')
-        if id is not None and not (isinstance(id, int) or id.isdigit()):
-            return Response(
-                {'event': _('Введите pk события')},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        event = get_object_or_404(Event, id=id)
-        self.check_object_permissions(self.request, event)
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
+        event = get_object_or_404(Event, id=self.request.data.get('event'))
+        self.check_object_permissions(self.request, event)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk=None):
         if pk is not None and not (isinstance(pk, int) or pk.isdigit()):
             return Response(
-                {'event': 'Неправильно указано событие. Введите pk.'},
+                {'event': _('Неправильно указано событие. Введите pk.')},
                 status=status.HTTP_400_BAD_REQUEST
             )
         instance = get_object_or_404(
