@@ -44,6 +44,9 @@ class Book(models.Model):
         ordering = ('id',)
         verbose_name = _('Книга')
         verbose_name_plural = _('Книги')
+        indexes = [
+            models.Index(fields=['type'], name='book_type_slug_index')
+        ]
 
     def __str__(self):
         return self.title

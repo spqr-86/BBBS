@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.functions import Extract
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
@@ -66,6 +67,16 @@ class Event(models.Model):
         permissions = (
             ('events_in_all_cities', _('Можно смотреть события всех городов')),
         )
+        indexes = [
+            models.Index(
+                Extract('start_at', 'month'),
+                name='event_start_at_month_index'
+            ),
+            models.Index(
+                Extract('start_at', 'year'),
+                name='event_start_at_year_index'
+            )
+        ]
 
     def __str__(self):
         return self.title
