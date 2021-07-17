@@ -9,7 +9,6 @@ from rest_framework.response import Response
 
 from ..filters import EventFilter
 from ..models import Event, Participant
-from ..permissions import IsUsersCity
 from ..serializers import (
     DateEventSerializer,
     EventSerializer,
@@ -60,7 +59,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MyEventsArchive(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsUsersCity, permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = EventSerializer
     pagination_class = LimitOffsetPagination
 
@@ -70,7 +69,7 @@ class MyEventsArchive(viewsets.ReadOnlyModelViewSet):
 
 
 class ParticipantViewSet(ListCreateDelViewSet):
-    permission_classes = [IsUsersCity, permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     pagination_class = LimitOffsetPagination
 
     def get_serializer_class(self):

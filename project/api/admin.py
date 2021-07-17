@@ -91,7 +91,7 @@ class DiaryAdmin(MixinAdmin):
 class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'get_start_at',
                     'get_end_at', 'city', 'taken_seats', 'seats')
-    list_filter = ('tags', )
+    list_filter = ('tags', 'city')
     search_fields = ('title', 'contact', 'address', 'city')
 
     def get_queryset(self, request):
