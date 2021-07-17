@@ -1,9 +1,8 @@
 from django.db.models import Count, Exists, F, OuterRef
-from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
-from django.utils.translation import gettext_lazy as _
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
@@ -91,14 +90,9 @@ class ParticipantViewSet(ListCreateDelViewSet):
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def destroy(self, request, pk=None):
-        if pk is not None and not (isinstance(pk, int) or pk.isdigit()):
-            return Response(
-                {'event': _('Неправильно указано событие. Введите pk.')},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        instance = get_object_or_404(
-            Participant, event=pk, participant=request.user
+    def get_object(self):
+        return get_object_or_404(
+            queryset=self.get_serializer_class().Meta.model.objects.all(),
+            participant=self.request.user,
+            event_id=self.kwargs.get('pk')
         )
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
