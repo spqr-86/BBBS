@@ -11,7 +11,6 @@ from ..filters import EventFilter
 from ..models import Event, Participant
 from ..serializers import (
     DateEventSerializer,
-    EventListSerializer,
     EventSerializer,
     ParticipantReadSerializer,
     ParticipantWriteSerializer,
@@ -35,11 +34,6 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = EventSerializer
     pagination_class = LimitOffsetPagination
     filter_class = EventFilter
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return EventListSerializer
-        return EventSerializer
 
     def get_queryset(self):
         user = self.request.user

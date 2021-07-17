@@ -8,7 +8,6 @@ from .city import CitySerializer
 from .diary import DiarySerializer
 from .event import (
     DateEventSerializer,
-    EventListSerializer,
     EventSerializer,
     ParticipantReadSerializer,
     ParticipantWriteSerializer,
@@ -32,7 +31,6 @@ __all__ = [
     'CitySerializer',
     'DiarySerializer',
     'EventSerializer',
-    'EventListSerializer',
     'DateEventSerializer',
     'ParticipantWriteSerializer',
     'ParticipantReadSerializer',
