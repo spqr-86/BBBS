@@ -48,6 +48,11 @@ class Diary(models.Model):
             ('neutral', _('Нейтрально')),
         ),
     )
+    sent_to_curator = models.BooleanField(
+        verbose_name=_('Отпралено куратору'),
+        default=False,
+        help_text=_('Метка о факте отправки дневника куратору.'),
+    )
 
     class Meta:
         app_label = 'api'
