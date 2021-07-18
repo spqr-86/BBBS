@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apscheduler',
     'rest_framework',
     'django_filters',
     'corsheaders',
