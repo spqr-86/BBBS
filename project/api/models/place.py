@@ -109,6 +109,9 @@ class Place(models.Model, ImageFromUrlMixin):
         permissions = (
             ('places_in_all_cities', _('Можно смотреть места всех городов')),
         )
+        indexes = [
+            models.Index(fields=['moderation_flag', 'city'])
+        ]
 
     def __str__(self):
         return self.title
