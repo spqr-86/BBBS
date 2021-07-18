@@ -46,7 +46,7 @@ class ActivityAdmin(MixinAdmin):
 class ArticleAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'image_tag',
                     'pinned_full_size', 'output_to_main')
-    search_fields = ('title', )
+    search_fields = ('title', 'info', 'annotation')
     list_filter = ('pinned_full_size', 'output_to_main')
 
 
@@ -61,7 +61,7 @@ class BookTypeAdmin(MixinAdmin):
 class BookAdmin(MixinAdmin):
     list_display = ('id', 'title', 'author', 'year', 'type', 'get_color')
     list_filter = ('type', )
-    search_fields = ('title', 'info', 'color')
+    search_fields = ('title', 'author', 'annotation')
 
     @admin.display(description=_('Цвет'))
     def get_color(self, obj):
@@ -90,7 +90,7 @@ class CityAdmin(MixinAdmin):
 @admin.register(models.Diary)
 class DiaryAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'mentor', 'place', 'date', 'mark', 'image_tag')
-    search_fields = ('place', )
+    search_fields = ('place', 'description')
     list_filter = ('mark', )
 
 
@@ -99,7 +99,7 @@ class EventAdmin(MixinAdmin):
     list_display = ('id', 'title', 'get_start_at',
                     'get_end_at', 'city', 'taken_seats', 'seats')
     list_filter = ('city', 'tags')
-    search_fields = ('title', 'contact', 'address', 'city')
+    search_fields = ('title', 'contact', 'address', 'description')
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -146,7 +146,7 @@ class EventAdmin(MixinAdmin):
 class HistoryAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'mentor', 'child',
                     'output_to_main', 'image_tag')
-    search_fields = ('title', )
+    search_fields = ('title', 'description')
     list_filter = ('output_to_main', )
 
 
@@ -154,14 +154,14 @@ class HistoryAdmin(ImageTagField, MixinAdmin):
 class MovieAdmin(ImageTagField, MixinAdmin):
     form = forms.MovieForm
     list_display = ('id', 'title', 'link', 'image_tag', 'output_to_main')
-    search_fields = ('title',)
+    search_fields = ('title', 'info', 'annotation')
     list_filter = ('output_to_main', 'tags')
 
 
 @admin.register(models.Question)
 class QuestionAdmin(MixinAdmin):
     list_display = ('id', 'get_title', 'get_answer')
-    search_fields = ('title', )
+    search_fields = ('title', 'answer')
     list_filter = ('tags', )
 
     @admin.display(description=_('Вопрос'))
@@ -184,7 +184,7 @@ class PlaceAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'city', 'activity_type', 'age_restriction',
                     'age', 'chosen', 'moderation_flag', 'output_to_main')
     list_editable = ('age_restriction', )
-    search_fields = ('title', 'name', 'info')
+    search_fields = ('title', 'description')
     list_filter = ('city', 'activity_type', 'age_restriction', 'chosen',
                    'moderation_flag', 'output_to_main', 'tags')
     radio_fields = {'gender': admin.HORIZONTAL}
@@ -239,6 +239,6 @@ class TagAdmin(MixinAdmin):
 class VideoAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'link', 'duration', 'resource_group',
                     'pinned_full_size', 'output_to_main',  'image_tag')
-    search_fields = ('title', )
+    search_fields = ('title', 'info')
     list_filter = ('resource_group', 'pinned_full_size',
                    'output_to_main', 'tags')

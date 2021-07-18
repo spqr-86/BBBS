@@ -10,7 +10,7 @@ User = get_user_model()
 class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'username', 'email', 'first_name',
                     'last_name', 'city', 'region', 'is_staff', 'is_mentor')
-    search_fields = ('username', 'email', 'first_name', 'last_name', 'city')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
     list_filter = ('city', 'region', 'is_mentor',
                    'is_staff', 'is_active', 'is_superuser')
     autocomplete_fields = ('city', 'region', 'curator')
