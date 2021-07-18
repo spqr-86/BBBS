@@ -19,6 +19,8 @@ class City(models.Model):
     is_primary = models.BooleanField(
         verbose_name=_('Приоритет вывода'),
         default=False,
+        help_text=_('Города с этой меткой будут отображаться \
+                     в начале списка.'),
     )
 
     class Meta:

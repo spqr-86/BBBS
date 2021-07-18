@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+
+from ..validators import file_size_validator, image_extension_validator
 
 User = get_user_model()
 
@@ -30,6 +33,11 @@ class Diary(models.Model):
         upload_to='diaries/',
         blank=True,
         null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
     )
     mark = models.CharField(
         verbose_name=_('Как прошло время'),

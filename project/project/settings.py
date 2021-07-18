@@ -179,5 +179,7 @@ SIMPLE_JWT = {
 }
 
 MAX_TAGS_COUNT = 4
+MAX_UPLOAD_SIZE_MB = 10
+IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
 
 ADMIN_HONEYPOT_EMAIL_ADMINS = False

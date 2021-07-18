@@ -4,11 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 class Tag(models.Model):
     name = models.CharField(
-        verbose_name=_('Название тега'),
+        verbose_name=_('Название'),
         max_length=50,
     )
     category = models.CharField(
-        verbose_name=_('Категория тега'),
+        verbose_name=_('Категория'),
         max_length=50,
         choices=(
             (_('Книги'), _('Книги')),

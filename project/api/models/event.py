@@ -11,6 +11,12 @@ User = get_user_model()
 
 
 class Event(models.Model):
+    city = models.ForeignKey(
+        'api.City',
+        verbose_name=_('Город мероприятия'),
+        related_name='events',
+        on_delete=models.PROTECT,
+    )
     address = models.CharField(
         verbose_name=_('Адрес мероприятия'),
         max_length=200,
@@ -36,12 +42,6 @@ class Event(models.Model):
     seats = models.PositiveSmallIntegerField(
         verbose_name=_('Количество мест'),
         validators=[validators.MinValueValidator(1)],
-    )
-    city = models.ForeignKey(
-        'api.City',
-        verbose_name=_('Город мероприятия'),
-        related_name='events',
-        on_delete=models.PROTECT,
     )
     participants = models.ManyToManyField(
         User,
