@@ -1,8 +1,10 @@
+from django.conf.urls import url
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import views
+from .views.profile import SendMailViewSet
 
 v1_router = DefaultRouter()
 
@@ -44,4 +46,5 @@ urlpatterns = [
         TokenRefreshView.as_view(), name='token_refresh'
     ),
     path('v1/', include((v1_router.urls, 'v1'), namespace='v1')),
+    url(r'send_email/', SendMailViewSet.as_view({'post': 'send_password'}))
 ]
