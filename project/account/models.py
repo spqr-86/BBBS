@@ -34,6 +34,11 @@ class CustomUser(AbstractUser):
         null=True,
     )
 
+    def __str__(self):
+        if self.first_name and self.last_name:
+            return f'{self.username}: {self.first_name} {self.last_name[:1]}.'
+        return self.username
+
     def clean(self):
         errors = {}
         if self.curator is None and self.is_mentor:

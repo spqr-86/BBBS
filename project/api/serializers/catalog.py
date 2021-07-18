@@ -13,4 +13,4 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Catalog
-        fields = '__all__'
+        exclude = ['image_url']

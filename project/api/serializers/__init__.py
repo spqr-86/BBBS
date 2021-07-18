@@ -14,10 +14,10 @@ from .event import (
 )
 from .history import HistorySerializer
 from .movie import MovieSerializer
-from .place import PlaceSerializer
+from .place import PlaceListSerializer, PlaceSerializer
 from .profile import ProfileSerializer
 from .question import QuestionSerializer
-from .right import RightListSerializer, RightRetrieveSerializer
+from .right import RightListSerializer, RightSerializer
 from .tag import TagSerializer
 from .video import VideoSerializer
 
@@ -35,10 +35,11 @@ __all__ = [
     'ParticipantWriteSerializer',
     'ParticipantReadSerializer',
     'HistorySerializer',
+    'PlaceListSerializer',
     'PlaceSerializer',
     'ProfileSerializer',
     'RightListSerializer',
-    'RightRetrieveSerializer',
+    'RightSerializer',
     'TagSerializer',
     'MovieSerializer',
     'VideoSerializer',

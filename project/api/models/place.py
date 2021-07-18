@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..validators import file_size_validator, image_extension_validator
 from .mixins import ImageFromUrlMixin
 
 
@@ -14,16 +16,23 @@ class Place(models.Model, ImageFromUrlMixin):
     description = models.TextField(
         verbose_name=_('Комментарий'),
     )
-    image_url = models.URLField(
-        verbose_name=_('Изображение'),
-        blank=True,
-        null=True,
-    )
     image = models.ImageField(
-        verbose_name=_('Фото'),
+        verbose_name=_('Изображение'),
         upload_to='places/',
         blank=True,
-        null=True
+        null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
+    )
+    image_url = models.URLField(
+        verbose_name=_('Ссылка на изображение'),
+        blank=True,
+        null=True,
+        help_text=_('Альтернативный способ загрузки изображения. \
+                     Приоритет у файла.'),
     )
     link = models.URLField(
         verbose_name=_('Сайт'),
@@ -36,27 +45,9 @@ class Place(models.Model, ImageFromUrlMixin):
         related_name='places',
         on_delete=models.CASCADE,
     )
-    chosen = models.BooleanField(
-        verbose_name=_('Выбор наставника'),
-        default=False
-    )
     address = models.CharField(
         verbose_name=_('Адрес'),
-        max_length=200
-    )
-    output_to_main = models.BooleanField(
-        verbose_name=_('Отображать на главной странице'),
-        default=False,
-    )
-    moderation_flag = models.BooleanField(
-        verbose_name=_('Отметка о модерации'),
-        default=False,
-    )
-    tags = models.ManyToManyField(
-        to='api.Tag',
-        verbose_name=_('Тег(и)'),
-        related_name='places',
-        limit_choices_to={'category': _('Места')},
+        max_length=200,
     )
     activity_type = models.ForeignKey(
         to='api.ActivityType',
@@ -87,6 +78,28 @@ class Place(models.Model, ImageFromUrlMixin):
             ('any', _('Любой'))
         ),
     )
+    chosen = models.BooleanField(
+        verbose_name=_('Выбор наставника'),
+        default=False,
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+        help_text=_('Места с этой меткой будут отображаться \
+                     на главной странице сайта.'),
+    )
+    moderation_flag = models.BooleanField(
+        verbose_name=_('Отметка о модерации'),
+        default=False,
+        help_text=_('Места без этой метки не будут отображаться \
+                     на сайте.'),
+    )
+    tags = models.ManyToManyField(
+        to='api.Tag',
+        verbose_name=_('Тег(и)'),
+        related_name='places',
+        limit_choices_to={'category': _('Места')},
+    )
 
     class Meta:
         app_label = 'api'
@@ -96,6 +109,9 @@ class Place(models.Model, ImageFromUrlMixin):
         permissions = (
             ('places_in_all_cities', _('Можно смотреть места всех городов')),
         )
+        indexes = [
+            models.Index(fields=['moderation_flag', 'city'])
+        ]
 
     def __str__(self):
         return self.title

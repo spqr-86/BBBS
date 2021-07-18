@@ -1,9 +1,11 @@
 import urllib
 
 import requests
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..validators import file_size_validator, image_extension_validator
 from .mixins import ImageFromUrlMixin
 
 
@@ -39,20 +41,27 @@ class Movie(models.Model, ImageFromUrlMixin):
         upload_to='movies/',
         blank=True,
         null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
     )
     link = models.URLField(
         verbose_name=_('Ссылка на фильм'),
         max_length=192,
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+        help_text=_('Фильмы с этой меткой будут отображаться \
+                     на главной странице сайта.'),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='movies',
         limit_choices_to={'category': _('Фильмы')},
-    )
-    output_to_main = models.BooleanField(
-        verbose_name=_('Отображать на главной странице'),
-        default=False,
     )
 
     class Meta:

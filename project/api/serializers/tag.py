@@ -5,5 +5,5 @@ from ..models import Tag
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
+        exclude = ['category']
         model = Tag

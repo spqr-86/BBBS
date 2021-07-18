@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
@@ -8,26 +10,27 @@ User = get_user_model()
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('id', 'username', 'email', 'first_name',
-                    'last_name', 'city', 'region', 'is_staff', 'is_mentor')
-    search_fields = ('username', 'email', 'first_name', 'last_name', 'city')
+    empty_value_display = _('-пусто-')
+    list_display = ('id', 'username', 'email', 'first_name', 'last_name',
+                    'city', 'region', 'is_staff', 'is_mentor', 'get_curator')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
     list_filter = ('city', 'region', 'is_mentor',
                    'is_staff', 'is_active', 'is_superuser')
     autocomplete_fields = ('city', 'region', 'curator')
     readonly_fields = ('date_joined', 'last_login')
 
     fieldsets = (
-        (None, {
+        (_('Логин/пароль'), {
             'fields': ('username', 'password')
         }),
-        (_('Personal info'), {
-            'fields': ('first_name', 'last_name', 'email',
-                       'city', 'region', 'is_mentor', 'curator')
+        (_('Персональная информация'), {
+            'fields': (('first_name', 'last_name'), 'email',
+                       ('city', 'region'), 'is_mentor', 'curator')
         }),
-        (_('Permissions'), {
+        (_('Права доступа'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups'),
         }),
-        (_('Important dates'), {
+        (_('Даты последнего входа/регистрации'), {
             'fields': ('last_login', 'date_joined')
         }),
     )
@@ -38,7 +41,6 @@ class CustomUserAdmin(UserAdmin):
         disabled_fields = set()
         if not is_superuser:
             disabled_fields |= {
-                'username',
                 'is_superuser',
                 'user_permissions',
             }
@@ -58,3 +60,15 @@ class CustomUserAdmin(UserAdmin):
             if f in form.base_fields:
                 form.base_fields[f].disabled = True
         return form
+
+    @admin.display(description=_('Куратор'))
+    def get_curator(self, obj):
+        curator = obj.curator
+        if curator:
+            url = (
+                reverse('admin:account_customuser_changelist')
+                + f'{curator.id}/change/'
+            )
+            curator = f'{curator.first_name} {curator.last_name[:1]}'
+            return format_html('<a href="{}">{}</a>', url, curator)
+        return None

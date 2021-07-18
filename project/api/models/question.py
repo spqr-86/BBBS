@@ -5,16 +5,10 @@ from django.utils.translation import gettext_lazy as _
 class Question(models.Model):
     title = models.CharField(
         verbose_name=_('Заголовок'),
-        max_length=200,
-    )
-    tags = models.ManyToManyField(
-        'api.Tag',
-        verbose_name=_('Тег(и)'),
-        related_name='questions',
-        limit_choices_to={'category': _('Вопросы')},
+        max_length=500,
     )
     answer = models.CharField(
-        max_length=200,
+        max_length=2048,
         verbose_name=_('Ответ'),
         blank=True,
         null=True,
@@ -22,6 +16,14 @@ class Question(models.Model):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
+        help_text=_('Вопросы с этой меткой будут отображаться \
+                     на главной странице сайта.'),
+    )
+    tags = models.ManyToManyField(
+        'api.Tag',
+        verbose_name=_('Тег(и)'),
+        related_name='questions',
+        limit_choices_to={'category': _('Вопросы')},
     )
 
     class Meta:
