@@ -17,6 +17,7 @@ class DiarySerializer(serializers.ModelSerializer):
         use_url=False,
         required=False,
     )
+    sent_to_curator = serializers.BooleanField(read_only=True)
 
     class Meta:
         fields = '__all__'
