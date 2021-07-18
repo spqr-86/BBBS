@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from ..validators import year_validator
@@ -30,14 +29,8 @@ class Book(models.Model):
         related_name='books'
     )
     url = models.URLField(
-        verbose_name=_('Ссылка')
+        verbose_name=_('Ссылка на книгу')
     )
-
-    def colortile(self):
-        if self.color:
-            return format_html('<div style="background-color: {0}; \
-                height: 100px; width: 100px"></div>', self.color)
-        return 'пусто'
 
     class Meta:
         app_label = 'api'

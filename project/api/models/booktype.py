@@ -5,10 +5,6 @@ from ..fields import fields
 
 
 class BookType(models.Model):
-    slug = models.SlugField(
-        verbose_name=_('Слаг'),
-        unique=True
-    )
     name = models.CharField(
         verbose_name=_('Название'),
         unique=True,
@@ -17,6 +13,10 @@ class BookType(models.Model):
     color = fields.ColorField(
         verbose_name=_('Цвет'),
         default='#FF0000'
+    )
+    slug = models.SlugField(
+        verbose_name=_('Слаг (Ссылка)'),
+        unique=True
     )
 
     class Meta:
