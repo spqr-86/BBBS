@@ -15,3 +15,4 @@ class ArticleSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
         tags = None
         model = Article
+        exclude = ['image_url']

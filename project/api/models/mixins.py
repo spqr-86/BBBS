@@ -1,15 +1,13 @@
 import os
-import requests
 
+import requests
 from django.conf import settings
+from django.utils.timezone import now
 
 
 class ImageFromUrlMixin:
     def load_image(self, *, image_url, save=False):
-        if self.__class__.objects.exists():
-            new_id = self.__class__.objects.latest('id').id + 1
-        else:
-            new_id = 1
+        new_id = str(now().timestamp())
         directory = self.__class__.image.field.upload_to
         try:
             response = requests.get(image_url)
@@ -20,7 +18,7 @@ class ImageFromUrlMixin:
                 'wb'
             ) as image:
                 image.write(response.content)
-                self.image = image.name
+                self.image = f'{directory}/{new_id}_pic.jpg'
             if save:
                 self.save()
         except requests.exceptions.ConnectionError:

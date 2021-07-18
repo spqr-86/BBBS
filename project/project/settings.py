@@ -15,7 +15,9 @@ SECRET_KEY = ENV['SECRET_KEY']
 DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'web:8000']
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 
 # Application definition
@@ -34,6 +36,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'api',
     'account',
+    'tinymce',
+    'django_summernote',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -70,22 +75,37 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': ENV['POSTGRES_DB'],
+        'USER': ENV.get('POSTGRES_USER', 'user'),
+        'PASSWORD': ENV.get('POSTGRES_PASSWORD', 'password'),
+        'HOST': ENV.get('DB_HOST', 'db'),
+        'PORT': ENV.get('DB_PORT', 5432),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': ENV.get('POSTGRES_DB'),
-            'USER': ENV.get('POSTGRES_USER'),
-            'PASSWORD': ENV.get('POSTGRES_PASSWORD'),
-            'HOST': ENV.get('DB_HOST', 'db'),
-            'PORT': ENV.get('DB_PORT', 5432),
+}
+
+if DEBUG:
+    LOGGING = {
+        'version': 1,
+        'filters': {
+            'require_debug_true': {
+                '()': 'django.utils.log.RequireDebugTrue',
+            }
+        },
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'filters': ['require_debug_true'],
+                'class': 'logging.StreamHandler',
+            }
+        },
+        'loggers': {
+            'django.db.backends': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+            }
         }
     }
 
@@ -181,3 +201,9 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+MAX_TAGS_COUNT = 4
+MAX_UPLOAD_SIZE_MB = 10
+IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
+
+ADMIN_HONEYPOT_EMAIL_ADMINS = False

@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+
+from ..validators import file_size_validator, image_extension_validator
 
 User = get_user_model()
 
@@ -30,6 +33,11 @@ class Diary(models.Model):
         upload_to='diaries/',
         blank=True,
         null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
     )
     mark = models.CharField(
         verbose_name=_('Как прошло время'),
@@ -40,12 +48,23 @@ class Diary(models.Model):
             ('neutral', _('Нейтрально')),
         ),
     )
+    sent_to_curator = models.BooleanField(
+        verbose_name=_('Отпралено куратору'),
+        default=False,
+        help_text=_('Метка о факте отправки дневника куратору.'),
+    )
 
     class Meta:
         app_label = 'api'
         ordering = ('-date',)
         verbose_name = _('Дневник')
         verbose_name_plural = _('Дневники')
+        constraints = [
+            models.UniqueConstraint(
+                fields=('place', 'date', 'mentor'),
+                name='diary_place_date_uniquetogether',
+            )
+        ]
 
     def __str__(self):
         return self.place
