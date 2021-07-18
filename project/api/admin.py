@@ -122,7 +122,6 @@ class EventAdmin(MixinAdmin):
         ).formfield_for_foreignkey(db_field, request, **kwargs)
 
     def taken_seats(self, obj):
-        from django.utils.html import format_html
         count = obj.participants.count()
         url = (
             reverse('admin:account_customuser_changelist')
