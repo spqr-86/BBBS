@@ -1,3 +1,5 @@
+from requests.exceptions import RequestException
+
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import status, views
@@ -34,7 +36,16 @@ class SendPassView(views.APIView):
                     )
                 }
                 return Response(message, status=status.HTTP_200_OK)
-            send_email(email, 'password', 'Тут будет ссылка.')
+            try:
+                send_email(email, 'password', 'Тут будет ссылка.')
+            except RequestException:
+                message = {
+                    'email': _('Проблемы с отправкой, попробуйте позднее.')
+                }
+                return Response(
+                    message,
+                    status=status.HTTP_504_GATEWAY_TIMEOUT
+                )
             message = {
                 'email': _(
                     f'Ссылка для сброса пароля была отправлена на {email}.'

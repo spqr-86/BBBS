@@ -1,4 +1,4 @@
-from requests.exceptions import SSLError
+from requests.exceptions import RequestException
 
 from django.utils.translation import gettext_lazy as _
 from rest_framework import permissions, status, viewsets
@@ -35,7 +35,7 @@ class DiaryViewSet(viewsets.ModelViewSet):
             text = diary.description
             try:
                 send_email(email, subject, text)
-            except SSLError:
+            except RequestException:
                 message = {
                     'diary': _('Проблемы с отправкой, попробуйте позднее.')
                 }
