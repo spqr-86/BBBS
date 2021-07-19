@@ -29,15 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apscheduler',
+    'django_apscheduler',
     'rest_framework',
     'django_filters',
     'corsheaders',
     'drf_yasg',
     'api',
     'account',
-    'tinymce',
-    'django_summernote',
     'admin_honeypot',
 ]
 
@@ -85,29 +83,6 @@ DATABASES = {
         'PORT': ENV.get('DB_PORT', 5432),
     }
 }
-
-if DEBUG:
-    LOGGING = {
-        'version': 1,
-        'filters': {
-            'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
-            }
-        },
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'filters': ['require_debug_true'],
-                'class': 'logging.StreamHandler',
-            }
-        },
-        'loggers': {
-            'django.db.backends': {
-                'level': 'DEBUG',
-                'handlers': ['console'],
-            }
-        }
-    }
 
 
 # User model
@@ -207,3 +182,15 @@ MAX_UPLOAD_SIZE_MB = 10
 IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
 
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
+
+
+# Mail Backend
+
+MAIL_API = ENV.get('MAIL_API')
+MAIL_API_KEY = ENV.get('MAIL_API_KEY')
+FROM_MAIL = ENV.get('FROM_MAIL')
+
+
+# Scheduler
+
+APSCHEDULER_DATETIME_FORMAT = 'd.m.Y H:i:s'

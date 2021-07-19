@@ -1,16 +1,17 @@
+import requests
 from typing import List
 
-import requests
-from os import getenv
+from django.conf import settings
 
 
 def send_email(to_email: List, subject: str, text: str):
     return requests.post(
-        getenv('MAIL_API'),
-        auth=("api", getenv('MAIL_API_KEY')),
+        settings.MAIL_API,
+        auth=('api', settings.MAIL_API_KEY),
         data={
-            "from": getenv('FROM_MAIL'),
-            "to": [to_email],
-            "subject": subject,
-            "text": text
-        })
+            'from': settings.FROM_MAIL,
+            'to': [to_email],
+            'subject': subject,
+            'text': text,
+        },
+    )

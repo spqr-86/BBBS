@@ -1,15 +1,12 @@
 from django.contrib.auth import get_user_model
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import gettext_lazy as _
+from rest_framework import status, views
 from rest_framework.generics import RetrieveUpdateAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.request import Request
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from ..serializers import ProfileSerializer
-from ..utils.BaseViewSet import BaseAttendersView
+from ..serializers import EmailSerializer, ProfileSerializer
 from ..utils.email import send_email
-from ...account.models import CustomUser
 
 User = get_user_model()
 
@@ -23,14 +20,24 @@ class ProfileViewSet(RetrieveUpdateAPIView):
         return self.request.user
 
 
-class SendMailViewSet(BaseAttendersView):
-    permission_classes_by_action = {
-        'send_password': [AllowAny]
-    }
+class SendPassView(views.APIView):
+    permission_classes = [AllowAny]
 
-    @method_decorator(csrf_exempt)
-    def send_password(self, request: Request):
-        email = self.request.query_params['email']
-        user = CustomUser.objects.get(email=email)
-        send_email([user.email], 'password', user.password)
-        return Response({'sent': 'true'})
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            email = request.data.get('email')
+            if not User.objects.filter(email=email).exists():
+                message = {
+                    'email': _(
+                        'Пользователь с таким email не зарегестрирован.'
+                    )
+                }
+                return Response(message, status=status.HTTP_200_OK)
+            send_email(email, 'password', 'Тут будет ссылка.')
+            message = {
+                'email': _(
+                    f'Ссылка для сброса пароля была отправлена на {email}.'
+                )
+            }
+            return Response(message, status=status.HTTP_200_OK)

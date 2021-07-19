@@ -2,42 +2,45 @@ from datetime import timedelta
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
 from django.utils.timezone import now
 from django_apscheduler.jobstores import DjangoJobStore
 
-from project.account.models import CustomUser
-from project.api.utils.email import send_email
-from project.project import settings
+from api.models import Event
+from api.utils.email import send_email
+
+User = get_user_model()
 
 
 def send_notification():
-    users = CustomUser.objects.all()
-    week_time = now() + timedelta(days=7)
-    for user in users:
-        current_city = user.city
-        print(user)
-        print(user.city)
-        events_by_city = current_city.events.all()
-        print(events_by_city)
-        for event in events_by_city:
-            if now() < event.start_at <= week_time:
-                send_email(
-                    user.email,
-                    f'Notification about event: {event.title}',
-                    f'Hello, dont forget about {event.title}'
-                )
+    events = Event.objects.filter(
+        start_at__gt=now(),
+        start_at__lt=now()+timedelta(hours=24)
+    )
+    for event in events:
+        users = User.objects.filter(events=event)
+        for user in users:
+            send_email(
+                user.email,
+                f'Напоминание о событии: {event.title}',
+                f'Здравствуйте!\n\n \
+                 Не забудьте посетить событие "{event.title}".\n \
+                 Начало {event.start_at.strftime("%d.%m.%Y в %H:%M")}'
+            )
 
 
 class Command(BaseCommand):
-    help = "Scheduler for sending email"
+    help = 'Scheduler for sending email'
 
     def handle(self, *args, **options):
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
-        scheduler.add_jobstore(DjangoJobStore(), "default")
+        scheduler.add_jobstore(DjangoJobStore(), 'default')
         scheduler.add_job(
             send_notification,
-            trigger=CronTrigger(second="*/86400"),
+            trigger=CronTrigger(day='*/1'),
+            id='Events reminder',
             max_instances=1,
             replace_existing=True,
         )
