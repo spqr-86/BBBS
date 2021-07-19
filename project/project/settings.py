@@ -15,7 +15,9 @@ SECRET_KEY = ENV['SECRET_KEY']
 DEBUG = int(ENV.get('DJANGO_DEVELOPMENT', False))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'web:8000']
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 
 # Application definition
@@ -27,12 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_apscheduler',
     'rest_framework',
     'django_filters',
     'corsheaders',
     'drf_yasg',
     'api',
     'account',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -69,24 +73,16 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': ENV['POSTGRES_DB'],
+        'USER': ENV.get('POSTGRES_USER', 'user'),
+        'PASSWORD': ENV.get('POSTGRES_PASSWORD', 'password'),
+        'HOST': ENV.get('DB_HOST', 'db'),
+        'PORT': ENV.get('DB_PORT', 5432),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': ENV.get('POSTGRES_DB'),
-            'USER': ENV.get('POSTGRES_USER'),
-            'PASSWORD': ENV.get('POSTGRES_PASSWORD'),
-            'HOST': ENV.get('DB_HOST', 'db'),
-            'PORT': ENV.get('DB_PORT', 5432),
-        }
-    }
+}
 
 
 # User model
@@ -180,3 +176,21 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+MAX_TAGS_COUNT = 4
+MAX_UPLOAD_SIZE_MB = 10
+IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
+
+ADMIN_HONEYPOT_EMAIL_ADMINS = False
+
+
+# Mail Backend
+
+MAIL_API = ENV.get('MAIL_API')
+MAIL_API_KEY = ENV.get('MAIL_API_KEY')
+FROM_MAIL = ENV.get('FROM_MAIL')
+
+
+# Scheduler
+
+APSCHEDULER_DATETIME_FORMAT = 'd.m.Y H:i:s'

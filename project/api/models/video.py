@@ -1,9 +1,12 @@
-import requests
 import urllib
+
+import requests
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..validators import file_size_validator, image_extension_validator
 from .mixins import ImageFromUrlMixin
 
 
@@ -35,28 +38,43 @@ class Video(models.Model, ImageFromUrlMixin):
         upload_to='videos/',
         blank=True,
         null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
     )
     link = models.URLField(
         verbose_name=_('Ссылка на видеоролик'),
         max_length=192,
     )
     duration = models.PositiveIntegerField(
-        verbose_name=_('Продолжительность видеоролика в сек.'),
-        default=0,
+        verbose_name=_('Длина видео в сек.'),
         validators=(MinValueValidator(1), MaxValueValidator(86400)),
+    )
+    output_to_main = models.BooleanField(
+        verbose_name=_('Отображать на главной странице'),
+        default=False,
+        help_text=_('Видео с этой меткой будут отображаться \
+                     на главной странице сайта.'),
+    )
+    pinned_full_size = models.BooleanField(
+        verbose_name=_('Закрепить'),
+        default=False,
+        help_text=_('Видео с этой меткой будет отображаться \
+                     в полноразмерном формате вверху страницы.'),
+    )
+    resource_group = models.BooleanField(
+        verbose_name=_('Ресурсная группа'),
+        default=False,
+        help_text=_('Видео с этой меткой не будут показаны \
+                     не авторизованным пользователям.'),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='videos',
-    )
-    output_to_main = models.BooleanField(
-        verbose_name=_('Отображать на главной странице'),
-        default=False,
-    )
-    pinned_full_size = models.BooleanField(
-        verbose_name=_('Отображать с полноразмерным видео вверху страницы'),
-        default=False,
+        limit_choices_to={'category': _('Видеоролики')},
     )
 
     class Meta:

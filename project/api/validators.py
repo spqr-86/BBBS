@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
@@ -21,23 +23,23 @@ def free_seats_validators(event):
         )
 
 
-def age_validator(value):
-    if value > 25:
-        raise ValidationError(
-            _('Слишком большой возраст для ребёнка'),
-            code='invalid',
-            params={'value': value})
-    elif value < 0:
-        raise ValidationError(
-            _('Возраст не может быть меньше 0'),
-            code='invalid',
-            params={'value': value})
-
-
 def year_validator(value):
     if value > now().year:
         raise ValidationError(
             '%(value)s год больше текущего',
             code='invalid',
             params={'value': value},
+        )
+
+
+def image_extension_validator(value):
+    return FileExtensionValidator(
+                allowed_extensions=settings.IMAGE_EXTENSIONS)(value)
+
+
+def file_size_validator(value):
+    limit = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError(
+            _(f'Файл не должен быть больше {settings.MAX_UPLOAD_SIZE_MB}М.')
         )

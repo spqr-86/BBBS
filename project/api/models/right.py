@@ -16,10 +16,16 @@ class Right(models.Model, ImageFromUrlMixin):
     text = models.TextField(
         verbose_name=_('Текст'),
     )
+    raw_html = models.TextField(
+        verbose_name=_('HTML'),
+        max_length=4 * 10 ** 6,
+        help_text=_('Поле для html кода страницы.'),
+    )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='rights',
+        limit_choices_to={'category': _('Права')},
     )
 
     class Meta:
@@ -30,3 +36,7 @@ class Right(models.Model, ImageFromUrlMixin):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.raw_html = ' '.join(self.raw_html.split())
+        return super().save(*args, **kwargs)

@@ -1,9 +1,9 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView  # noqa (E501)
 
 from . import views
+
 
 v1_router = DefaultRouter()
 
@@ -31,6 +31,10 @@ urlpatterns = [
     path(
         'v1/main/',
         views.MainViewSet.as_view(), name='main'
+    ),
+    path(
+        'v1/profile/send_password/',
+        views.SendPassView.as_view(), name='send_password'
     ),
     path(
         'v1/profile/',

@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..validators import file_size_validator, image_extension_validator
 from .mixins import ImageFromUrlMixin
 
 
@@ -21,26 +23,36 @@ class Article(models.Model, ImageFromUrlMixin):
         verbose_name=_('Ссылка на статью'),
         max_length=192,
     )
+    image = models.ImageField(
+        upload_to='articles/',
+        verbose_name=_('Изображение'),
+        blank=True,
+        null=True,
+        help_text=_(
+            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
+             Размер до 10М.'
+        ),
+        validators=[file_size_validator, image_extension_validator],
+    )
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,
         blank=True,
         null=True,
-    )
-    image = models.ImageField(
-        upload_to='articles/',
-        verbose_name=_('Фото'),
-        blank=True,
-        null=True,
+        help_text=_('Альтернативный способ загрузки изображения. \
+                     Приоритет у файла.'),
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
+        help_text=_('Статьи с этой меткой будут отображаться \
+                     на главной странице сайта.'),
     )
     pinned_full_size = models.BooleanField(
-        verbose_name=_('Отображать с полноразмерным '
-                       'изображением вверху страницы'),
+        verbose_name=_('Закрепить'),
         default=False,
+        help_text=_('Статья с этой меткой будет отображаться \
+                     в полноразмерном формате вверху страницы.'),
     )
 
     class Meta:
