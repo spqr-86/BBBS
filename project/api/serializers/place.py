@@ -17,7 +17,6 @@ class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         exclude = [
-            'city',
             'image_url',
             'age_restriction',
             'output_to_main',
