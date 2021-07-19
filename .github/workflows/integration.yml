@@ -2,7 +2,7 @@ name: Deploy BBBS To Yandex
 
 on:
   push:
-    branches: [ integration ]
+    branches: [ main ]
 
 jobs:
   build_and_push_to_docker_hub:
@@ -59,8 +59,8 @@ jobs:
             sudo docker-compose rm frontend
             sudo docker-compose rm nginx
             sudo docker system prune -f
-            sudo docker volume rm admin_react_build
-            touch .env 
+            sudo docker volume rm admin_react_build -f
+            touch .env
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} > .env
             echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
             echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env

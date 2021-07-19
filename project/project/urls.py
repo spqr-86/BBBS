@@ -23,8 +23,6 @@ urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('management/', admin.site.urls),
     path('api/', include('api.urls', namespace='api')),
-    path('tinymce/', include('tinymce.urls')),
-    path('summernote/', include('django_summernote.urls')),
     path(
         'swagger/',
         schema_view.with_ui('swagger', cache_timeout=0),

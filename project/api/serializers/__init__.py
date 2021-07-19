@@ -15,7 +15,7 @@ from .event import (
 from .history import HistorySerializer
 from .movie import MovieSerializer
 from .place import PlaceListSerializer, PlaceSerializer
-from .profile import ProfileSerializer
+from .profile import EmailSerializer, ProfileSerializer
 from .question import QuestionSerializer
 from .right import RightListSerializer, RightSerializer
 from .tag import TagSerializer
@@ -37,6 +37,7 @@ __all__ = [
     'HistorySerializer',
     'PlaceListSerializer',
     'PlaceSerializer',
+    'EmailSerializer',
     'ProfileSerializer',
     'RightListSerializer',
     'RightSerializer',

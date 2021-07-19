@@ -89,7 +89,8 @@ class CityAdmin(MixinAdmin):
 
 @admin.register(models.Diary)
 class DiaryAdmin(ImageTagField, MixinAdmin):
-    list_display = ('id', 'mentor', 'place', 'date', 'mark', 'image_tag')
+    list_display = ('id', 'mentor', 'place', 'date',
+                    'mark', 'sent_to_curator', 'image_tag')
     search_fields = ('place', 'description')
     list_filter = ('mark', )
 
