@@ -17,9 +17,9 @@
 
 asgiref==3.3.4
 
-apscheduler-3.7.0
+apscheduler==3.7.0
 
-django-apscheduler-0.6.0
+django-apscheduler==0.6.0
 
 autopep8==1.5.7
 
