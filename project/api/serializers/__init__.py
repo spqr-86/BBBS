@@ -18,6 +18,7 @@ from .place import PlaceListSerializer, PlaceSerializer
 from .profile import EmailSerializer, ProfileSerializer
 from .question import QuestionSerializer
 from .right import RightListSerializer, RightSerializer
+from .search import SearchResultSerializer
 from .tag import TagSerializer
 from .video import VideoSerializer
 
@@ -45,4 +46,5 @@ __all__ = [
     'MovieSerializer',
     'VideoSerializer',
     'QuestionSerializer',
+    'SearchResultSerializer',
 ]

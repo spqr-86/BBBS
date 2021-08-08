@@ -23,6 +23,7 @@ v1_router.register(r'profile/diaries', views.DiaryViewSet, basename='diary')
 v1_router.register(r'afisha/events', views.EventViewSet, basename='event')
 v1_router.register(r'afisha/event-participants/archive', views.MyEventsArchive, basename='my-events-archive')  # noqa (E501)
 v1_router.register(r'afisha/event-participants', views.ParticipantViewSet, basename='event-participant')  # noqa (E501)
+v1_router.register(r'search', views.SearchView, basename='global-search')
 
 
 app_name = 'api'
