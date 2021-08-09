@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
@@ -209,8 +210,9 @@ class PlaceAdmin(ImageTagField, MixinAdmin):
 @admin.register(models.Right)
 class RightAdmin(MixinAdmin):
     list_display = ('id', 'title', 'get_description')
-    search_fields = ('title', 'description', 'text')
+    search_fields = ('title', 'description', 'text_blocks__text')
     list_filter = ('tags', )
+    filter_horizontal = ('text_blocks', )
 
     @admin.display(description=_('Описание'))
     def get_description(self, obj):
@@ -233,6 +235,12 @@ class TagAdmin(MixinAdmin):
     search_fields = ('name', 'category', 'slug')
     list_filter = ('category', )
     prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(models.TextBlock)
+class TextBlockAdmin(MixinAdmin):
+    list_display = ('id', 'title')
+    search_fields = ('title', 'text')
 
 
 @admin.register(models.Video)

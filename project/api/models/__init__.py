@@ -13,6 +13,7 @@ from .question import Question
 from .region import Region
 from .right import Right
 from .tag import Tag
+from .text_block import TextBlock
 from .video import Video
 
 __all__ = [
@@ -31,6 +32,7 @@ __all__ = [
     'Right',
     'Region',
     'Tag',
+    'TextBlock',
     'Movie',
     'Video',
 ]
