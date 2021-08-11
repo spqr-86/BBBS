@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'drf_yasg',
+    'common',
     'api',
     'account',
     'admin_honeypot',

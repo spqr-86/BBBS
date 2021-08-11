@@ -1,18 +1,24 @@
 from rest_framework import serializers
 
-from ..models import Right, TextBlock
+from ..models import Right, RightContent
 from .tag import TagSerializer
 
 
-class TextBlockSerializer(serializers.ModelSerializer):
+class RightContentSerializer(serializers.ModelSerializer):
+    text_blocks = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='text',
+    )
+
     class Meta:
-        model = TextBlock
-        fields = '__all__'
+        model = RightContent
+        fields = ['block_type', 'title', 'text_blocks', 'colored_back']
 
 
 class RightSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False, read_only=True)
-    text_blocks = TextBlockSerializer(many=True, read_only=True)
+    tags = TagSerializer(many=True, read_only=True)
+    content = RightContentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Right
@@ -20,7 +26,6 @@ class RightSerializer(serializers.ModelSerializer):
 
 
 class RightListSerializer(RightSerializer):
-    class Meta(RightSerializer.Meta):
+    class Meta:
         model = Right
         fields = ['id', 'title', 'tags']
-

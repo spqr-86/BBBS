@@ -12,7 +12,7 @@ class TextBlock(models.Model):
     )
 
     class Meta:
-        app_label = 'api'
+        app_label = 'common'
         ordering = ('order', )
         verbose_name = _('Блок текста')
         verbose_name_plural = _('Блоки текста')

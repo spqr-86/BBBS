@@ -11,9 +11,8 @@ from .movie import Movie
 from .place import Place
 from .question import Question
 from .region import Region
-from .right import Right
+from .right import Right, RightContent
 from .tag import Tag
-from .text_block import TextBlock
 from .video import Video
 
 __all__ = [
@@ -30,9 +29,9 @@ __all__ = [
     'Question',
     'Place',
     'Right',
+    'RightContent',
     'Region',
     'Tag',
-    'TextBlock',
     'Movie',
     'Video',
 ]
