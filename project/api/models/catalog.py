@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from martor.models import MartorField
 
 from ..validators import file_size_validator, image_extension_validator
 from .mixins import ImageFromUrlMixin
@@ -11,6 +12,13 @@ class Catalog(models.Model, ImageFromUrlMixin):
         verbose_name=_('Заголовок'),
         max_length=128,
     )
+    description = models.TextField(
+        verbose_name=_('Верхний абзац'),
+        max_length=1024,
+        help_text=_(
+            'Отображается над изображением.'
+        ),
+    )
     image = models.ImageField(
         upload_to='catalogs/',
         verbose_name=_('Изображение'),
@@ -18,20 +26,22 @@ class Catalog(models.Model, ImageFromUrlMixin):
         null=True,
         help_text=_(
             f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
+             Размер до {settings.MAX_IMAGE_UPLOAD_SIZE_MB}М.'
         ),
         validators=[file_size_validator, image_extension_validator],
     )
     image_url = models.URLField(
         verbose_name=_('Ссылка на изображение'),
         max_length=192,
-        help_text=_('Альтернативный способ загрузки изображения. \
-                     Приоритет у файла.'),
+        help_text=_(
+            'Альтернативный способ загрузки изображения. Приоритет у файла.'
+        ),
     )
-    raw_html = models.TextField(
-        verbose_name=_('HTML'),
-        max_length=4 * 10 ** 6,
-        help_text=_('Поле для html кода страницы.'),
+    body = MartorField(
+        verbose_name=_('Текст статьи'),
+        help_text=_(
+            'Основной текст статьи. Пожалуйста, используйте форматирование.'
+        ),
     )
 
     class Meta:
@@ -46,5 +56,4 @@ class Catalog(models.Model, ImageFromUrlMixin):
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
-        self.raw_html = ' '.join(self.raw_html.split())
         return super().save(*args, **kwargs)

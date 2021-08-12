@@ -38,8 +38,8 @@ def image_extension_validator(value):
 
 
 def file_size_validator(value):
-    limit = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    limit = settings.MAX_IMAGE_UPLOAD_SIZE
     if value.size > limit:
         raise ValidationError(
-            _(f'Файл не должен быть больше {settings.MAX_UPLOAD_SIZE_MB}М.')
+            _(f'Файл не должен быть больше {settings.MAX_IMAGE_UPLOAD_SIZE_MB}М.')
         )

@@ -22,6 +22,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('management/', admin.site.urls),
+    path('martor/', include('martor.urls')),
     path('api/', include('api.urls', namespace='api')),
     path(
         'swagger/',
