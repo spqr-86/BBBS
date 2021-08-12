@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.db.models import TextField
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
