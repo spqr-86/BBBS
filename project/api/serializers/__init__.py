@@ -3,7 +3,7 @@ from .article import ArticleSerializer
 from .base import BaseSerializer
 from .book import BookSerializer
 from .booktype import BookTypeSerializer
-from .catalog import CatalogSerializer
+from .catalog import CatalogListSerializer, CatalogSerializer
 from .city import CitySerializer
 from .diary import DiarySerializer
 from .event import (
@@ -27,6 +27,7 @@ __all__ = [
     'BaseSerializer',
     'BookSerializer',
     'BookTypeSerializer',
+    'CatalogListSerializer',
     'CatalogSerializer',
     'CitySerializer',
     'DiarySerializer',
