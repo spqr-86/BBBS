@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'api',
     'account',
     'admin_honeypot',
+    'martor',
 ]
 
 MIDDLEWARE = [
