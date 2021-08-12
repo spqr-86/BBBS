@@ -12,6 +12,13 @@ class Catalog(models.Model, ImageFromUrlMixin):
         verbose_name=_('Заголовок'),
         max_length=128,
     )
+    description = models.TextField(
+        verbose_name=_('Верхний абзац'),
+        max_length=1024,
+        help_text=_(
+            'Отображается над изображением.'
+        ),
+    )
     image = models.ImageField(
         upload_to='catalogs/',
         verbose_name=_('Изображение'),

@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from martor.models import MartorField
 from martor.widgets import AdminMartorWidget
 
 from . import forms, models
@@ -80,7 +81,7 @@ class CatalogAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'image_tag')
     search_fields = ('title', )
     formfield_overrides = {
-        TextField: {'widget': AdminMartorWidget},
+        MartorField: {'widget': AdminMartorWidget},
     }
 
 
