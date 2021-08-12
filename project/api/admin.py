@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.db.models import TextField
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from martor.widgets import AdminMartorWidget
 
 from . import forms, models
 
@@ -77,6 +79,9 @@ class BookAdmin(MixinAdmin):
 class CatalogAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'image_tag')
     search_fields = ('title', )
+    formfield_overrides = {
+        TextField: {'widget': AdminMartorWidget},
+    }
 
 
 @admin.register(models.City)

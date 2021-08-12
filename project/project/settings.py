@@ -179,7 +179,8 @@ SIMPLE_JWT = {
 }
 
 MAX_TAGS_COUNT = 4
-MAX_UPLOAD_SIZE_MB = 10
+MAX_IMAGE_UPLOAD_SIZE_MB = 10
+MAX_IMAGE_UPLOAD_SIZE = MAX_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024
 IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
 
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
@@ -195,3 +196,25 @@ FROM_MAIL = ENV.get('FROM_MAIL')
 # Scheduler
 
 APSCHEDULER_DATETIME_FORMAT = 'd.m.Y H:i:s'
+
+
+# Martor settings
+
+MARTOR_THEME = 'bootstrap'
+
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'true',
+    'imgur': 'false',
+    'mention': 'false',
+    'jquery': 'true',
+    'living': 'false',
+    'spellcheck': 'false',
+    'hljs': 'true',
+}
+
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold', 'italic', 'horizontal', 'heading', 'pre-code',
+    'blockquote', 'unordered-list', 'ordered-list',
+    'link', 'image-link', 'emoji',
+    'direct-mention', 'toggle-maximize', 'help'
+]

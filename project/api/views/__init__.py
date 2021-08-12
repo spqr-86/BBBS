@@ -37,5 +37,5 @@ __all__ = [
     'QuestionViewSet',
     'GetListPostPutMixin',
     'TagMixin',
-    'MyEventsArchive'
+    'MyEventsArchive',
 ]
