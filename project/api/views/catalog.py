@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from ..models import Catalog
-from ..serializers import CatalogSerializer
+from ..serializers import CatalogListSerializer, CatalogSerializer
 
 
 class CatalogView(ReadOnlyModelViewSet):
@@ -11,3 +11,8 @@ class CatalogView(ReadOnlyModelViewSet):
     serializer_class = CatalogSerializer
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return CatalogListSerializer
+        return CatalogSerializer
