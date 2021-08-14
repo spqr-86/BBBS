@@ -1,19 +1,30 @@
-# Статьи, События, Места, Книги, Видео, Фильмы, Права, Вопросы
+from django.contrib.postgres.search import (SearchVector, SearchQuery,
+                                            SearchRank)
+from django.urls import reverse
 from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet
-from django.contrib.postgres.search import (SearchVector, SearchQuery,
-                                            SearchRank)
 
 from ..models import Article, Event, Place, Book, Movie, Video, Right, Question
 from ..serializers import SearchResultSerializer
 
 SEARCH_MODELS = [Event, Place, Book, Movie, Video, Right, Question]
-SELECT_VALUE = "'{model._meta.verbose_name_plural}'"
+SELECT_VALUE = '\'{model._meta.verbose_name_plural}\''
+NAMESPACE = 'api:v1:'
+REVERSE_VIEWNAME_TEMPLATE = '%s{model}-list' % NAMESPACE
+
+
+def get_path(model):
+    return reverse(
+        REVERSE_VIEWNAME_TEMPLATE.format(model=model.__name__.lower())
+    )
 
 
 def build_select_dict(model):
-    return {'model_name': SELECT_VALUE.format(model=model)}
+    return {
+        'model_name': SELECT_VALUE.format(model=model),
+        'url': f'\'{get_path(model)}\' || id'
+    }
 
 
 def build_queryset(model, search_vector, search_query, search_text):
@@ -24,7 +35,7 @@ def build_queryset(model, search_vector, search_query, search_text):
         search=search_text
     ).extra(
         select=build_select_dict(model)
-    ).values('title', 'model_name', 'rank')
+    ).values('title', 'model_name', 'rank', 'url')
 
 
 class SearchView(GenericViewSet, ListModelMixin):
@@ -35,12 +46,13 @@ class SearchView(GenericViewSet, ListModelMixin):
         search_text = self.request.GET.get('text')
         search_vector = SearchVector('title')
         search_query = SearchQuery(search_text, search_type='plain')
-        queryset = build_queryset(
-            Article,
-            search_vector,
-            search_query,
-            search_text
-        )
+        queryset = Article.objects.none().extra(
+            select={
+                'model_name': 'null',
+                'rank': 'null',
+                'url': 'null'
+            }
+        ).values('title', 'model_name', 'rank', 'url')
         for model in SEARCH_MODELS:
             queryset = queryset.union(
                 build_queryset(
