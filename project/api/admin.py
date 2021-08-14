@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from martor.models import MartorField
+from martor.widgets import AdminMartorWidget
 
 from . import forms, models
 
@@ -77,6 +79,9 @@ class BookAdmin(MixinAdmin):
 class CatalogAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'image_tag')
     search_fields = ('title', )
+    formfield_overrides = {
+        MartorField: {'widget': AdminMartorWidget},
+    }
 
 
 @admin.register(models.City)
@@ -238,7 +243,7 @@ class TagAdmin(MixinAdmin):
 @admin.register(models.Video)
 class VideoAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'link', 'duration', 'resource_group',
-                    'pinned_full_size', 'output_to_main',  'image_tag')
+                    'pinned_full_size', 'output_to_main', 'image_tag')
     search_fields = ('title', 'info')
     list_filter = ('resource_group', 'pinned_full_size',
                    'output_to_main', 'tags')

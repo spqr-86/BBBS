@@ -16,4 +16,3 @@ class RightListSerializer(RightSerializer):
     class Meta(RightSerializer.Meta):
         model = Right
         fields = ['id', 'title', 'tags']
-
