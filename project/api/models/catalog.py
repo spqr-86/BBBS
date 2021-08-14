@@ -24,10 +24,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до {settings.MAX_IMAGE_UPLOAD_SIZE_MB}М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     image_url = models.URLField(

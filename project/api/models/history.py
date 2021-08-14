@@ -30,10 +30,7 @@ class History(models.Model):
         upload_to='history/',
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     description = models.TextField(
@@ -47,8 +44,9 @@ class History(models.Model):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Истории с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Истории с этой меткой будут отображаться на главной странице.'
+        ),
     )
 
     class Meta:

@@ -16,14 +16,15 @@ class Question(models.Model):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Вопросы с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Вопросы с этой меткой будут отображаться на главной странице.'
+        ),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='questions',
-        limit_choices_to={'category': _('Вопросы')},
+        limit_choices_to={'category': 'Вопросы'},
     )
 
     class Meta:

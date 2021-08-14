@@ -38,10 +38,7 @@ class Video(models.Model, ImageFromUrlMixin):
         upload_to='videos/',
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     link = models.URLField(
@@ -55,26 +52,31 @@ class Video(models.Model, ImageFromUrlMixin):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Видео с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Видео с этой меткой будут отображаться на главной странице.'
+        ),
     )
     pinned_full_size = models.BooleanField(
         verbose_name=_('Закрепить'),
         default=False,
-        help_text=_('Видео с этой меткой будет отображаться \
-                     в полноразмерном формате вверху страницы.'),
+        help_text=_(
+            'Видео с этой меткой будет отображаться'
+            'в полноразмерном формате вверху страницы.'
+        ),
     )
     resource_group = models.BooleanField(
         verbose_name=_('Ресурсная группа'),
         default=False,
-        help_text=_('Видео с этой меткой не будут показаны \
-                     не авторизованным пользователям.'),
+        help_text=_(
+            'Видео с этой меткой не будут показаны'
+            'не авторизованным пользователям.'
+        ),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='videos',
-        limit_choices_to={'category': _('Видеоролики')},
+        limit_choices_to={'category': 'Видеоролики'},
     )
 
     class Meta:

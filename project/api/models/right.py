@@ -25,7 +25,7 @@ class Right(models.Model, ImageFromUrlMixin):
         'api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='rights',
-        limit_choices_to={'category': _('Права')},
+        limit_choices_to={'category': 'Права'},
     )
 
     class Meta:

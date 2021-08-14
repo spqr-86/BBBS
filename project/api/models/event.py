@@ -53,10 +53,10 @@ class Event(models.Model):
     )
     tags = models.ForeignKey(
         to='api.Tag',
-        verbose_name=_('Тег(и)'),
+        verbose_name=_('Тег'),
         related_name='events',
         on_delete=models.PROTECT,
-        limit_choices_to={'category': _('События')},
+        limit_choices_to={'category': 'События'},
     )
 
     class Meta:
