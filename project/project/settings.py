@@ -2,6 +2,7 @@ from datetime import timedelta
 from os import environ
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -183,6 +184,11 @@ MAX_TAGS_COUNT = 4
 MAX_IMAGE_UPLOAD_SIZE_MB = 10
 MAX_IMAGE_UPLOAD_SIZE = MAX_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024
 IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'gif', 'png', 'bmp')
+
+IMAGE_FIELD_HELP_TEXT = _(
+    f'Поддерживаемые форматы {", ".join(IMAGE_EXTENSIONS)}. Размер до {MAX_IMAGE_UPLOAD_SIZE_MB} Мб.' # noqa(501)
+)
+
 
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
 

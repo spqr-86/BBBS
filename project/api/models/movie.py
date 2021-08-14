@@ -41,10 +41,7 @@ class Movie(models.Model, ImageFromUrlMixin):
         upload_to='movies/',
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     link = models.URLField(
@@ -54,14 +51,15 @@ class Movie(models.Model, ImageFromUrlMixin):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Фильмы с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Фильмы с этой меткой будут отображаться на главной странице.'
+        ),
     )
     tags = models.ManyToManyField(
         'api.Tag',
         verbose_name=_('Теги'),
         related_name='movies',
-        limit_choices_to={'category': _('Фильмы')},
+        limit_choices_to={'category': 'Фильмы'},
     )
 
     class Meta:

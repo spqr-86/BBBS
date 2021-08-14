@@ -28,10 +28,7 @@ class Article(models.Model, ImageFromUrlMixin):
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     image_url = models.URLField(
@@ -39,20 +36,24 @@ class Article(models.Model, ImageFromUrlMixin):
         max_length=192,
         blank=True,
         null=True,
-        help_text=_('Альтернативный способ загрузки изображения. \
-                     Приоритет у файла.'),
+        help_text=_(
+            'Альтернативный способ загрузки изображения. Приоритет у файла.'
+        ),
     )
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Статьи с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Статьи с этой меткой будут отображаться на главной странице.'
+        ),
     )
     pinned_full_size = models.BooleanField(
         verbose_name=_('Закрепить'),
         default=False,
-        help_text=_('Статья с этой меткой будет отображаться \
-                     в полноразмерном формате вверху страницы.'),
+        help_text=_(
+            'Статья с этой меткой будет отображаться'
+            'в полноразмерном формате вверху страницы.'
+        ),
     )
 
     class Meta:
@@ -68,5 +69,9 @@ class Article(models.Model, ImageFromUrlMixin):
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
         if self.pinned_full_size:
-            self.__class__.objects.filter(pinned_full_size=True).update(pinned_full_size=False)  # noqa E501
+            self.__class__.objects.filter(
+                pinned_full_size=True
+            ).update(
+                pinned_full_size=False
+            )
         return super().save(*args, **kwargs)

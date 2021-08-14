@@ -33,10 +33,7 @@ class Diary(models.Model):
         upload_to='diaries/',
         blank=True,
         null=True,
-        help_text=_(
-            f'Поддерживаемые форматы {", ".join(settings.IMAGE_EXTENSIONS)}. \
-             Размер до 10М.'
-        ),
+        help_text=settings.IMAGE_FIELD_HELP_TEXT,
         validators=[file_size_validator, image_extension_validator],
     )
     mark = models.CharField(
