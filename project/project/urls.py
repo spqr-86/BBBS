@@ -24,6 +24,7 @@ urlpatterns = [
     path('management/', admin.site.urls),
     path('martor/', include('martor.urls')),
     path('api/', include('api.urls', namespace='api')),
+    path('api/', include('account.urls', namespace='account')),
     path(
         'swagger/',
         schema_view.with_ui('swagger', cache_timeout=0),
