@@ -17,7 +17,7 @@ User = get_user_model()
 def send_notification():
     events = Event.objects.filter(
         start_at__gt=now(),
-        start_at__lt=now()+timedelta(hours=24)
+        start_at__lt=now() + timedelta(hours=24)
     )
     for event in events:
         users = User.objects.filter(events=event)

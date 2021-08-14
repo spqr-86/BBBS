@@ -34,12 +34,13 @@ def year_validator(value):
 
 def image_extension_validator(value):
     return FileExtensionValidator(
-                allowed_extensions=settings.IMAGE_EXTENSIONS)(value)
+        allowed_extensions=settings.IMAGE_EXTENSIONS)(value)
 
 
 def file_size_validator(value):
     limit = settings.MAX_IMAGE_UPLOAD_SIZE
     if value.size > limit:
         raise ValidationError(
-            _(f'Файл не должен быть больше {settings.MAX_IMAGE_UPLOAD_SIZE_MB}М.')
+            _('Файл не должен быть больше '
+              f'{settings.MAX_IMAGE_UPLOAD_SIZE_MB}М.')
         )
