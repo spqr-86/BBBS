@@ -13,6 +13,7 @@ from .place import PlacesViewSet
 from .profile import ProfileViewSet, SendPassView
 from .question import QuestionViewSet
 from .right import RightViewSet
+from .search import SearchView
 from .tag import TagViewSet
 from .video import VideoView
 
@@ -38,4 +39,5 @@ __all__ = [
     'GetListPostPutMixin',
     'TagMixin',
     'MyEventsArchive',
+    'SearchView',
 ]

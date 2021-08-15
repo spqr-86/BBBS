@@ -59,9 +59,9 @@ class MainViewSet(RetrieveAPIView):
         instance.event = get_event(request)
         instance.history = History.objects.filter(output_to_main=True).last()
         instance.place = get_place(request)
-        instance.articles = Castraitor(Article, self.ARTICLES_LENGTH, '-id').get_n_records()
-        instance.movies = Castraitor(Movie, self.MOVIES_LENGTH, '-id').get_n_records()
+        instance.articles = Castraitor(Article, self.ARTICLES_LENGTH, '-id').get_n_records()  # noqa E501
+        instance.movies = Castraitor(Movie, self.MOVIES_LENGTH, '-id').get_n_records()  # noqa E501
         instance.video = Video.objects.filter(output_to_main=True).last()
-        instance.questions = Castraitor(Question, self.QUESTION_LENGTH, '-id').get_n_records()
+        instance.questions = Castraitor(Question, self.QUESTION_LENGTH, '-id').get_n_records()  # noqa E501
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

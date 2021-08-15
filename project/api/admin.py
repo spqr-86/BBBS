@@ -243,7 +243,7 @@ class TagAdmin(MixinAdmin):
 @admin.register(models.Video)
 class VideoAdmin(ImageTagField, MixinAdmin):
     list_display = ('id', 'title', 'link', 'duration', 'resource_group',
-                    'pinned_full_size', 'output_to_main',  'image_tag')
+                    'pinned_full_size', 'output_to_main', 'image_tag')
     search_fields = ('title', 'info')
     list_filter = ('resource_group', 'pinned_full_size',
                    'output_to_main', 'tags')

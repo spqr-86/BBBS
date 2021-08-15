@@ -85,20 +85,22 @@ class Place(models.Model, ImageFromUrlMixin):
     output_to_main = models.BooleanField(
         verbose_name=_('Отображать на главной странице'),
         default=False,
-        help_text=_('Места с этой меткой будут отображаться \
-                     на главной странице сайта.'),
+        help_text=_(
+            'Места с этой меткой будут отображаться на главной странице сайта.'
+        ),
     )
     moderation_flag = models.BooleanField(
         verbose_name=_('Отметка о модерации'),
         default=False,
-        help_text=_('Места без этой метки не будут отображаться \
-                     на сайте.'),
+        help_text=_(
+            'Места без этой метки не будут отображаться на сайте.'
+        ),
     )
     tags = models.ManyToManyField(
         to='api.Tag',
         verbose_name=_('Тег(и)'),
         related_name='places',
-        limit_choices_to={'category': _('Места')},
+        limit_choices_to={'category': 'Места'},
     )
 
     class Meta:
