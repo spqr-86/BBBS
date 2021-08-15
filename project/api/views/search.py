@@ -1,5 +1,4 @@
-from django.contrib.postgres.search import (SearchVector, SearchQuery,
-                                            SearchRank)
+from django.contrib.postgres.search import TrigramSimilarity
 from django.urls import reverse
 from django.utils.timezone import now
 from rest_framework.mixins import ListModelMixin
@@ -27,12 +26,11 @@ def build_select_dict(model):
     }
 
 
-def build_queryset(queryset, search_vector, search_query, search_text):
+def build_queryset(queryset, search_text):
     return queryset.annotate(
-        search=search_vector,
-        rank=SearchRank(search_vector, search_query)
+        rank=TrigramSimilarity('title', search_text)
     ).filter(
-        search=search_text
+        rank__gt=0.071428575
     ).extra(
         select=build_select_dict(queryset.model)
     ).values('title', 'model_name', 'rank', 'url')
@@ -56,8 +54,6 @@ class SearchView(GenericViewSet, ListModelMixin):
             Question.objects.exclude(answer=None)
         ]
         search_text = self.request.GET.get('text')
-        search_vector = SearchVector('title')
-        search_query = SearchQuery(search_text, search_type='plain')
         queryset = Article.objects.none().extra(
             select={
                 'model_name': 'null',
@@ -69,8 +65,6 @@ class SearchView(GenericViewSet, ListModelMixin):
             queryset = queryset.union(
                 build_queryset(
                     query,
-                    search_vector,
-                    search_query,
                     search_text
                 )
             )
