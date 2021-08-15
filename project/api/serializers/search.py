@@ -5,4 +5,3 @@ class SearchResultSerializer(serializers.Serializer):
     title = serializers.CharField()
     model_name = serializers.CharField()
     url = serializers.CharField()
-    rank = serializers.FloatField()
