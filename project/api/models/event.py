@@ -62,8 +62,8 @@ class Event(models.Model):
     class Meta:
         app_label = 'api'
         ordering = ('id',)
-        verbose_name = _('Событие')
-        verbose_name_plural = _('События')
+        verbose_name = _('Календарь')
+        verbose_name_plural = _('Календарь')
         permissions = (
             ('events_in_all_cities', _('Можно смотреть события всех городов')),
         )
