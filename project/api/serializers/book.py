@@ -10,3 +10,10 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = '__all__'
+
+
+class BookResponseSerializer(serializers.Serializer):
+    count = serializers.IntegerField()
+    next = serializers.URLField()
+    previous = serializers.URLField()
+    results = BookSerializer(many=True)
