@@ -1,7 +1,7 @@
 from .activity_types import ActivityTypeSerializer
 from .article import ArticleSerializer
 from .base import BaseSerializer
-from .book import BookSerializer, BookResponseSerializer
+from .book import BookSerializer
 from .booktype import BookTypeSerializer
 from .catalog import CatalogListSerializer, CatalogSerializer
 from .city import CitySerializer
@@ -27,7 +27,6 @@ __all__ = [
     'ActivityTypeSerializer',
     'BaseSerializer',
     'BookSerializer',
-    'BookResponseSerializer',
     'BookTypeSerializer',
     'CatalogListSerializer',
     'CatalogSerializer',
