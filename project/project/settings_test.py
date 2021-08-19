@@ -1,5 +1,5 @@
+import os
 from datetime import timedelta
-from os import environ
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ENV = environ
+ENV = os.environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,14 +78,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': ENV['POSTGRES_DB'],
-        'USER': ENV.get('POSTGRES_USER', 'user'),
-        'PASSWORD': ENV.get('POSTGRES_PASSWORD', 'password'),
-        'HOST': ENV.get('DB_HOST', 'db'),
-        'PORT': ENV.get('DB_PORT', 5432),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 # User model
 
