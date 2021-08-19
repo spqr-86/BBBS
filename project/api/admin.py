@@ -26,6 +26,7 @@ class ImageTagField(admin.ModelAdmin):
 
 class MixinAdmin(admin.ModelAdmin):
     empty_value_display = _('-пусто-')
+    ordering = ('-id',)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'tags':

@@ -50,17 +50,20 @@ class Place(models.Model, ImageFromUrlMixin):
         max_length=200,
     )
     activity_type = models.ForeignKey(
+        blank=True,
         to='api.ActivityType',
         verbose_name=_('Вид активности'),
         related_name='places',
         on_delete=models.PROTECT,
     )
     gender = models.CharField(
+        blank=True,
         verbose_name=_('Пол ребёнка'),
         max_length=6,
         choices=(('male', _('Мальчик')), ('female', _('Девочка'))),
     )
     age = models.SmallIntegerField(
+        blank=True,
         verbose_name=_('Возраст ребёнка'),
         validators=[
             validators.MinValueValidator(8),
@@ -106,8 +109,8 @@ class Place(models.Model, ImageFromUrlMixin):
     class Meta:
         app_label = 'api'
         ordering = ('id',)
-        verbose_name = _('Место')
-        verbose_name_plural = _('Места')
+        verbose_name = _('Куда пойти')
+        verbose_name_plural = _('Куда пойти')
         permissions = (
             ('places_in_all_cities', _('Можно смотреть места всех городов')),
         )
