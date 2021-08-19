@@ -1,3 +1,5 @@
+from django.db.models.expressions import F, Window
+from django.db.models.functions import Rank
 from django_filters.filters import CharFilter
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
@@ -19,7 +21,13 @@ class TypeFilter(FilterSet):
 
 
 class BookView(ReadOnlyModelViewSet):
-    queryset = Book.objects.all()
+    queryset = Book.objects.annotate(
+        rank=Window(
+            expression=Rank(),
+            order_by=F('pk').desc(),
+            partition_by=[F('type_id')]
+        )
+    ).order_by('rank', '-pk')
     serializer_class = BookSerializer
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
@@ -28,8 +36,9 @@ class BookView(ReadOnlyModelViewSet):
 
     @action(methods=['get'], detail=False)
     def types(self, request):
-        related_query_name = self.queryset.model._meta.get_field('type') \
-                                 .related_query_name()
+        related_query_name = self.queryset.model._meta.get_field(
+            'type'
+        ).related_query_name()
         filter_key = f'{related_query_name}__in'
         types = BookType.objects.filter(
             **{filter_key: self.queryset}
