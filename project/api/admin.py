@@ -234,7 +234,6 @@ class RegionAdmin(MixinAdmin):
 
 @admin.register(models.Tag)
 class TagAdmin(MixinAdmin):
-    admin_priority = 1
     list_display = ('id', 'name', 'category', 'slug')
     list_editable = ('category', )
     search_fields = ('name', 'category', 'slug')
