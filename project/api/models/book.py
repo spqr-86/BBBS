@@ -25,11 +25,8 @@ class Book(models.Model):
         'api.BookType',
         on_delete=models.SET_NULL,
         null=True,
-        verbose_name=_('Тип'),
+        verbose_name=_('Тип книги'),
         related_name='books'
-    )
-    url = models.URLField(
-        verbose_name=_('Ссылка на книгу')
     )
 
     class Meta:
