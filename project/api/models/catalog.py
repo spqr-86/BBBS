@@ -20,7 +20,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
         ),
     )
     image = models.ImageField(
-        upload_to='catalogs/',
+        upload_to='catalog/',
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
@@ -43,12 +43,15 @@ class Catalog(models.Model, ImageFromUrlMixin):
 
     class Meta:
         app_label = 'api'
-        ordering = ('id',)
+        ordering = ('-id',)
         verbose_name = _('Справочник')
         verbose_name_plural = _('Справочник')
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return f'/catalog/{self.pk}'
 
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:

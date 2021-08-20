@@ -8,7 +8,6 @@ from ..serializers import CatalogListSerializer, CatalogSerializer
 
 class CatalogView(ReadOnlyModelViewSet):
     queryset = Catalog.objects.all()
-    serializer_class = CatalogSerializer
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
 
