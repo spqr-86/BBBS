@@ -32,8 +32,10 @@ class CatalogSerializer(serializers.ModelSerializer):
         exclude = ['image_url']
 
     def get_next_article(self, obj):
-        next_article = Catalog.objects.filter(id__lt=obj.id).first()
-        serializer = CatalogNextSerializer(next_article)
+        queryset = Catalog.objects.filter(id__lt=obj.id)
+        if not queryset.exists():
+            return None
+        serializer = CatalogNextSerializer(queryset.first())
         return serializer.data
 
 
