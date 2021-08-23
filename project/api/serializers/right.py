@@ -30,8 +30,10 @@ class RightSerializer(serializers.ModelSerializer):
     def get_next_article(self, obj):
         queryset = Right.objects.filter(id__lt=obj.id)
         tags = self.context['request'].query_params.get('tags')
-        if tags is not None:
+        if tags is not None and len(tags) > 0:
             queryset = queryset.filter(tags__slug__in=tags.split(','))
+        if not queryset.exists():
+            return None
         serializer = RightNextSerializer(queryset.first())
         return serializer.data
 
