@@ -20,7 +20,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
         ),
     )
     image = models.ImageField(
-        upload_to='catalogs/',
+        upload_to='catalog/',
         verbose_name=_('Изображение'),
         blank=True,
         null=True,
@@ -43,7 +43,7 @@ class Catalog(models.Model, ImageFromUrlMixin):
 
     class Meta:
         app_label = 'api'
-        ordering = ('id',)
+        ordering = ('-id',)
         verbose_name = _('Справочник')
         verbose_name_plural = _('Справочник')
 

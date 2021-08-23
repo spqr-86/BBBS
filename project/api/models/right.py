@@ -30,7 +30,7 @@ class Right(models.Model, ImageFromUrlMixin):
 
     class Meta:
         app_label = 'api'
-        ordering = ('id',)
+        ordering = ('-id',)
         verbose_name = _('Право')
         verbose_name_plural = _('Права')
 
