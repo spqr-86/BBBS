@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import serializers
 
 from ..models import Catalog
@@ -11,7 +12,10 @@ class CatalogNextSerializer(serializers.ModelSerializer):
         exclude = ['description', 'image', 'image_url', 'body']
 
     def get_url(self, obj):
-        return obj.get_absolute_url()
+        return reverse(
+            f'api:v1:{obj.__class__.__name__.lower()}-detail',
+            kwargs={'pk': obj.id}
+        )
 
 
 class CatalogSerializer(serializers.ModelSerializer):
