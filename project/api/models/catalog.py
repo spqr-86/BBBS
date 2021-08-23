@@ -50,9 +50,6 @@ class Catalog(models.Model, ImageFromUrlMixin):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return f'/catalog/{self.pk}'
-
     def save(self, *args, **kwargs) -> None:
         if self.image_url and not self.image:
             self.load_image(image_url=self.image_url)
